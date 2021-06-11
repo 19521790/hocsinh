@@ -210,19 +210,27 @@ public class ManHinhChinh extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tblMainBoard, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
+                .addComponent(tblMainBoard, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(148, Short.MAX_VALUE)
+                    .addContainerGap(162, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(82, Short.MAX_VALUE)))
+                    .addContainerGap(97, Short.MAX_VALUE)))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
+
+    private void ThayDoiQuyDinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThayDoiQuyDinhActionPerformed
+        if (mThayDoiQuyDinh==null){
+            mThayDoiQuyDinh= new ManHinhThayDoiQuyDinh();
+            tblMainBoard.addTab("Thay đổi quy định", null, mThayDoiQuyDinh);
+        }
+        tblMainBoard.setSelectedComponent(mThayDoiQuyDinh);
+    }//GEN-LAST:event_ThayDoiQuyDinhActionPerformed
+
     private void BaoCaoTongKetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BaoCaoTongKetActionPerformed
         if (mBaoCaoTongKet==null){
             mBaoCaoTongKet= new ManHinhLapBaoCaoTongKet();
@@ -230,45 +238,6 @@ public class ManHinhChinh extends javax.swing.JFrame {
         }
         tblMainBoard.setSelectedComponent(mBaoCaoTongKet);
     }//GEN-LAST:event_BaoCaoTongKetActionPerformed
-
-    private void Main_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Main_exitActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_Main_exitActionPerformed
-    
-    private void Menu_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_exitActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_Menu_exitActionPerformed
-
-    private void Menu_exiyAncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_Menu_exiyAncestorMoved
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Menu_exiyAncestorMoved
-
-    private void mnuManageStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuManageStudentActionPerformed
-        if (mHocSinh == null) {
-            mHocSinh = new ManHinhTiepNhanHocSinh();
-           
-            tblMainBoard.addTab("Tiếp nhận học sinh", null, mHocSinh, "Nhập học sinh");
-        }
-        tblMainBoard.setSelectedComponent(mHocSinh);
-    }//GEN-LAST:event_mnuManageStudentActionPerformed
-
-    private void NhaplopBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NhaplopBtnActionPerformed
-        if (mNhapLop==null){
-            mNhapLop= new ManHinhLapDanhSachLop();
-            tblMainBoard.addTab("Lập danh sách lớp",null, mNhapLop);
-        }
-        tblMainBoard.setSelectedComponent(mNhapLop);
-        
-    }//GEN-LAST:event_NhaplopBtnActionPerformed
-
-    private void TracuuhocsinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TracuuhocsinhActionPerformed
-        if (mTimKiem==null){
-            mTimKiem= new ManHinhTraCuuHocSinh();
-            tblMainBoard.addTab("Tra cứu học sinh", null, mTimKiem);
-        }
-        tblMainBoard.setSelectedComponent(mTimKiem);
-    }//GEN-LAST:event_TracuuhocsinhActionPerformed
 
     private void NhanBangDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NhanBangDiemActionPerformed
         if (mNhanbangdiem== null){
@@ -278,14 +247,44 @@ public class ManHinhChinh extends javax.swing.JFrame {
         tblMainBoard.setSelectedComponent(mNhanbangdiem);
     }//GEN-LAST:event_NhanBangDiemActionPerformed
 
-    private void ThayDoiQuyDinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThayDoiQuyDinhActionPerformed
-        if (mThayDoiQuyDinh==null){
-            mThayDoiQuyDinh= new ManHinhThayDoiQuyDinh();
-            tblMainBoard.addTab("Thay đổi quy định", null, mThayDoiQuyDinh);
+    private void TracuuhocsinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TracuuhocsinhActionPerformed
+        if (mTimKiem==null){
+            mTimKiem= new ManHinhTraCuuHocSinh();
+            tblMainBoard.addTab("Tra cứu học sinh", null, mTimKiem);
         }
-        tblMainBoard.setSelectedComponent(mThayDoiQuyDinh);
-    }//GEN-LAST:event_ThayDoiQuyDinhActionPerformed
-    private void SetIcon(){
+        tblMainBoard.setSelectedComponent(mTimKiem);
+    }//GEN-LAST:event_TracuuhocsinhActionPerformed
+
+    private void NhaplopBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NhaplopBtnActionPerformed
+        if (mNhapLop==null){
+            mNhapLop= new ManHinhLapDanhSachLop();
+            tblMainBoard.addTab("Lập danh sách lớp",null, mNhapLop);
+        }
+        tblMainBoard.setSelectedComponent(mNhapLop);
+    }//GEN-LAST:event_NhaplopBtnActionPerformed
+
+    private void mnuManageStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuManageStudentActionPerformed
+        if (mHocSinh == null) {
+            mHocSinh = new ManHinhTiepNhanHocSinh();
+
+            tblMainBoard.addTab("Tiếp nhận học sinh", null, mHocSinh, "Nhập học sinh");
+        }
+        tblMainBoard.setSelectedComponent(mHocSinh);
+    }//GEN-LAST:event_mnuManageStudentActionPerformed
+
+    private void Main_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Main_exitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_Main_exitActionPerformed
+
+    private void Menu_exiyAncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_Menu_exiyAncestorMoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Menu_exiyAncestorMoved
+
+    private void Menu_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_exitActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_Menu_exitActionPerformed
+            private void SetIcon(){
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/edu/poly/poly/app/icons/16x16/graduated.png")));
     }
     /**
