@@ -6,6 +6,7 @@
 package edu.poly.poly.app.ui;
 
 import java.awt.Toolkit;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -210,13 +211,13 @@ public class ManHinhChinh extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tblMainBoard, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
+                .addComponent(tblMainBoard, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(162, Short.MAX_VALUE)
+                    .addContainerGap(163, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(97, Short.MAX_VALUE)))
+                    .addContainerGap(98, Short.MAX_VALUE)))
         );
 
         pack();
@@ -273,7 +274,9 @@ public class ManHinhChinh extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuManageStudentActionPerformed
 
     private void Main_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Main_exitActionPerformed
-        System.exit(0);
+        int exit=JOptionPane.showConfirmDialog(null, "Bạn có muốn thoát ứng dụng", "Thoát", JOptionPane.YES_NO_OPTION);
+        if(exit==JOptionPane.YES_OPTION)
+            System.exit(0);
     }//GEN-LAST:event_Main_exitActionPerformed
 
     private void Menu_exiyAncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_Menu_exiyAncestorMoved

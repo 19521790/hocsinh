@@ -41,7 +41,6 @@ public class ManHinhTiepNhanHocSinh extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         txtHoTen = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
-        txtDiaChi = new javax.swing.JTextField();
         txtNgaySinh = new javax.swing.JTextField();
         rbNam = new javax.swing.JRadioButton();
         rbNu = new javax.swing.JRadioButton();
@@ -52,6 +51,8 @@ public class ManHinhTiepNhanHocSinh extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtAreaDiaChi = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableHocSinh = new javax.swing.JTable();
@@ -116,6 +117,10 @@ public class ManHinhTiepNhanHocSinh extends javax.swing.JPanel {
         jLabel8.setForeground(new java.awt.Color(255, 51, 51));
         jLabel8.setText("*");
 
+        txtAreaDiaChi.setColumns(20);
+        txtAreaDiaChi.setRows(5);
+        jScrollPane2.setViewportView(txtAreaDiaChi);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -132,25 +137,24 @@ public class ManHinhTiepNhanHocSinh extends javax.swing.JPanel {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtHoTen, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                    .addComponent(txtHoTen, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                     .addComponent(txtEmail)
                     .addComponent(txtNgaySinh))
                 .addGap(71, 71, 71)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(rbNam)
                         .addGap(40, 40, 40)
-                        .addComponent(rbNu)
-                        .addGap(0, 182, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(rbNu))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtDiaChi)))
-                .addGap(41, 41, 41))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(119, 129, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jButton1)
@@ -173,21 +177,23 @@ public class ManHinhTiepNhanHocSinh extends javax.swing.JPanel {
                     .addComponent(jLabel5)
                     .addComponent(jLabel8))
                 .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNgaySinh)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel7))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtEmail)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton4))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(txtNgaySinh)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel7))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtEmail)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(jButton2)
+                            .addComponent(jButton4)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
                 .addGap(17, 17, 17))
         );
 
@@ -216,7 +222,7 @@ public class ManHinhTiepNhanHocSinh extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -262,7 +268,7 @@ public class ManHinhTiepNhanHocSinh extends javax.swing.JPanel {
                 gioiTinh = "Nu";    
             
             //Lưu trữ thông tin 1 dòng vào mảng data
-            String data[]={txtHoTen.getText(), gioiTinh, txtNgaySinh.getText(), txtDiaChi.getText(), txtEmail.getText()};
+            String data[]={txtHoTen.getText(), gioiTinh, txtNgaySinh.getText(), txtAreaDiaChi.getText(), txtEmail.getText()};
             //Lưu data vào bangDuLieu
             bangDuLieu.addRow(data);
             
@@ -272,7 +278,7 @@ public class ManHinhTiepNhanHocSinh extends javax.swing.JPanel {
             //Dọn textfield để thêm dữ liệu mới
             txtHoTen.setText("");
             txtEmail.setText("");
-            txtDiaChi.setText("");
+            txtAreaDiaChi.setText("");
             txtNgaySinh.setText("");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -318,10 +324,11 @@ public class ManHinhTiepNhanHocSinh extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JRadioButton rbNam;
     private javax.swing.JRadioButton rbNu;
     private javax.swing.JTable tableHocSinh;
-    private javax.swing.JTextField txtDiaChi;
+    private javax.swing.JTextArea txtAreaDiaChi;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtHoTen;
     private javax.swing.JTextField txtNgaySinh;
