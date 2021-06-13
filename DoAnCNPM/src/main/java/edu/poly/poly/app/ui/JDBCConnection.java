@@ -23,7 +23,7 @@ public class JDBCConnection {
             
             try {
                 System.out.println("Kết nối thành công");
-                DriverManager.getConnection(url, user, password);
+               return   DriverManager.getConnection(url, user, password);
 
             } catch (SQLException ex) {
                 Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ex);

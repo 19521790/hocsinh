@@ -4,18 +4,78 @@
  * and open the template in the editor.
  */
 package edu.poly.poly.app.ui;
+import java.util.Date; 
+import java.util.List;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import java.sql.DriverManager;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
+     
 
 /**
  *
  * @author Admin
  */
+ 
 public class TraCuuHocSinhPanel extends javax.swing.JPanel {
-
+    DefaultListModel<String> model = new DefaultListModel<>();
+    List<String> mahsList = new ArrayList<>();
+    
+    void loadContentYearList(int curYear){
+     model.addElement(Integer.toString(curYear));
+      model.addElement(Integer.toString(curYear-1));
+       model.addElement(Integer.toString(curYear-2));
+       this.yearList.setModel(model);
+}
+    void useDB(String y, String c){
+        if(y==c) return;
+        Connection  cn= JDBCConnection.ketNoiJBDC();
+        //Statement sta = cn.createStatement();
+        if( c=="")
+        {
+        String sql= "select HOCSINH.HoTen ,HOCSINH.MaHocSinh, HOCSINH.Email, HOCSINH.GioiTinh,HOCSINH.DiaChi, HOCSINH.NgaySinh from HOCSINH  , QUATRINHHOC,HOCKI WHERE HOCSINH.MaHocSinh=QUATRINHHOC.MaHocSinh AND QUATRINHHOC.MaHocKi=HOCKI.MaHocKi  AND HOCKI.Nam="+y;
+        }
+        else if(y==""){
+         String sql="select HOCSINH.HoTen ,HOCSINH.MaHocSinh, HOCSINH.Email, HOCSINH.GioiTinh,HOCSINH.DiaChi, HOCSINH.NgaySinh  from HOCSINH ,QUATRINHHOC,LOP WHERE LOP.MaLop=QUATRINHHOC.MaLop AND HOCSINH.MaHocSinh=QUATRINHHOC.MaHocSinh AND LOP.TenLop="+c;
+        }
+        else {
+        
+        }
+            
+    }
+    void loadContent(List<String> y, List<String>c){
+        if(y.isEmpty()){
+            for(var item : c ){
+            useDB("",item);
+            }
+        return;
+        }
+         if(c.isEmpty()){
+            for(var item : y ){
+            useDB(item,"");
+            }
+        return;
+        }
+        for(int i=0; i<y.size();i++)
+        {
+            for(int j=0;j<c.size();j++)
+            {
+                   useDB(y.get(i),c.get(j));
+                   System.out.println(y.get(i)+"+"+c.get(j));
+            }
+        }
+    }
     /**
      * Creates new form SearchStudentPanel
      */
     public TraCuuHocSinhPanel() {
-        initComponents();
+        
+    this.initComponents();
+    Date d= new Date();
+    this.loadContentYearList(d.getYear()+1900);
+
     }
 
     /**
@@ -30,81 +90,71 @@ public class TraCuuHocSinhPanel extends javax.swing.JPanel {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        searchButton = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        classList = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
+        yearList = new javax.swing.JList<>();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        infotable = new javax.swing.JTable();
+        printButton = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nhập thông tin cần tra cứu"));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/plus.png"))); // NOI18N
-        jButton1.setText("Thêm mới");
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/search.png"))); // NOI18N
-        jButton2.setText("Tìm kiếm");
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/search.png"))); // NOI18N
+        searchButton.setText("Tìm kiếm");
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Lớp:");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        classList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "10A1", "10A2", "10A3", "10A4", "11A1", "11A2", "11A3", "12A1", "12A2" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(classList);
 
         jLabel1.setText("Năm học:");
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "2021", "2020", "2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jList2.addAncestorListener(new javax.swing.event.AncestorListener() {
+        yearList.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jList2AncestorAdded(evt);
+                yearListAncestorAdded(evt);
             }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jScrollPane3.setViewportView(jList2);
+        jScrollPane3.setViewportView(yearList);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(121, 121, 121))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)))
+                            .addComponent(jLabel7)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(49, 49, 49)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)))
+                        .addGap(75, 75, 75)
+                        .addComponent(searchButton)))
                 .addGap(0, 20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -121,15 +171,13 @@ public class TraCuuHocSinhPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                .addComponent(searchButton)
                 .addGap(117, 117, 117))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Danh sách học sinh"));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        infotable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -140,43 +188,30 @@ public class TraCuuHocSinhPanel extends javax.swing.JPanel {
                 "STT", "Họ tên", "Lớp", "TKB Học Kỳ I", "TKB Học Kỳ II"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(infotable);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/pencil.png"))); // NOI18N
-        jButton4.setText("Sửa");
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/remove.png"))); // NOI18N
-        jButton3.setText("Xóa");
-
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/printer (1).png"))); // NOI18N
-        jButton5.setText("In");
+        printButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/printer (1).png"))); // NOI18N
+        printButton.setText("In");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton3)
-                .addGap(29, 29, 29)
-                .addComponent(jButton4)
-                .addGap(30, 30, 30)
-                .addComponent(jButton5)
+                .addGap(211, 211, 211)
+                .addComponent(printButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
+                .addComponent(printButton)
                 .addGap(13, 13, 13))
         );
 
@@ -219,21 +254,29 @@ public class TraCuuHocSinhPanel extends javax.swing.JPanel {
         add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 870, 450));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jList2AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jList2AncestorAdded
+    private void yearListAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_yearListAncestorAdded
         // TODO add your handling code here:
-    }//GEN-LAST:event_jList2AncestorAdded
+    }//GEN-LAST:event_yearListAncestorAdded
+
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        // TODO add your handling code here:
+          List<String> yearselected= new ArrayList<String>();
+      List<String> classelected= new ArrayList<String>();
+        if(this.yearList.getSelectedIndex()!=-1){
+        yearselected=this.yearList.getSelectedValuesList();
+        }
+        if(this.classList.getSelectedIndex()!=-1){
+          classelected= this.classList.getSelectedValuesList();
+        }
+        this.loadContent(yearselected, classelected);
+    }//GEN-LAST:event_searchButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JList<String> classList;
+    private javax.swing.JTable infotable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -242,6 +285,8 @@ public class TraCuuHocSinhPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JButton printButton;
+    private javax.swing.JButton searchButton;
+    private javax.swing.JList<String> yearList;
     // End of variables declaration//GEN-END:variables
 }
