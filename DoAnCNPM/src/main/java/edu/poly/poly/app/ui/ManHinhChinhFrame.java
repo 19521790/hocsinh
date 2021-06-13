@@ -40,8 +40,6 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
         mnuManageStudent = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         NhaplopBtn = new javax.swing.JButton();
-        jSeparator2 = new javax.swing.JToolBar.Separator();
-        Tracuuhocsinh = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
         NhanBangDiem = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
@@ -98,20 +96,6 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(NhaplopBtn);
-        jToolBar1.add(jSeparator2);
-
-        Tracuuhocsinh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        Tracuuhocsinh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/search.png"))); // NOI18N
-        Tracuuhocsinh.setText("Tra cứu học sinh");
-        Tracuuhocsinh.setFocusable(false);
-        Tracuuhocsinh.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Tracuuhocsinh.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        Tracuuhocsinh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TracuuhocsinhActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(Tracuuhocsinh);
         jToolBar1.add(jSeparator3);
 
         NhanBangDiem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -233,11 +217,6 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
         chenPanel(new BangDiemMonPanel(), tieuDe);
     }//GEN-LAST:event_NhanBangDiemActionPerformed
 
-    private void TracuuhocsinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TracuuhocsinhActionPerformed
-        String tieuDe = "Tra cứu học sinh";
-        chenPanel(new TraCuuHocSinhPanel(), tieuDe);
-    }//GEN-LAST:event_TracuuhocsinhActionPerformed
-
     private void NhaplopBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NhaplopBtnActionPerformed
         String tieuDe = "Lập danh sách lớp";
         chenPanel(new DanhSachLopPanel(), tieuDe);
@@ -312,11 +291,9 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
     private javax.swing.JButton NhanBangDiem;
     private javax.swing.JButton NhaplopBtn;
     private javax.swing.JButton ThayDoiQuyDinh;
-    private javax.swing.JButton Tracuuhocsinh;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JToolBar.Separator jSeparator1;
-    private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
