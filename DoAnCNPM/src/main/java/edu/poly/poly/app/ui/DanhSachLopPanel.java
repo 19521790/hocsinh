@@ -4,7 +4,18 @@
  * and open the template in the editor.
  */
 package edu.poly.poly.app.ui;
-
+import java.util.Date; 
+import java.util.List;
+import java.util.ArrayList;
+import javax.swing.table.TableModel;
+import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
+import java.sql.DriverManager;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+     
 /**
  *
  * @author Admin
@@ -14,8 +25,76 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
     /**
      * Creates new form NhapLop
      */
+    String mshsChosen="";
+    List<String> mahsList = new ArrayList<>();
+    void getInfo(String mshs){
+        String sql="select * from HOCSINH where HOCSINH.MaHocSinh='"+mshs+"'";
+       try{
+          Connection  cn= JDBCConnection.ketNoiJBDC();
+          Statement sta=cn.createStatement();
+          ResultSet r = sta.executeQuery(sql); 
+          while(r.next()){
+          this.nameBox.setText(r.getString("HoTen"));
+         this.dateBox.setText(r.getString("NgaySinh"));
+         this.emailBox.setText(r.getString("Email"));
+         this.addressBox.setText(r.getString("DiaChi"));
+          
+          String s= r.getString("GioiTinh");
+        if(s=="0"){
+            this.rbNam2.setSelected(true);
+            this.rbNu2.setSelected(false);
+        }
+        else{
+           this.rbNam2.setSelected(false);
+            this.rbNu2.setSelected(true);
+          }
+         
+          
+          }
+          }
+          catch (SQLException e){
+          
+          }
+    
+    
+    }
+    void seek(String c, String y){
+        
+          
+          String sql ="select HOCSINH.HoTen ,HOCSINH.MaHocSinh, HOCSINH.Email, HOCSINH.GioiTinh,HOCSINH.DiaChi, HOCSINH.NgaySinh  from HOCSINH  , QUATRINHHOC,HOCKI ,LOP WHERE HOCSINH.MaHocSinh=QUATRINHHOC.MaHocSinh AND QUATRINHHOC.MaHocKi=HOCKI.MaHocKi  AND QUATRINHHOC.MaLop=LOP.MaLop AND LOP.TenLop='"+c+"' AND HOCKI.Nam="+y;
+          try{
+          Connection  cn= JDBCConnection.ketNoiJBDC();
+          Statement sta=cn.createStatement();
+          ResultSet r = sta.executeQuery(sql); 
+          while(r.next()){
+          String name =r.getString("HoTen");
+          String date= r.getString("NgaySinh");
+          String mahs =r.getString("MaHocSinh");
+          System.out.println(mahs);
+          String email= r.getString("Email");
+          String address=  r.getString("DiaChi");
+          String s= r.getString("GioiTinh");
+          String datab[]={mahs,name,s,date,address};
+          DefaultTableModel tblM= (DefaultTableModel)this.infoTable.getModel();
+          tblM.addRow(datab);
+          }
+          }
+          catch (SQLException e){
+          
+          }
+    
+   
+    }
+    void loadContentYearList(int curYear){
+    this.yearList.addItem(Integer.toString(curYear));
+    this.yearList.addItem(Integer.toString(curYear-1));
+    this.yearList.addItem(Integer.toString(curYear-2));
+
+}
     public DanhSachLopPanel() {
-        initComponents();
+           initComponents();
+         Date d= new Date();
+    this.loadContentYearList(d.getYear()+1900);
     }
 
     /**
@@ -29,33 +108,33 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        clasList = new javax.swing.JComboBox<>();
         validateSiSo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        yearList = new javax.swing.JComboBox<>();
+        seekButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        infoTable = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        txtHoTen2 = new javax.swing.JTextField();
-        txtEmail2 = new javax.swing.JTextField();
-        txtNgaySinh2 = new javax.swing.JTextField();
+        nameBox = new javax.swing.JTextField();
+        emailBox = new javax.swing.JTextField();
+        dateBox = new javax.swing.JTextField();
         rbNam2 = new javax.swing.JRadioButton();
         rbNu2 = new javax.swing.JRadioButton();
         jLabel23 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        txtAreaDiaChi2 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        addressBox = new javax.swing.JTextArea();
+        addButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
 
@@ -63,14 +142,17 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
 
         jLabel1.setText("Lớp:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10A1", "10A2", "10A3", "10A4", "11A1", "11A2", "11A3", "12A1", "12A2" }));
+        clasList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10A1", "10A2", "10A3", "10A4", "11A1", "11A2", "11A3", "12A1", "12A2" }));
 
         jLabel2.setText("Năm học:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10A1", "10A2", "10A3", "10A4", "11A1", "11A2", "11A3", "12A1", "12A2" }));
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/search.png"))); // NOI18N
-        jButton2.setText("Tìm kiếm");
+        seekButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/search.png"))); // NOI18N
+        seekButton.setText("Tìm kiếm");
+        seekButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seekButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -82,7 +164,7 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(35, 35, 35)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(clasList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(validateSiSo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -90,8 +172,8 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton2))
+                                .addComponent(yearList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(seekButton))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -101,28 +183,48 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
                 .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(clasList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(validateSiSo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(yearList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(43, 43, 43)
-                .addComponent(jButton2)
+                .addComponent(seekButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Danh sách lớp"));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        infoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
                 "STT", "MSSV", "Họ tên", "TBHK1", "TBHK2"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        infoTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                infoTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(infoTable);
+        if (infoTable.getColumnModel().getColumnCount() > 0) {
+            infoTable.getColumnModel().getColumn(0).setResizable(false);
+            infoTable.getColumnModel().getColumn(1).setResizable(false);
+            infoTable.getColumnModel().getColumn(2).setResizable(false);
+            infoTable.getColumnModel().getColumn(3).setResizable(false);
+            infoTable.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -151,29 +253,39 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
 
         jLabel22.setText("Ngày sinh:");
 
-        txtHoTen2.addActionListener(new java.awt.event.ActionListener() {
+        nameBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtHoTen2ActionPerformed(evt);
+                nameBoxActionPerformed(evt);
             }
         });
 
-        txtEmail2.addActionListener(new java.awt.event.ActionListener() {
+        emailBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmail2ActionPerformed(evt);
+                emailBoxActionPerformed(evt);
             }
         });
 
         rbNam2.setText("Nam");
+        rbNam2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbNam2ActionPerformed(evt);
+            }
+        });
 
         rbNu2.setText("Nữ");
+        rbNu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbNu2ActionPerformed(evt);
+            }
+        });
 
         jLabel23.setText("Địa chỉ:");
 
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/diskette.png"))); // NOI18N
-        jButton8.setText("Lưu");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        saveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/diskette.png"))); // NOI18N
+        saveButton.setText("Lưu");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                saveButtonActionPerformed(evt);
             }
         });
 
@@ -189,9 +301,9 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
         jLabel26.setForeground(new java.awt.Color(255, 51, 51));
         jLabel26.setText("*");
 
-        txtAreaDiaChi2.setColumns(20);
-        txtAreaDiaChi2.setRows(5);
-        jScrollPane4.setViewportView(txtAreaDiaChi2);
+        addressBox.setColumns(20);
+        addressBox.setRows(5);
+        jScrollPane4.setViewportView(addressBox);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -205,7 +317,7 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jButton8)
+                        .addComponent(saveButton)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,9 +326,9 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
                             .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(23, 23, 23)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtHoTen2, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                            .addComponent(txtEmail2)
-                            .addComponent(txtNgaySinh2))
+                            .addComponent(nameBox, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                            .addComponent(emailBox)
+                            .addComponent(dateBox))
                         .addGap(71, 71, 71)
                         .addComponent(jLabel26)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -238,7 +350,7 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
-                    .addComponent(txtHoTen2)
+                    .addComponent(nameBox)
                     .addComponent(jLabel21)
                     .addComponent(rbNam2)
                     .addComponent(rbNu2)
@@ -249,32 +361,32 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel23)
-                            .addComponent(txtNgaySinh2)
+                            .addComponent(dateBox)
                             .addComponent(jLabel22)
                             .addComponent(jLabel25))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtEmail2)
+                            .addComponent(emailBox)
                             .addComponent(jLabel20))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton8))
+                        .addComponent(saveButton))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
                 .addGap(17, 17, 17))
         );
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/plus.png"))); // NOI18N
-        jButton1.setText("Thêm mới");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/plus.png"))); // NOI18N
+        addButton.setText("Thêm mới");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                addButtonActionPerformed(evt);
             }
         });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/remove.png"))); // NOI18N
-        jButton4.setText("Xóa");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/remove.png"))); // NOI18N
+        deleteButton.setText("Xóa");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                deleteButtonActionPerformed(evt);
             }
         });
 
@@ -298,11 +410,11 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(144, 144, 144)
-                .addComponent(jButton1)
+                .addComponent(addButton)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton4)
+                .addComponent(deleteButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel11)
                 .addGap(110, 110, 110))
@@ -318,8 +430,8 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton4)
+                            .addComponent(addButton)
+                            .addComponent(deleteButton)
                             .addComponent(jLabel12)))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -330,34 +442,83 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtEmail2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmail2ActionPerformed
+    private void emailBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmail2ActionPerformed
+    }//GEN-LAST:event_emailBoxActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+             String sql="";  
+        if(this.rbNam2.isSelected())
+            {
+         sql="update HOCSINH set HoTen= '"+this.nameBox.getText()+"',Email='"+this.emailBox.getText()+"',GioiTinh=1,DiaChi='"+this.addressBox.getText()+"',NgaySinh='' where HOCSINH.MaHocSinh='"+this.mshsChosen+"' ";
+            }
+            else {
+                 sql="update HOCSINH set HoTen= '"+this.nameBox.getText()+"',Email='"+this.emailBox.getText()+"',GioiTinh=0,DiaChi='"+this.addressBox.getText()+"',NgaySinh='' where HOCSINH.MaHocSinh='"+this.mshsChosen+"' ";
 
-    }//GEN-LAST:event_jButton8ActionPerformed
+        }
+       try{
+          Connection  cn= JDBCConnection.ketNoiJBDC();
+          Statement sta=cn.createStatement();
+          int r = sta.executeUpdate(sql); 
+          
+          }
+          catch (SQLException e){
+          
+          }
+    }//GEN-LAST:event_saveButtonActionPerformed
 
-    private void txtHoTen2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHoTen2ActionPerformed
+    private void nameBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtHoTen2ActionPerformed
+    }//GEN-LAST:event_nameBoxActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+                
+    }//GEN-LAST:event_addButtonActionPerformed
 
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
       
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
+    private void seekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seekButtonActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) this.infoTable.getModel();
+model.setRowCount(0);
+         System.out.println((String)this.yearList.getSelectedItem());
+        seek((String)this.clasList.getSelectedItem(),(String)this.yearList.getSelectedItem());
+    }//GEN-LAST:event_seekButtonActionPerformed
+
+    private void infoTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_infoTableMouseClicked
+        // TODO add your handling code here:
+         int index =this.infoTable.getSelectedRow();
+        TableModel md= this.infoTable.getModel();
+        this.getInfo(this.mshsChosen=md.getValueAt(index, 0).toString());
+        
+    }//GEN-LAST:event_infoTableMouseClicked
+
+    private void rbNam2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbNam2ActionPerformed
+        // TODO add your handling code here:
+          if(this.rbNam2.isSelected())
+        {
+         this.rbNu2.setSelected(false);
+        }
+    }//GEN-LAST:event_rbNam2ActionPerformed
+
+    private void rbNu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbNu2ActionPerformed
+          // TODO add your handling code here:
+        if(this.rbNu2.isSelected())
+        {
+         this.rbNam2.setSelected(false);      
+    }//GEN-LAST:event_rbNu2ActionPerformed
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton addButton;
+    private javax.swing.JTextArea addressBox;
+    private javax.swing.JComboBox<String> clasList;
+    private javax.swing.JTextField dateBox;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JTextField emailBox;
+    private javax.swing.JTable infoTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -375,13 +536,12 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField nameBox;
     private javax.swing.JRadioButton rbNam2;
     private javax.swing.JRadioButton rbNu2;
-    private javax.swing.JTextArea txtAreaDiaChi2;
-    private javax.swing.JTextField txtEmail2;
-    private javax.swing.JTextField txtHoTen2;
-    private javax.swing.JTextField txtNgaySinh2;
+    private javax.swing.JButton saveButton;
+    private javax.swing.JButton seekButton;
     private javax.swing.JLabel validateSiSo;
+    private javax.swing.JComboBox<String> yearList;
     // End of variables declaration//GEN-END:variables
 }
