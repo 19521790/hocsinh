@@ -29,6 +29,7 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
     String selectedYear="";
     String mshsChosen="";
     themhocsinhDialog addstudent= new themhocsinhDialog(this);
+    List<String > deletequery= new ArrayList<>();
     List<String> mahsList = new ArrayList<>();
     List<String> procquery= new ArrayList<>();
     void modifyDB(){
@@ -42,6 +43,19 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
         catch(SQLException e){
                 
         }
+        }
+        
+        for(var t :deletequery){
+         try {
+             Connection  cn= JDBCConnection.ketNoiJBDC();
+             Statement cst=cn.createStatement();
+               int  r = cst.executeUpdate(t);
+             
+         }
+         catch(SQLException e){
+             
+         }
+        
         }
     }
     public void addintoTable(String ms){
@@ -119,7 +133,7 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
     void seek(String c, String y){
         
           
-          String sql ="select HOCSINH.HoTen ,HOCSINH.MaHocSinh, HOCSINH.Email, HOCSINH.GioiTinh,HOCSINH.DiaChi, HOCSINH.NgaySinh  from HOCSINH  , QUATRINHHOC,HOCKI ,LOP WHERE HOCSINH.MaHocSinh=QUATRINHHOC.MaHocSinh AND QUATRINHHOC.MaHocKi=HOCKI.MaHocKi  AND QUATRINHHOC.MaLop=LOP.MaLop AND LOP.TenLop='"+c+"' AND HOCKI.Nam="+y;
+          String sql ="select DISTINCT  HOCSINH.HoTen ,HOCSINH.MaHocSinh, HOCSINH.Email, HOCSINH.GioiTinh,HOCSINH.DiaChi, HOCSINH.NgaySinh  from HOCSINH  , QUATRINHHOC,HOCKI ,LOP WHERE HOCSINH.MaHocSinh=QUATRINHHOC.MaHocSinh AND QUATRINHHOC.MaHocKi=HOCKI.MaHocKi  AND QUATRINHHOC.MaLop=LOP.MaLop AND LOP.TenLop='"+c+"' AND HOCKI.Nam="+y;
           try{
           Connection  cn= JDBCConnection.ketNoiJBDC();
           Statement sta=cn.createStatement();
@@ -186,7 +200,6 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
         rbNam2 = new javax.swing.JRadioButton();
         rbNu2 = new javax.swing.JRadioButton();
         jLabel23 = new javax.swing.JLabel();
-        saveButton = new javax.swing.JButton();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
@@ -196,6 +209,7 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nhập lớp cần tìm"));
 
@@ -340,14 +354,6 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
 
         jLabel23.setText("Địa chỉ:");
 
-        saveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/diskette.png"))); // NOI18N
-        saveButton.setText("Lưu");
-        saveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveButtonActionPerformed(evt);
-            }
-        });
-
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 51, 51));
         jLabel24.setText("*");
@@ -375,33 +381,28 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
                     .addComponent(jLabel25))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel22)
+                    .addComponent(jLabel20)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nameBox, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                    .addComponent(emailBox)
+                    .addComponent(dateBox))
+                .addGap(71, 71, 71)
+                .addComponent(jLabel26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(saveButton)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel22)
-                            .addComponent(jLabel20)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(23, 23, 23)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nameBox, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                            .addComponent(emailBox)
-                            .addComponent(dateBox))
-                        .addGap(71, 71, 71)
-                        .addComponent(jLabel26)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(rbNam2)
-                                .addGap(40, 40, 40)
-                                .addComponent(rbNu2))
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(rbNam2)
+                        .addGap(40, 40, 40)
+                        .addComponent(rbNu2))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -427,8 +428,7 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(emailBox)
                             .addComponent(jLabel20))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(saveButton))
+                        .addGap(36, 36, 36))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
                 .addGap(17, 17, 17))
         );
@@ -453,6 +453,14 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
             }
         });
 
+        saveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/diskette.png"))); // NOI18N
+        saveButton.setText("Lưu");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -462,7 +470,9 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
+                        .addGap(1, 1, 1)
+                        .addComponent(saveButton)
+                        .addGap(18, 18, 18)
                         .addComponent(addButton)
                         .addGap(30, 30, 30)
                         .addComponent(jLabel12)
@@ -495,7 +505,9 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
                         .addComponent(jLabel11))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addButton)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addButton)
+                            .addComponent(saveButton))))
                 .addGap(13, 13, 13)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -509,24 +521,9 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_emailBoxActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-             String sql="";  
-        if(this.rbNam2.isSelected())
-            {
-         sql="update HOCSINH set HoTen= '"+this.nameBox.getText()+"',Email='"+this.emailBox.getText()+"',GioiTinh=1,DiaChi='"+this.addressBox.getText()+"',NgaySinh='' where HOCSINH.MaHocSinh='"+this.mshsChosen+"' ";
-            }
-            else {
-                 sql="update HOCSINH set HoTen= '"+this.nameBox.getText()+"',Email='"+this.emailBox.getText()+"',GioiTinh=0,DiaChi='"+this.addressBox.getText()+"',NgaySinh='' where HOCSINH.MaHocSinh='"+this.mshsChosen+"' ";
-
-        }
-       try{
-          Connection  cn= JDBCConnection.ketNoiJBDC();
-          Statement sta=cn.createStatement();
-          int r = sta.executeUpdate(sql); 
-          
-          }
-          catch (SQLException e){
-          
-          }
+            this.modifyDB();
+            this.deletequery=new  ArrayList<>();
+            this.procquery=new  ArrayList<>();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void nameBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameBoxActionPerformed
@@ -540,11 +537,23 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-      
+               
+        int index =this.infoTable.getSelectedRow();
+        TableModel md= this.infoTable.getModel();
+       this.deletequery.add("update QUATRINHHOC set MaLop=null where MaHocSinh='"+md.getValueAt(index, 0).toString()+"'");
+       int numRows = infoTable.getSelectedRows().length;
+        DefaultTableModel model = (DefaultTableModel) this.infoTable.getModel();
+for(int i=0; i<numRows ; i++ ) {
+
+    model.removeRow(infoTable.getSelectedRow());
+}
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void seekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seekButtonActionPerformed
         // TODO add your handling code here:
+        
+        this.deletequery=new  ArrayList<>();
+            this.procquery=new  ArrayList<>();
         DefaultTableModel model = (DefaultTableModel) this.infoTable.getModel();
 model.setRowCount(0);
          System.out.println((String)this.yearList.getSelectedItem());

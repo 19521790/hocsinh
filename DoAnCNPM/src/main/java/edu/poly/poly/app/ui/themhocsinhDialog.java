@@ -95,11 +95,12 @@ public class themhocsinhDialog extends javax.swing.JFrame {
         if(this.dsl.addstu(this.jTextField1.getText())){
             
             this.dsl.addintoTable(this.jTextField1.getText());
-            this.dsl.modifyDB();
+           ;
         }
         else {
         
         }
+        this.setVisible(false);
     }//GEN-LAST:event_okbuttonActionPerformed
 
     /**
