@@ -40,7 +40,7 @@ public class themhocsinhDialog extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("jLabel1");
+        jLabel1.setText("MSHS");
 
         okbutton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         okbutton.setText("OK");
@@ -52,8 +52,11 @@ public class themhocsinhDialog extends javax.swing.JFrame {
 
         cancelbutton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cancelbutton.setText("CANCEL");
-
-        jTextField1.setText("jTextField1");
+        cancelbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelbuttonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,6 +105,11 @@ public class themhocsinhDialog extends javax.swing.JFrame {
         }
         this.setVisible(false);
     }//GEN-LAST:event_okbuttonActionPerformed
+
+    private void cancelbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelbuttonActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_cancelbuttonActionPerformed
 
     /**
      * @param args the command line arguments
