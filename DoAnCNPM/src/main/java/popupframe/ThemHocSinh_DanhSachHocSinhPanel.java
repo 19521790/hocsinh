@@ -6,6 +6,7 @@
 package popupframe;
 
 import gui.DanhSachHocSinhPanel;
+import javax.swing.JFrame;
 
 /**
  *
@@ -19,10 +20,12 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
     DanhSachHocSinhPanel dsl;
     public ThemHocSinh_DanhSachHocSinhPanel() {
         initComponents();
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE );
     }
     public ThemHocSinh_DanhSachHocSinhPanel(DanhSachHocSinhPanel t){
         initComponents();
         dsl=t;
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE );
     }
 
     /**

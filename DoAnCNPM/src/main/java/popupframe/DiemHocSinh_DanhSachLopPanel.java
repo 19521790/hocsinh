@@ -5,7 +5,15 @@
  */
 package popupframe;
 
+import gui.JDBCConnection;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JFrame;
 
 /**
  *
@@ -20,16 +28,47 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
     String mshs;
     String tenlop;
     void loaddatabase(){
-    String sqlkh1="";
-    
-    
-    
+   
+    String sqlkh1="EXEC sp_DanhSachLop_InDiemHocSinh "+namhoc+",N'Học kì 1','"+mshs+"'";
+    System.out.println(sqlkh1);
+     String sqlkh2="EXEC sp_DanhSachLop_InDiemHocSinh "+namhoc+",N'Học kì 2','"+mshs+"'";
+ 
+    System.out.println(sqlkh2);
+   
+      try{
+             Connection  cn= JDBCConnection.ketNoiJBDC();
+         CallableStatement   cst=cn.prepareCall(sqlkh1);
+            ResultSet r = cst.executeQuery(); 
+            
+            while(r.next()){
+                 System.out.println("?????????????");
+            String arr[]={r.getString("TenMonHoc"),r.getString("Diem15Phut"),r.getString("Diem1Tiet"),r.getString("DiemTBM"),r.getString("DiemTBM")};
+            addItemTableKH1(arr);
+            }
+        }
+        catch(SQLException e){
+            System.out.println("unfound");
+         return;       
+        }
+      try{
+            Connection  cn= JDBCConnection.ketNoiJBDC();
+         java.sql.CallableStatement cst=cn.prepareCall(sqlkh2);
+            ResultSet r = cst.executeQuery(); 
+             while(r.next()){
+                 System.out.println("?????????????");
+            String arr[]={r.getString("TenMonHoc"),r.getString("Diem15Phut"),r.getString("Diem1Tiet"),r.getString("DiemTBM"),r.getString("DiemTBM")};
+            addItemTableKH2(arr);
+            }
+        }
+        catch(SQLException e){
+                
+        }
     }
     void addItemTableKH1(String  data[]){
     DefaultTableModel tblM= (DefaultTableModel)this.hk1table.getModel();
           tblM.addRow(data);
     }
-    void addItenTableKH2(String data []){
+    void addItemTableKH2(String data []){
      DefaultTableModel tblM= (DefaultTableModel)this.hk2table.getModel();
           tblM.addRow(data);
     
@@ -39,7 +78,11 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
         this.namhoc = nam;
         this.tenlop = lop;
         this.mshs= ms;
-        
+        this.clasLabel.setText(lop);
+        this.yearLabel.setText(nam);
+        this.IDLabel.setText(ms);
+        loaddatabase();
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE );
         
     }
 
@@ -61,15 +104,15 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        IDLabel = new javax.swing.JLabel();
+        yearLabel = new javax.swing.JLabel();
+        clasLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         hk1table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Môn Học", "Điểm 15 phút", "Điểm 1 tiết", "Điểm thi học kì ", "Điểm trung bình"
@@ -79,10 +122,7 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
 
         hk2table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Môn học", "Điểm 15 phút", "Điểm 1 tiết", "Điểm thi học kì", "Điểm trung bình"
@@ -90,38 +130,53 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(hk2table);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Mã số học sinh");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Lớp");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Năm Học");
 
-        jLabel4.setText("Diem hoc ki 1");
+        jLabel4.setText("Điểm học kì 1");
 
-        jLabel5.setText("Diem hoc ki 2");
+        jLabel5.setText("Điểm học kì 2");
+
+        IDLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        IDLabel.setText("name");
+
+        yearLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        yearLabel.setText("year");
+
+        clasLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        clasLabel.setText("class");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addGap(18, 18, 18)
+                            .addComponent(IDLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(59, 59, 59)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(yearLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                             .addComponent(jLabel2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(267, 267, 267)
-                                .addComponent(jLabel3))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 639, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 639, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))))
-                .addContainerGap(40, Short.MAX_VALUE))
+                            .addGap(33, 33, 33)
+                            .addComponent(clasLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,18 +184,20 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel3))
-                .addGap(28, 28, 28)
-                .addComponent(jLabel2)
-                .addGap(28, 28, 28)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2)
+                    .addComponent(IDLabel)
+                    .addComponent(yearLabel)
+                    .addComponent(clasLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -148,6 +205,8 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel IDLabel;
+    private javax.swing.JLabel clasLabel;
     private javax.swing.JTable hk1table;
     private javax.swing.JTable hk2table;
     private javax.swing.JLabel jLabel1;
@@ -157,5 +216,6 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel yearLabel;
     // End of variables declaration//GEN-END:variables
 }
