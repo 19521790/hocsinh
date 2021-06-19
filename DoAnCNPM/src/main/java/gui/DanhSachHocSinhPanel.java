@@ -5,6 +5,7 @@
  */
 package gui;
 import popupframe.ThemHocSinh_DanhSachHocSinhPanel;
+import popupframe.DiemHocSinh_DanhSachLopPanel;
 import java.util.Date; 
 import java.util.List;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
     String selectedYear="";
     String mshsChosen="";
     ThemHocSinh_DanhSachHocSinhPanel addstudent= new ThemHocSinh_DanhSachHocSinhPanel(this);
+    DiemHocSinh_DanhSachLopPanel diemhs ;
     List<String > deletequery= new ArrayList<>();
     List<String> mahsList = new ArrayList<>();
     List<String> procquery= new ArrayList<>();
@@ -107,19 +109,19 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
           Statement sta=cn.createStatement();
           ResultSet r = sta.executeQuery(sql); 
           while(r.next()){
-          this.nameBox.setText(r.getString("HoTen"));
-         this.dateBox.setText(r.getString("NgaySinh"));
-         this.emailBox.setText(r.getString("Email"));
-         this.addressBox.setText(r.getString("DiaChi"));
+//          this.nameBox.setText(r.getString("HoTen"));
+//         this.dateBox.setText(r.getString("NgaySinh"));
+//         this.emailBox.setText(r.getString("Email"));
+//         this.addressBox.setText(r.getString("DiaChi"));
           
           String s= r.getString("GioiTinh");
         if(s=="0"){
-            this.rbNam2.setSelected(true);
-            this.rbNu2.setSelected(false);
+//            this.rbNam2.setSelected(true);
+//            this.rbNu2.setSelected(false);
         }
         else{
-           this.rbNam2.setSelected(false);
-            this.rbNu2.setSelected(true);
+//           this.rbNam2.setSelected(false);
+//            this.rbNu2.setSelected(true);
           }
          
           
@@ -135,7 +137,7 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
         
           
           String sql ="select DISTINCT  HOCSINH.HoTen ,HOCSINH.MaHocSinh, HOCSINH.Email, HOCSINH.GioiTinh,HOCSINH.DiaChi, HOCSINH.NgaySinh  from HOCSINH  , QUATRINHHOC,HOCKI ,LOP WHERE HOCSINH.MaHocSinh=QUATRINHHOC.MaHocSinh AND QUATRINHHOC.MaHocKi=HOCKI.MaHocKi  AND QUATRINHHOC.MaLop=LOP.MaLop AND LOP.TenLop='"+c+"' AND HOCKI.Nam="+y;
-          try{
+        try{
           Connection  cn= JDBCConnection.ketNoiJBDC();
           Statement sta=cn.createStatement();
           ResultSet r = sta.executeQuery(sql); 
@@ -151,9 +153,9 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
           DefaultTableModel tblM= (DefaultTableModel)this.infoTable.getModel();
           tblM.addRow(datab);
           }
-          }
+        }
           catch (SQLException e){
-          
+           
           }
     
    
@@ -230,7 +232,7 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
                 .addComponent(yearList, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(71, 71, 71)
                 .addComponent(seekButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
                 .addComponent(validateSiSo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -318,7 +320,7 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Điểm số");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -341,9 +343,9 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
                         .addComponent(addButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel12)
-                        .addGap(39, 39, 39)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(deleteButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel11)))
@@ -421,6 +423,12 @@ model.setRowCount(0);
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+         int index =this.infoTable.getSelectedRow();
+        TableModel md= this.infoTable.getModel();
+        this.diemhs= new DiemHocSinh_DanhSachLopPanel(this.clasList.getSelectedItem().toString(),this.yearList.getSelectedItem().toString(),md.getValueAt(index, 0).toString());
+        this.getInfo(this.mshsChosen=md.getValueAt(index, 0).toString());
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
         

@@ -212,9 +212,9 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        this.modifyDB();
-        this.deletequery=new  ArrayList<>();
-        this.procquery=new  ArrayList<>();
+//        this.modifyDB();
+//        this.deletequery=new  ArrayList<>();
+//        this.procquery=new  ArrayList<>();
     }//GEN-LAST:event_saveButtonActionPerformed
 
 

@@ -5,6 +5,8 @@
  */
 package popupframe;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author nguye
@@ -14,8 +16,31 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
     /**
      * Creates new form DiemHocSinh_DanhSachLopPanel
      */
-    public DiemHocSinh_DanhSachLopPanel() {
+    String namhoc;
+    String mshs;
+    String tenlop;
+    void loaddatabase(){
+    String sqlkh1="";
+    
+    
+    
+    }
+    void addItemTableKH1(String  data[]){
+    DefaultTableModel tblM= (DefaultTableModel)this.hk1table.getModel();
+          tblM.addRow(data);
+    }
+    void addItenTableKH2(String data []){
+     DefaultTableModel tblM= (DefaultTableModel)this.hk2table.getModel();
+          tblM.addRow(data);
+    
+    }
+    public DiemHocSinh_DanhSachLopPanel(String lop,String nam,String ms) {
         initComponents();
+        this.namhoc = nam;
+        this.tenlop = lop;
+        this.mshs= ms;
+        
+        
     }
 
     /**
@@ -28,9 +53,9 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        hk1table = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        hk2table = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -39,37 +64,37 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        hk1table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Môn Học", "Điểm 15 phút", "Điểm 1 tiết", "Điểm thi học kì ", "Điểm trung bình"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(hk1table);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        hk2table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Môn học", "Điểm 15 phút", "Điểm 1 tiết", "Điểm thi học kì", "Điểm trung bình"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(hk2table);
 
-        jLabel1.setText("MaHocSInh:");
+        jLabel1.setText("Mã số học sinh");
 
-        jLabel2.setText("jLabel2");
+        jLabel2.setText("Lớp");
 
-        jLabel3.setText("NamHoc");
+        jLabel3.setText("Năm Học");
 
         jLabel4.setText("Diem hoc ki 1");
 
@@ -123,6 +148,8 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable hk1table;
+    private javax.swing.JTable hk2table;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -130,7 +157,5 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }
