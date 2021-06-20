@@ -279,7 +279,7 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "STT", "Họ tên", "Lớp", "Điểm 15 phút", "Điểm 1 tiết", "Điểm TB"
+                "STT", "Họ tên", "Lớp", "Điểm 15 phút", "Điểm 1 tiết", "Điểm TBM"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -463,11 +463,10 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
             ResultSet rs = mystm.executeQuery();
             while (rs.next()) {
                 String HoTen = rs.getString("HoTen");
-
                 String MaLop = rs.getString("MaLop");
                 String Diem15p = rs.getString("Diem15Phut");
                 String Diem1tiet = rs.getString("Diem1Tiet");
-                String DiemTB = rs.getString("DiemTBHK");
+                String DiemTB = rs.getString("DiemTBM");
                 String MaHocSinh = rs.getString("MaHocSinh");
                 String[] data = {Integer.toString(STT), HoTen, MaLop, Diem15p, Diem1tiet, DiemTB, MaHocSinh};
                 bangDuLieu.addRow(data);

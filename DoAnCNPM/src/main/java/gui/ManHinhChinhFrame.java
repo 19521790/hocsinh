@@ -8,6 +8,7 @@ package gui;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import thamso.LayThamSo;
 /**
  *
  * @author Admin
@@ -15,13 +16,10 @@ import javax.swing.JPanel;
 public class ManHinhChinhFrame extends javax.swing.JFrame {
 
     public ManHinhChinhFrame() {
-        
         initComponents();
-        
         //Đặt màn hình chính giữa màn hình
         setLocationRelativeTo(null);
         SetIcon();
-        
     }
     
     //Hàm chuyển đổi các giữa các JPanel 
@@ -32,6 +30,44 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
         tblMainBoard.setSelectedComponent(panel);
     }
     
+    
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(ManHinhChinhFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ManHinhChinhFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ManHinhChinhFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ManHinhChinhFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new LayThamSo().ketNoiCoSoDulieu();
+                new ManHinhChinhFrame().setVisible(true);
+
+            }
+        });
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -40,7 +76,6 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
         Main_exit = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JToolBar.Separator();
         mnuManageStudent = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JToolBar.Separator();
         jSeparator9 = new javax.swing.JToolBar.Separator();
         NhaplopBtn = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
@@ -50,6 +85,8 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JToolBar.Separator();
         BaoCaoTongKet = new javax.swing.JButton();
         jSeparator8 = new javax.swing.JToolBar.Separator();
+        BaoCaoTongKet1 = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
         ThayDoiQuyDinh = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         tblMainBoard = new javax.swing.JTabbedPane();
@@ -87,12 +124,11 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(mnuManageStudent);
-        jToolBar1.add(jSeparator1);
         jToolBar1.add(jSeparator9);
 
         NhaplopBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         NhaplopBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/presentation.png"))); // NOI18N
-        NhaplopBtn.setText("Danh sách học sinh");
+        NhaplopBtn.setText("Quản lý học sinh");
         NhaplopBtn.setFocusable(false);
         NhaplopBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         NhaplopBtn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -134,7 +170,7 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
 
         BaoCaoTongKet.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         BaoCaoTongKet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/report (1).png"))); // NOI18N
-        BaoCaoTongKet.setText("Lập báo cáo tổng kết");
+        BaoCaoTongKet.setText("Tổng kết môn");
         BaoCaoTongKet.setFocusable(false);
         BaoCaoTongKet.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         BaoCaoTongKet.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -145,6 +181,20 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
         });
         jToolBar1.add(BaoCaoTongKet);
         jToolBar1.add(jSeparator8);
+
+        BaoCaoTongKet1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        BaoCaoTongKet1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/report (1).png"))); // NOI18N
+        BaoCaoTongKet1.setText("Tổng kết học kì");
+        BaoCaoTongKet1.setFocusable(false);
+        BaoCaoTongKet1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        BaoCaoTongKet1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        BaoCaoTongKet1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BaoCaoTongKet1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(BaoCaoTongKet1);
+        jToolBar1.add(jSeparator1);
 
         ThayDoiQuyDinh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         ThayDoiQuyDinh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/exchange_1.png"))); // NOI18N
@@ -192,16 +242,16 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 918, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 998, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(tblMainBoard)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(194, Short.MAX_VALUE)
+                    .addContainerGap(234, Short.MAX_VALUE)
                     .addComponent(jLabel1)
-                    .addContainerGap(194, Short.MAX_VALUE)))
+                    .addContainerGap(234, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,8 +278,8 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_ThayDoiQuyDinhActionPerformed
 
     private void BaoCaoTongKetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BaoCaoTongKetActionPerformed
-        String tieuDe = "Báo cáo tổng kết";
-        chenPanel(new BaoCaoTongKetPanel(), tieuDe);
+        String tieuDe = "Tổng kết môn";
+        chenPanel(new TongKetMonPanel(), tieuDe);
     }//GEN-LAST:event_BaoCaoTongKetActionPerformed
 
     private void NhanBangDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NhanBangDiemActionPerformed
@@ -238,7 +288,7 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_NhanBangDiemActionPerformed
 
     private void NhaplopBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NhaplopBtnActionPerformed
-        String tieuDe = "Lập danh sách lớp";
+        String tieuDe = "Quản lý học sinh";
         chenPanel(new DanhSachHocSinhPanel(), tieuDe);
     }//GEN-LAST:event_NhaplopBtnActionPerformed
 
@@ -263,53 +313,23 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_Menu_exitActionPerformed
 
     private void NhaplopBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NhaplopBtn1ActionPerformed
-        String tieuDe = "Tiếp nhận học sinh";
+        String tieuDe = "Danh sách lớp";
         chenPanel(new DanhSachLopPanel(), tieuDe);
     }//GEN-LAST:event_NhaplopBtn1ActionPerformed
+
+    private void BaoCaoTongKet1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BaoCaoTongKet1ActionPerformed
+        String tieuDe = "Tổng kết học kỳ";
+        chenPanel(new TongKetHocKyPanel(), tieuDe);
+    }//GEN-LAST:event_BaoCaoTongKet1ActionPerformed
             private void SetIcon(){
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/edu/poly/poly/app/icons/16x16/graduated.png")));
     }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ManHinhChinhFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ManHinhChinhFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ManHinhChinhFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ManHinhChinhFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ManHinhChinhFrame().setVisible(true);
-            }
-        });
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BaoCaoTongKet;
+    private javax.swing.JButton BaoCaoTongKet1;
     private javax.swing.JButton Main_exit;
     private javax.swing.JMenuItem Menu_exit;
     private javax.swing.JMenu Menu_exiy;

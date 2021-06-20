@@ -25,11 +25,10 @@ import thamso.LayThamSo;
 public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
 
     DefaultTableModel bangDuLieu = new DefaultTableModel();
-    //goi lay tham so
-    LayThamSo thamso = new LayThamSo();
+
     //goi ham return tuoi toi thieu tuoi toi da
-    int NamSinhCuaTuoiToiThieu = Calendar.getInstance().get(Calendar.YEAR) - thamso.getTuoiToiThieu();
-    int NamSinhCuaTuoiToiDa = Calendar.getInstance().get(Calendar.YEAR) - thamso.getTuoiToiDa();
+    int NamSinhCuaTuoiToiThieu = Calendar.getInstance().get(Calendar.YEAR) - new LayThamSo().getTuoiToiThieu();
+    int NamSinhCuaTuoiToiDa = Calendar.getInstance().get(Calendar.YEAR) - new LayThamSo().getTuoiToiDa();
     int NamHienTai = Calendar.getInstance().get(Calendar.YEAR);
 
     public TiepNhanHocSinhPanel() {
@@ -49,7 +48,7 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
 
         bangDuLieu.addColumn("STT");
         bangDuLieu.addColumn("Họ tên");
-     
+
         bangDuLieu.addColumn("Ngày sinh");
         bangDuLieu.addColumn("Giới tính");
         bangDuLieu.addColumn("Địa chỉ");
@@ -390,7 +389,7 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
                 gioiTinh = "Nu";
             }
 
-            String data[] = {Integer.toString(STT), txtHoTen.getText(),  txtNgaysinh ,gioiTinh, txtAreaDiaChi.getText(), txtEmail.getText()};
+            String data[] = {Integer.toString(STT), txtHoTen.getText(), txtNgaysinh, gioiTinh, txtAreaDiaChi.getText(), txtEmail.getText()};
             //Lưu data vào bangDuLieu
             bangDuLieu.addRow(data);
 
@@ -435,13 +434,13 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
                                     mystm.setInt(index, 0);
                                 }
                             }
-                          
+
                             default -> //lay gia tri
                                 mystm.setString(index, tableHocSinh.getValueAt(i, j).toString());
                         }
-                      index++;
+                        index++;
                     }
-                    
+
 //                    chay du lieu vao sql
                     mystm.execute();
 
@@ -465,16 +464,14 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
             int xacNhan = JOptionPane.showConfirmDialog(null, "Bạn có muốn xóa thông tin dòng này", "Xác nhận", JOptionPane.YES_NO_OPTION);
             if (xacNhan == JOptionPane.YES_OPTION) {
                 bangDuLieu.removeRow(indexTB);
-              
-                int row= tableHocSinh.getRowCount();
-              
-                for (int i=0; i< row; i++){
-                   tableHocSinh.setValueAt(i+1, i, 0);
-                   
+
+                int row = tableHocSinh.getRowCount();
+
+                for (int i = 0; i < row; i++) {
+                    tableHocSinh.setValueAt(i + 1, i, 0);
+
                 }
-                
-                
-                
+
             }
         }
         //Xóa dòng đang chọn ra khỏi bangDuLieu

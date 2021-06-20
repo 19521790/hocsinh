@@ -292,7 +292,7 @@
                     <Column editable="false" title="L&#x1edb;p" type="java.lang.Object"/>
                     <Column editable="true" title="&#x110;i&#x1ec3;m 15 ph&#xfa;t" type="java.lang.Object"/>
                     <Column editable="true" title="&#x110;i&#x1ec3;m 1 ti&#x1ebf;t" type="java.lang.Object"/>
-                    <Column editable="false" title="&#x110;i&#x1ec3;m TB" type="java.lang.Object"/>
+                    <Column editable="false" title="&#x110;i&#x1ec3;m TBM" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
