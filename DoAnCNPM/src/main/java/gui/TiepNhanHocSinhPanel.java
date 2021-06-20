@@ -5,13 +5,13 @@
  */
 package gui;
 
-import java.awt.Dimension;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.*;
@@ -28,22 +28,30 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
     //goi lay tham so
     LayThamSo thamso = new LayThamSo();
     //goi ham return tuoi toi thieu tuoi toi da
-    int NamSinhCuaTuoiToiThieu = Calendar.getInstance().get(Calendar.YEAR)- thamso.getTuoiToiThieu();
-    int NamSinhCuaTuoiToiDa=  Calendar.getInstance().get(Calendar.YEAR)-thamso.getTuoiToiDa();
+    int NamSinhCuaTuoiToiThieu = Calendar.getInstance().get(Calendar.YEAR) - thamso.getTuoiToiThieu();
+    int NamSinhCuaTuoiToiDa = Calendar.getInstance().get(Calendar.YEAR) - thamso.getTuoiToiDa();
     int NamHienTai = Calendar.getInstance().get(Calendar.YEAR);
+
     public TiepNhanHocSinhPanel() {
-       
+
         initComponents();
-         textChuThichTuoi.setText("Vui lòng nhập năm sinh giữa "+ NamSinhCuaTuoiToiDa +" và "+ NamSinhCuaTuoiToiThieu);
+        textChuThichTuoi.setText("Vui lòng nhập năm sinh giữa " + NamSinhCuaTuoiToiDa + " và " + NamSinhCuaTuoiToiThieu);
         //set format  date
         //set locale viet nam
-        datechoose.setLocale(Locale.forLanguageTag("vi-VN"));
-        datechoose.getJCalendar().setPreferredSize(new Dimension(400, 250));
+
         datechoose.setDateFormatString("dd/MM/yyyy");
-      
+        datechoose.getCalendarButton().setVisible(false);
+        Date maxSelected = new GregorianCalendar(NamSinhCuaTuoiToiThieu, 11, 31).getTime();
+        Date minSelected = new GregorianCalendar(NamSinhCuaTuoiToiDa, 0, 1).getTime();
+
+        datechoose.getDateEditor().setMaxSelectableDate(maxSelected);
+        datechoose.getDateEditor().setMinSelectableDate(minSelected);
+
+        bangDuLieu.addColumn("STT");
         bangDuLieu.addColumn("Họ tên");
-        bangDuLieu.addColumn("Giới tính");
+     
         bangDuLieu.addColumn("Ngày sinh");
+        bangDuLieu.addColumn("Giới tính");
         bangDuLieu.addColumn("Địa chỉ");
         bangDuLieu.addColumn("Email");
 
@@ -65,20 +73,22 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
         rbNam = new javax.swing.JRadioButton();
         rbNu = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        ThemMoi = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtAreaDiaChi = new javax.swing.JTextArea();
-        datechoose = new com.toedter.calendar.JDateChooser();
-        jButton5 = new javax.swing.JButton();
+        String datePattern = "dd/MM/yyyy";
+        String dateMask = "##/##/####";
+        datechoose = new com.toedter.calendar.JDateChooser(datePattern, dateMask, '_');
+        LamMoi = new javax.swing.JButton();
         textChuThichTuoi = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableHocSinh = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        CapNhat = new javax.swing.JButton();
+        Xoa = new javax.swing.JButton();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nhập thông tin học sinh"));
 
@@ -88,7 +98,6 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
 
         jLabel3.setText("Giới tính");
 
-        txtHoTen.setToolTipText("");
         txtHoTen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtHoTenActionPerformed(evt);
@@ -112,11 +121,11 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
 
         jLabel6.setText("Địa chỉ");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/plus.png"))); // NOI18N
-        jButton1.setText("Thêm mới");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        ThemMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/plus.png"))); // NOI18N
+        ThemMoi.setText("Thêm mới");
+        ThemMoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                ThemMoiActionPerformed(evt);
             }
         });
 
@@ -134,6 +143,7 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
 
         txtAreaDiaChi.setColumns(20);
         txtAreaDiaChi.setRows(5);
+        txtAreaDiaChi.setToolTipText(""); // NOI18N
         jScrollPane2.setViewportView(txtAreaDiaChi);
 
         datechoose.setToolTipText("");
@@ -144,6 +154,11 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
                 datechooseFocusGained(evt);
             }
         });
+        datechoose.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                datechooseMousePressed(evt);
+            }
+        });
         datechoose.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
@@ -151,12 +166,17 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
                 datechooseInputMethodTextChanged(evt);
             }
         });
+        datechoose.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                datechooseKeyPressed(evt);
+            }
+        });
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/recycle.png"))); // NOI18N
-        jButton5.setText("Làm mới");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        LamMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/recycle.png"))); // NOI18N
+        LamMoi.setText("Làm mới");
+        LamMoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                LamMoiActionPerformed(evt);
             }
         });
 
@@ -175,9 +195,10 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(40, 40, 40)
-                        .addComponent(jButton5))
+                        .addComponent(ThemMoi)
+                        .addGap(42, 42, 42)
+                        .addComponent(LamMoi)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -188,21 +209,21 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
                             .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(datechoose, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textChuThichTuoi))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
+                            .addComponent(textChuThichTuoi))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                        .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(rbNam)
-                        .addGap(40, 40, 40)
-                        .addComponent(rbNu)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rbNam)
+                                .addGap(40, 40, 40)
+                                .addComponent(rbNu)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -217,14 +238,13 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
                     .addComponent(rbNu)
                     .addComponent(jLabel5)
                     .addComponent(jLabel8))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(71, 71, 71)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtEmail)
-                            .addComponent(jLabel2))
-                        .addGap(55, 55, 55))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel2)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -238,11 +258,11 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
                                     .addComponent(datechoose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(textChuThichTuoi)
-                                    .addGap(25, 25, 25))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton5))
+                                    .addGap(25, 25, 25))))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(LamMoi)
+                    .addComponent(ThemMoi))
                 .addContainerGap())
         );
 
@@ -253,24 +273,34 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Họ tên", "Giới tính", "Ngày sinh", "Địa chỉ", "Email"
+                "STT", "Họ tên", "Ngày sinh", "Giới tính", "Địa chỉ", "Email"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tableHocSinh);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/updated.png"))); // NOI18N
-        jButton2.setText("Cập nhật");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        CapNhat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/updated.png"))); // NOI18N
+        CapNhat.setText("Cập nhật");
+        CapNhat.setToolTipText("");
+        CapNhat.setAutoscrolls(true);
+        CapNhat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                CapNhatActionPerformed(evt);
             }
         });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/remove.png"))); // NOI18N
-        jButton4.setText("Xóa");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        Xoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/remove.png"))); // NOI18N
+        Xoa.setText("Xóa");
+        Xoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                XoaActionPerformed(evt);
             }
         });
 
@@ -278,27 +308,27 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jButton2)
-                .addGap(47, 47, 47)
-                .addComponent(jButton4)
+                .addGap(23, 23, 23)
+                .addComponent(CapNhat)
+                .addGap(48, 48, 48)
+                .addComponent(Xoa)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton4))
-                .addGap(20, 20, 20))
+                    .addComponent(Xoa)
+                    .addComponent(CapNhat))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -315,9 +345,9 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -325,11 +355,10 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailActionPerformed
+    int STT = 1;
+//default stt
+    private void ThemMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThemMoiActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-        
-        
         int NamDaNhap = 0;
 
         String gioiTinh = "1";
@@ -349,8 +378,8 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
         if (txtHoTen.getText().equals("") || txtNgaysinh.equals("") || ((!rbNam.isSelected()) && (!rbNu.isSelected()))) {
             //Nếu các dòng này trống thì báo message
             JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin");
-        } else if (NamSinhCuaTuoiToiDa > NamHienTai - NamDaNhap || NamHienTai - NamDaNhap > NamSinhCuaTuoiToiThieu) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập năm sinh giữa "+ NamSinhCuaTuoiToiDa +" và "+ NamSinhCuaTuoiToiThieu);
+        } else if (NamSinhCuaTuoiToiDa > NamDaNhap || NamDaNhap > NamSinhCuaTuoiToiThieu) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập năm sinh giữa " + NamSinhCuaTuoiToiDa + " và " + NamSinhCuaTuoiToiThieu);
         } else {
             //Nếu điền đầy đủ, điền thông tin vào bangDuLieu
             //Lưu thông tin giới tính từ rdNam, rdNu
@@ -361,7 +390,7 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
                 gioiTinh = "Nu";
             }
 
-            String data[] = {txtHoTen.getText(), gioiTinh, txtNgaysinh, txtAreaDiaChi.getText(), txtEmail.getText()};
+            String data[] = {Integer.toString(STT), txtHoTen.getText(),  txtNgaysinh ,gioiTinh, txtAreaDiaChi.getText(), txtEmail.getText()};
             //Lưu data vào bangDuLieu
             bangDuLieu.addRow(data);
 
@@ -374,42 +403,48 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
             txtAreaDiaChi.setText("");
             buttonGroup1.clearSelection();
             datechoose.setCalendar(null);
+            STT++;
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_ThemMoiActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void CapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CapNhatActionPerformed
         int xacNhan = JOptionPane.showConfirmDialog(null, "Bạn có muốn lưu thông tin những dòng này", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if (xacNhan == JOptionPane.YES_OPTION) {
             Connection con = JDBCConnection.ketNoiJBDC();
 
             try {
                 //Tạo statement
-                CallableStatement mystm = con.prepareCall("{call addstudent(?,?,?,?,?)}");
+                CallableStatement mystm = con.prepareCall("{call sp_TiepNhanHocSinh_ThemHocSinh(?,?,?,?,?)}");
                 //so hang
                 int row = tableHocSinh.getRowCount();
                 //so cot
                 int column = tableHocSinh.getColumnCount();
+
                 //chay vong lap: i la vi tri hang, j la vi tri cot
                 for (int i = 0; i < row; i++) {
                     int index = 1;
-                    for (int j = 0; j < column; j++) {
-                        //lay gia tri gioi tinh
-                        if (index == 2) {
-                            String Gioitinh = tableHocSinh.getValueAt(i, j).toString();
-                            if (Gioitinh == "Nam") {
-                                mystm.setInt(index, 1);
-                            } else if (Gioitinh == "Nu") {
-                                mystm.setInt(index, 0);
-                            }
+                    for (int j = 1; j < column; j++) {
 
-                        } else {
-                            //lay gia tri
-                            mystm.setString(index, tableHocSinh.getValueAt(i, j).toString());
+//                        lay gia tri gioi tinh
+                        switch (index) {
+                            case 3 -> {
+                                String Gioitinh = tableHocSinh.getValueAt(i, j).toString();
+                                if ("Nam".equals(Gioitinh)) {
+                                    mystm.setInt(index, 1);
+                                } else if ("Nu".equals(Gioitinh)) {
+                                    mystm.setInt(index, 0);
+                                }
+                            }
+                          
+                            default -> //lay gia tri
+                                mystm.setString(index, tableHocSinh.getValueAt(i, j).toString());
                         }
-                        index++;
+                      index++;
                     }
-                    //chay du lieu vao sql
+                    
+//                    chay du lieu vao sql
                     mystm.execute();
+
                 }
 
             } catch (SQLException ex) {
@@ -418,9 +453,9 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
         }
 
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_CapNhatActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void XoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_XoaActionPerformed
         //Lấy vị trí đang chọn trên tableHocSinh
         int indexTB = tableHocSinh.getSelectedRow();
         //check xem chua chon dong nao
@@ -430,19 +465,29 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
             int xacNhan = JOptionPane.showConfirmDialog(null, "Bạn có muốn xóa thông tin dòng này", "Xác nhận", JOptionPane.YES_NO_OPTION);
             if (xacNhan == JOptionPane.YES_OPTION) {
                 bangDuLieu.removeRow(indexTB);
+              
+                int row= tableHocSinh.getRowCount();
+              
+                for (int i=0; i< row; i++){
+                   tableHocSinh.setValueAt(i+1, i, 0);
+                   
+                }
+                
+                
+                
             }
         }
         //Xóa dòng đang chọn ra khỏi bangDuLieu
 
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_XoaActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void LamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LamMoiActionPerformed
         txtHoTen.setText("");
         txtEmail.setText("");
         txtAreaDiaChi.setText("");
         buttonGroup1.clearSelection();
         datechoose.setCalendar(null);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_LamMoiActionPerformed
 
     private void datechooseInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_datechooseInputMethodTextChanged
         // TODO add your handling code here:
@@ -456,14 +501,23 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtHoTenActionPerformed
 
+    private void datechooseKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_datechooseKeyPressed
+
+
+    }//GEN-LAST:event_datechooseKeyPressed
+
+    private void datechooseMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_datechooseMousePressed
+
+    }//GEN-LAST:event_datechooseMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton CapNhat;
+    private javax.swing.JButton LamMoi;
+    private javax.swing.JButton ThemMoi;
+    private javax.swing.JButton Xoa;
     private javax.swing.ButtonGroup buttonGroup1;
     private com.toedter.calendar.JDateChooser datechoose;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -485,4 +539,8 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtHoTen;
     // End of variables declaration//GEN-END:variables
+
+    private void execute() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -5,15 +5,19 @@
  */
 package gui;
 import popupframe.ThemHocSinh_DanhSachHocSinhPanel;
+import popupframe.DiemHocSinh_DanhSachLopPanel;
 import java.util.Date; 
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.table.TableModel;
+import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
+import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import popupframe.ThongTinHocSinh_DanhSachHocSinhPanel;
      
 /**
  *
@@ -24,10 +28,12 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
     /**
      * Creates new form NhapLop
      */
+    ThongTinHocSinh_DanhSachHocSinhPanel  infoPanel=new ThongTinHocSinh_DanhSachHocSinhPanel();
     String selectedClas="";
     String selectedYear="";
     String mshsChosen="";
     ThemHocSinh_DanhSachHocSinhPanel addstudent= new ThemHocSinh_DanhSachHocSinhPanel(this);
+    DiemHocSinh_DanhSachLopPanel diemhs ;
     List<String > deletequery= new ArrayList<>();
     List<String> mahsList = new ArrayList<>();
     List<String> procquery= new ArrayList<>();
@@ -89,8 +95,8 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
              ResultSet r = sta.executeQuery(sql); 
              if(!r.next()) return false;
              System.out.println(r.getString("HoTen"));
-             procquery.add("exec thembangdiem 0 ,'"+ms+"','"+"LOP"+this.selectedClas+"','"+this.selectedYear+"K1"+"'");
-             procquery.add("exec thembangdiem 0 ,'"+ms+"','"+"LOP"+this.selectedClas+"','"+this.selectedYear+"K2"+"'");             
+             procquery.add("exec sp_DanhSachHocSinh_ThemHocSinhVaoLop '"+ms+"','"+this.selectedClas+"','"+this.selectedYear+"'");
+                 
        }
        catch(SQLException e){
            return  false;
@@ -105,19 +111,19 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
           Statement sta=cn.createStatement();
           ResultSet r = sta.executeQuery(sql); 
           while(r.next()){
-          this.nameBox.setText(r.getString("HoTen"));
-         this.dateBox.setText(r.getString("NgaySinh"));
-         this.emailBox.setText(r.getString("Email"));
-         this.addressBox.setText(r.getString("DiaChi"));
+//          this.nameBox.setText(r.getString("HoTen"));
+//         this.dateBox.setText(r.getString("NgaySinh"));
+//         this.emailBox.setText(r.getString("Email"));
+//         this.addressBox.setText(r.getString("DiaChi"));
           
           String s= r.getString("GioiTinh");
         if(s=="0"){
-            this.rbNam2.setSelected(true);
-            this.rbNu2.setSelected(false);
+//            this.rbNam2.setSelected(true);
+//            this.rbNu2.setSelected(false);
         }
         else{
-           this.rbNam2.setSelected(false);
-            this.rbNu2.setSelected(true);
+//           this.rbNam2.setSelected(false);
+//            this.rbNu2.setSelected(true);
           }
          
           
@@ -132,8 +138,8 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
     void seek(String c, String y){
         
           
-          String sql ="select DISTINCT  HOCSINH.HoTen ,HOCSINH.MaHocSinh, HOCSINH.Email, HOCSINH.GioiTinh,HOCSINH.DiaChi, HOCSINH.NgaySinh  from HOCSINH  , QUATRINHHOC,HOCKI ,LOP WHERE HOCSINH.MaHocSinh=QUATRINHHOC.MaHocSinh AND QUATRINHHOC.MaHocKi=HOCKI.MaHocKi  AND QUATRINHHOC.MaLop=LOP.MaLop AND LOP.TenLop='"+c+"' AND HOCKI.Nam="+y;
-          try{
+          String sql ="select DISTINCT  HOCSINH.HoTen ,HOCSINH.MaHocSinh, HOCSINH.Email, HOCSINH.GioiTinh,HOCSINH.DiaChi, HOCSINH.NgaySinh  from HOCSINH  , QUATRINHHOC,HOCKI_NAM ,LOP WHERE HOCSINH.MaHocSinh=QUATRINHHOC.MaHocSinh AND QUATRINHHOC.MaHocKi=HOCKI_NAM.MaHocKi  AND QUATRINHHOC.MaLop=LOP.MaLop AND LOP.MaLop='"+c+"' AND HOCKI_NAM.Nam="+y;
+        try{
           Connection  cn= JDBCConnection.ketNoiJBDC();
           Statement sta=cn.createStatement();
           ResultSet r = sta.executeQuery(sql); 
@@ -149,9 +155,9 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
           DefaultTableModel tblM= (DefaultTableModel)this.infoTable.getModel();
           tblM.addRow(datab);
           }
-          }
+        }
           catch (SQLException e){
-          
+           
           }
     
    
@@ -165,6 +171,7 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
     public DanhSachHocSinhPanel() {
            initComponents();
          Date d= new Date();
+          System.out.println("ọ");
     this.loadContentYearList(d.getYear()+1900);
     }
 
@@ -194,6 +201,7 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
         addButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        showinfo = new javax.swing.JButton();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nhập lớp cần tìm"));
 
@@ -202,8 +210,6 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
         clasList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10A1", "10A2", "10A3", "10A4", "11A1", "11A2", "11A3", "12A1", "12A2" }));
 
         jLabel2.setText("Năm học:");
-
-        yearList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2022", "2021", "2020", "2019", "2018" }));
 
         seekButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/search.png"))); // NOI18N
         seekButton.setText("Tìm kiếm");
@@ -226,7 +232,7 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(yearList, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71)
+                .addGap(32, 32, 32)
                 .addComponent(seekButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(validateSiSo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -316,10 +322,17 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Điểm số");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        showinfo.setText("Thông tin học sinh");
+        showinfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showinfoActionPerformed(evt);
             }
         });
 
@@ -339,9 +352,11 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
                         .addComponent(addButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel12)
-                        .addGap(39, 39, 39)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                        .addGap(26, 26, 26)
+                        .addComponent(showinfo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(deleteButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel11)))
@@ -358,7 +373,8 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
                         .addComponent(addButton)
                         .addComponent(saveButton)
                         .addComponent(jLabel12)
-                        .addComponent(jButton1))
+                        .addComponent(jButton1)
+                        .addComponent(showinfo))
                     .addComponent(deleteButton)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -378,7 +394,7 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-               
+        if(this.mshsChosen=="") return;
         int index =this.infoTable.getSelectedRow();
         TableModel md= this.infoTable.getModel();
        this.deletequery.add("update QUATRINHHOC set MaLop=null where MaHocSinh='"+md.getValueAt(index, 0).toString()+"'");
@@ -392,7 +408,7 @@ for(int i=0; i<numRows ; i++ ) {
 
     private void seekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seekButtonActionPerformed
         // TODO add your handling code here:
-        
+        this.mshsChosen="";
         this.deletequery=new  ArrayList<>();
             this.procquery=new  ArrayList<>();
         DefaultTableModel model = (DefaultTableModel) this.infoTable.getModel();
@@ -419,7 +435,42 @@ model.setRowCount(0);
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        if(this.mshsChosen=="")return;
+         int index =this.infoTable.getSelectedRow();
+        TableModel md= this.infoTable.getModel();
+        
+        this.diemhs= new DiemHocSinh_DanhSachLopPanel(this.selectedClas,this.selectedYear,this.mshsChosen);
+       // this.getInfo(this.mshsChosen=md.getValueAt(index, 0).toString());
+       this.diemhs.setVisible(true);
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void showinfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showinfoActionPerformed
+        // TODO add your handling code here:
+        if(mshsChosen=="") return;
+        this.infoPanel.setVisible(true);
+         String sql="select * from HOCSINH where HOCSINH.MaHocSinh='"+mshsChosen+"'";
+       try{
+          Connection  cn= JDBCConnection.ketNoiJBDC();
+          Statement sta=cn.createStatement();
+          ResultSet r = sta.executeQuery(sql); 
+          while(r.next()){
+    this.infoPanel.ten=r.getString("HoTen");
+     this.infoPanel.ngaysinh=r.getString("NgaySinh");
+     this.infoPanel.email=r.getString("Email");
+     this.infoPanel.diachi=r.getString("DiaChi");
+     this.infoPanel.s=r.getString("GioiTinh");
+//         this.emailBox.setText(r.getString("Email"));
+//         this.addressBox.setText(r.getString("DiaChi"));
+             }
+          }
+          catch (SQLException e){
+          
+          }
+       this.infoPanel.loaddata();
+        
+    }//GEN-LAST:event_showinfoActionPerformed
 
         
 
@@ -438,6 +489,7 @@ model.setRowCount(0);
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton saveButton;
     private javax.swing.JButton seekButton;
+    private javax.swing.JButton showinfo;
     private javax.swing.JLabel validateSiSo;
     private javax.swing.JComboBox<String> yearList;
     // End of variables declaration//GEN-END:variables

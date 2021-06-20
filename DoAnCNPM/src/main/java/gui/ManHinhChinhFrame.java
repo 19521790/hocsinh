@@ -8,7 +8,6 @@ package gui;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import thamso.LayThamSo;
 /**
  *
  * @author Admin
@@ -16,10 +15,7 @@ import thamso.LayThamSo;
 public class ManHinhChinhFrame extends javax.swing.JFrame {
 
     public ManHinhChinhFrame() {
-        //chay ket noi database chuan bi san tuoi toi thieu tuoi toi da
-        LayThamSo thamso= new LayThamSo();
-        thamso.ketNoiCoSoDulieu();
-       
+        
         initComponents();
         
         //Đặt màn hình chính giữa màn hình
@@ -268,7 +264,7 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
 
     private void NhaplopBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NhaplopBtn1ActionPerformed
         String tieuDe = "Tiếp nhận học sinh";
-        chenPanel(new TiepNhanHocSinhPanel(), tieuDe);
+        chenPanel(new DanhSachLopPanel(), tieuDe);
     }//GEN-LAST:event_NhaplopBtn1ActionPerformed
             private void SetIcon(){
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/edu/poly/poly/app/icons/16x16/graduated.png")));

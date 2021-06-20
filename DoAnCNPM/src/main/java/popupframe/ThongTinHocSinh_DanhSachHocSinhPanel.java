@@ -5,6 +5,8 @@
  */
 package popupframe;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author nguye
@@ -14,9 +16,30 @@ public class ThongTinHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
     /**
      * Creates new form ThongTinHocSinh_DanhSachHocSinhPanel
      */
+   public String ten="";
+   public String diachi="";
+   public String email="";
+   public String ngaysinh="";
+   public String s="Nữ"; 
+  public void loaddata(){
+  this.nameBox.setText(ten);
+  this.addressBox.setText(diachi);
+  this.emailBox.setText(email);
+   this.dateBox.setText(ngaysinh);
+   System.out.println(s);
+   if("Nu".equals(s)){
+          this.rbNam2.setSelected(true);
+           this.rbNu2.setSelected(false);
+        }
+    else{
+         this.rbNam2.setSelected(false);
+         this.rbNu2.setSelected(true);
+          }
+   
+   }
     public ThongTinHocSinh_DanhSachHocSinhPanel() {
         initComponents();
-        
+         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE );
         //Đặt 
         setLocationRelativeTo(null);
         

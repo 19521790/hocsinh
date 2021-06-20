@@ -17,9 +17,9 @@ public class JDBCConnection {
 
     public static  Connection ketNoiJBDC() {
 
-        String url = "jdbc:sqlserver://14.245.52.250;databaseName=customer";
-        String user = "admin";
-        String password = "0000";
+        String url = "jdbc:sqlserver://LAPTOP-6LEAMI4B\\SQLEXPRESS01:1466;databaseName=customer";
+        String user = "vuong";
+        String password = "1";
 
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
