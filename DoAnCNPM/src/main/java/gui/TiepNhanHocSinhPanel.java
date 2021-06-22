@@ -8,14 +8,17 @@ package gui;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.table.*;
 import javax.swing.JOptionPane;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.table.*;
 import thamso.LayThamSo;
 
 /**
@@ -30,6 +33,7 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
     int NamSinhCuaTuoiToiThieu = Calendar.getInstance().get(Calendar.YEAR) - new LayThamSo().getTuoiToiThieu();
     int NamSinhCuaTuoiToiDa = Calendar.getInstance().get(Calendar.YEAR) - new LayThamSo().getTuoiToiDa();
     int NamHienTai = Calendar.getInstance().get(Calendar.YEAR);
+    String DiemBanDau = "";
 
     public TiepNhanHocSinhPanel() {
 
@@ -47,12 +51,71 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
         datechoose.getDateEditor().setMinSelectableDate(minSelected);
 
         bangDuLieu.addColumn("STT");
+
         bangDuLieu.addColumn("Họ tên");
 
         bangDuLieu.addColumn("Ngày sinh");
         bangDuLieu.addColumn("Giới tính");
         bangDuLieu.addColumn("Địa chỉ");
         bangDuLieu.addColumn("Email");
+
+        tableHocSinh.getDefaultEditor(String.class).addCellEditorListener(new CellEditorListener() {
+            @Override
+            @SuppressWarnings("empty-statement")
+            public void editingStopped(ChangeEvent e) {
+
+                int column = tableHocSinh.getSelectedColumn();
+                int row = tableHocSinh.getSelectedRow();
+                String checkValue = tableHocSinh.getValueAt(row, column).toString();
+                //xet truong hop sua ngay sinh
+                if (column == 2) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+                    if (checkValue.isEmpty()) {
+                        tableHocSinh.setValueAt(DiemBanDau, row, column);
+                    } else {
+                        try {
+
+                            Date date = sdf.parse(checkValue);
+                            int year = date.getYear() + 1900;
+
+                            if (NamSinhCuaTuoiToiDa > year || year > NamSinhCuaTuoiToiThieu) {
+                                JOptionPane.showMessageDialog(null, "Ngày sinh bạn nhập đã sai");
+                                tableHocSinh.setValueAt(DiemBanDau, row, column);
+
+                            }
+
+                        } catch (ParseException ex) {
+
+                            JOptionPane.showMessageDialog(null, "Ngày sinh bạn nhập đã sai");
+                            tableHocSinh.setValueAt(DiemBanDau, row, column);
+                        }
+
+                    }
+
+                }
+                if (column == 5) {
+                    System.out.println(checkValue);
+                    if (!(checkValue.contains("@") && checkValue.contains("."))) {
+                        JOptionPane.showMessageDialog(null, "Email bạn nhập đã sai");
+                        tableHocSinh.setValueAt(DiemBanDau, row, column);
+                    }
+                }
+                if (column == 3) {
+
+                    if (!"Nam".equals(checkValue) && !"Nu".equals(checkValue)) {
+                        JOptionPane.showMessageDialog(null, "Vui lòng nhập 2 giá trị Nam hoặc Nu");
+                        tableHocSinh.setValueAt(DiemBanDau, row, column);
+                    }
+                }
+            }
+
+            @Override
+            public void editingCanceled(ChangeEvent e) {
+
+            }
+        });
+        //them listen vao bang dem xem du lieu chinh sua co dung hay khong
 
     }
 
@@ -83,6 +146,7 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
         datechoose = new com.toedter.calendar.JDateChooser(datePattern, dateMask, '_');
         LamMoi = new javax.swing.JButton();
         textChuThichTuoi = new javax.swing.JLabel();
+        gmail = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableHocSinh = new javax.swing.JTable();
@@ -95,7 +159,7 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
 
         jLabel2.setText("Email:");
 
-        jLabel3.setText("Giới tính");
+        jLabel3.setText("Giới tính:");
 
         txtHoTen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,7 +182,7 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
         buttonGroup1.add(rbNu);
         rbNu.setText("Nữ");
 
-        jLabel6.setText("Địa chỉ");
+        jLabel6.setText("Địa chỉ:");
 
         ThemMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/plus.png"))); // NOI18N
         ThemMoi.setText("Thêm mới");
@@ -140,7 +204,7 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
         jLabel8.setForeground(new java.awt.Color(255, 51, 51));
         jLabel8.setText("*");
 
-        txtAreaDiaChi.setColumns(20);
+        txtAreaDiaChi.setColumns(12);
         txtAreaDiaChi.setRows(5);
         txtAreaDiaChi.setToolTipText(""); // NOI18N
         jScrollPane2.setViewportView(txtAreaDiaChi);
@@ -182,6 +246,13 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
         textChuThichTuoi.setFont(new java.awt.Font("Segoe UI", 2, 10)); // NOI18N
         textChuThichTuoi.setText("settext");
 
+        gmail.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "@gmail.com", "@outlook.com", "@yahoo.com", "@hotmail.com", "@icloud.com", "@live.com", "@msn.com", "Khác..." }));
+        gmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gmailActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -197,7 +268,7 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
                         .addComponent(ThemMoi)
                         .addGap(42, 42, 42)
                         .addComponent(LamMoi)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -205,25 +276,37 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(datechoose, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textChuThichTuoi))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(textChuThichTuoi)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(txtHoTen)
+                                                .addGap(81, 81, 81)
+                                                .addComponent(jLabel8)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(datechoose, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(94, 94, 94)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(rbNam)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(rbNu))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap())
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(rbNam)
-                                .addGap(40, 40, 40)
-                                .addComponent(rbNu)))))
-                .addContainerGap())
+                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(gmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,30 +317,32 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
                     .addComponent(txtHoTen)
                     .addComponent(jLabel3)
                     .addComponent(rbNam)
-                    .addComponent(rbNu)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel8)
+                    .addComponent(rbNu))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(71, 71, 71)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtEmail)
-                            .addComponent(jLabel2)))
+                            .addComponent(jLabel2)
+                            .addComponent(gmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel4)
                                 .addComponent(jLabel7))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(datechoose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(textChuThichTuoi)
-                                    .addGap(25, 25, 25))))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(datechoose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(textChuThichTuoi))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(LamMoi)
@@ -281,6 +366,11 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tableHocSinh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tableHocSinhMousePressed(evt);
             }
         });
         jScrollPane1.setViewportView(tableHocSinh);
@@ -309,7 +399,7 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 785, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
@@ -322,12 +412,12 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Xoa)
                     .addComponent(CapNhat))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -337,17 +427,19 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -357,6 +449,7 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
     int STT = 1;
 //default stt
     private void ThemMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThemMoiActionPerformed
+        //add listen toi thay doi bang
 
         int NamDaNhap = 0;
 
@@ -374,35 +467,42 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
         }
 
         //Lưu trữ thông tin 1 dòng vào mảng data
-        if (txtHoTen.getText().equals("") || txtNgaysinh.equals("") || ((!rbNam.isSelected()) && (!rbNu.isSelected()))) {
+        if (txtHoTen.getText().equals("") || txtNgaysinh.equals("") || gmail.getSelectedItem().toString().isEmpty() || ((!rbNam.isSelected()) && (!rbNu.isSelected()))) {
             //Nếu các dòng này trống thì báo message
             JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin");
         } else if (NamSinhCuaTuoiToiDa > NamDaNhap || NamDaNhap > NamSinhCuaTuoiToiThieu) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập năm sinh giữa " + NamSinhCuaTuoiToiDa + " và " + NamSinhCuaTuoiToiThieu);
         } else {
+
+            //kiem tra xem mail nhập nếu chọn khác có đúng không
+            if (!(gmail.getSelectedItem().toString().contains("@") && gmail.getSelectedItem().toString().contains("."))) {
+                JOptionPane.showMessageDialog(this, "Thông tin email bị sai!!");
+            } else {
+                if (rbNam.isSelected()) {
+                    gioiTinh = "Nam";
+                } else if (rbNu.isSelected()) {
+                    gioiTinh = "Nu";
+                }
+
+                String data[] = {Integer.toString(STT), txtHoTen.getText(), txtNgaysinh, gioiTinh, txtAreaDiaChi.getText(), txtEmail.getText() + gmail.getSelectedItem()};
+                //Lưu data vào bangDuLieu
+                bangDuLieu.addRow(data);
+
+                //Gán bangDuLieu vào jTalbe tableHocSinh
+                tableHocSinh.setModel(bangDuLieu);
+
+                //Dọn textfield để thêm dữ liệu mới
+                txtHoTen.setText("");
+                txtEmail.setText("");
+                txtAreaDiaChi.setText("");
+                gmail.setSelectedIndex(0);
+                buttonGroup1.clearSelection();
+                datechoose.setCalendar(null);
+                STT++;
+            }
             //Nếu điền đầy đủ, điền thông tin vào bangDuLieu
             //Lưu thông tin giới tính từ rdNam, rdNu
 
-            if (rbNam.isSelected()) {
-                gioiTinh = "Nam";
-            } else if (rbNu.isSelected()) {
-                gioiTinh = "Nu";
-            }
-
-            String data[] = {Integer.toString(STT), txtHoTen.getText(), txtNgaysinh, gioiTinh, txtAreaDiaChi.getText(), txtEmail.getText()};
-            //Lưu data vào bangDuLieu
-            bangDuLieu.addRow(data);
-
-            //Gán bangDuLieu vào jTalbe tableHocSinh
-            tableHocSinh.setModel(bangDuLieu);
-
-            //Dọn textfield để thêm dữ liệu mới
-            txtHoTen.setText("");
-            txtEmail.setText("");
-            txtAreaDiaChi.setText("");
-            buttonGroup1.clearSelection();
-            datechoose.setCalendar(null);
-            STT++;
         }
     }//GEN-LAST:event_ThemMoiActionPerformed
 
@@ -484,6 +584,7 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
         txtAreaDiaChi.setText("");
         buttonGroup1.clearSelection();
         datechoose.setCalendar(null);
+        gmail.setSelectedIndex(0);
     }//GEN-LAST:event_LamMoiActionPerformed
 
     private void datechooseInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_datechooseInputMethodTextChanged
@@ -507,6 +608,25 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_datechooseMousePressed
 
+    private void gmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gmailActionPerformed
+        if (gmail.getSelectedIndex() == 7) {
+            gmail.setEditable(true);
+            gmail.setSelectedItem("");
+
+        } else {
+            gmail.setEditable(false);
+        }
+
+    }//GEN-LAST:event_gmailActionPerformed
+
+    private void tableHocSinhMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableHocSinhMousePressed
+        try {
+            DiemBanDau = tableHocSinh.getValueAt(tableHocSinh.getSelectedRow(), tableHocSinh.getSelectedColumn()).toString();
+        } catch (Exception e) {
+            DiemBanDau = "";
+        }
+    }//GEN-LAST:event_tableHocSinhMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CapNhat;
@@ -515,6 +635,7 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
     private javax.swing.JButton Xoa;
     private javax.swing.ButtonGroup buttonGroup1;
     private com.toedter.calendar.JDateChooser datechoose;
+    private javax.swing.JComboBox<String> gmail;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

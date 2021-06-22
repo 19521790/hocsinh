@@ -7,6 +7,7 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -18,7 +19,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import popupframe.SuaDiemBangDiemMonPanel;
 
@@ -45,15 +45,6 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
         //tat han edit khi thoat khoi edit table
         tableDiem.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
         //lay diem ban dau
-        tableDiem.getSelectionModel().addListSelectionListener((ListSelectionEvent le) -> {
-            try {
-                 DiemBanDau = tableDiem.getValueAt(tableDiem.getSelectedRow(), tableDiem.getSelectedColumn()).toString();
-            } catch (Exception e) {
-                 DiemBanDau = "";
-            }
-           
-
-        });
 
         //khi diem thay doi thi update diem trung binh (khi edit truc tiep tren bang)
         tableDiem.getDefaultEditor(String.class).addCellEditorListener(new CellEditorListener() {
@@ -65,8 +56,14 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
                 int SelectedRow = tableDiem.getSelectedRow();
                 int SelectedColumn = tableDiem.getSelectedColumn();
                 String DiemSauKhiSua = tableDiem.getValueAt(SelectedRow, SelectedColumn).toString();
-                if (DiemSauKhiSua != null) {
-                }
+
+                //check xem diem sau khi sua co chua ki tu , khong
+                while (DiemSauKhiSua.trim().endsWith(",") == true) {
+                    DiemSauKhiSua = DiemSauKhiSua.substring(0, DiemSauKhiSua.length() - 1);
+                    tableDiem.setValueAt(DiemSauKhiSua, SelectedRow, SelectedColumn);
+
+                };
+
                 String[] ArrayDiemSauKhiSua = DiemSauKhiSua.split(",");
                 boolean Kiemtra = true;
                 for (int i = 0; i < ArrayDiemSauKhiSua.length; i++) {
@@ -78,6 +75,17 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
                             Kiemtra = false;
                             break;
                         }
+                    }
+                    float x=Float.parseFloat(ArrayDiemSauKhiSua[i]);
+                    if (x>10 ){
+                         Kiemtra = false;
+                         JOptionPane.showMessageDialog(null, "Vui long nhap diem so <= 10 ");
+                         break;
+                    }
+                    if ( x<0){
+                    Kiemtra = false;
+                         JOptionPane.showMessageDialog(null, "Vui long nhap diem so >0 ");
+                         break;
                     }
                 }
                 //neu nhap dung thi tinh diem trung binh
@@ -125,7 +133,6 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
                     DiemTb = Float.valueOf(df.format(DiemTb));
                     tableDiem.setValueAt(Float.toString(DiemTb), SelectedRow, 5);
 
-                    DiemBanDau = tableDiem.getValueAt(SelectedRow, SelectedColumn).toString();
 
                 } else {
 
@@ -156,6 +163,18 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
         tableDiem.getColumn("Mã học sinh").setMaxWidth(0);
         tableDiem.getColumn("Mã học sinh").setWidth(0);
 
+    }
+
+    public void propertyChange(PropertyChangeEvent e) {
+        //  A cell has started/stopped editing
+
+        if ("tableCellEditor".equals(e.getPropertyName())) {
+            if (tableDiem.isEditing()) {
+                System.out.println("hello");
+            } else {
+                System.out.println("not");
+            }
+        }
     }
 
     /**
@@ -290,6 +309,11 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tableDiem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tableDiemMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableDiem);
 
         SaveTableButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/diskette.png"))); // NOI18N
@@ -417,8 +441,7 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
                     Float.parseFloat(chuoi15p[i]);
                 } catch (NumberFormatException evt) {
                     if (!diem15p.isEmpty()) {
-                        System.out.println("hello");
-                        JOptionPane.showMessageDialog(null, "Bạn đã điền sai form !!");
+
                         kiemtra = false;
                         break;
                     }
@@ -431,20 +454,23 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
                     } catch (NumberFormatException evt) {
 
                         if (!diem1tiet.isEmpty()) {
-                            JOptionPane.showMessageDialog(null, "Bạn đã điền sai form !!");
+
                             kiemtra = false;
                             break;
                         }
                     }
                 }
-                if (kiemtra == true) {
 
-                    tableDiem.setValueAt(diem15p, selectedRow, 3);
-                    tableDiem.setValueAt(diem1tiet, selectedRow, 4);
+            }
+            if (kiemtra == true) {
 
-                    editBangdiem.setVisible(false);
+                tableDiem.setValueAt(diem15p, selectedRow, 3);
+                tableDiem.setValueAt(diem1tiet, selectedRow, 4);
 
-                }
+                editBangdiem.setVisible(false);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Bạn đã điền sai form !!");
             }
         }
     }
@@ -482,7 +508,7 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_TimKiemActionPerformed
 
     private void SaveTableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveTableButtonActionPerformed
-     
+
         int xacNhan = JOptionPane.showConfirmDialog(null, "Bạn có muốn lưu thông tin những dòng này", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if (xacNhan == JOptionPane.YES_OPTION) {
             Connection con = JDBCConnection.ketNoiJBDC();
@@ -491,7 +517,7 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
                 //so hang
                 int row = tableDiem.getRowCount();
                 //so cot
-                int column = tableDiem.getColumnCount();
+
                 mystm.setInt(1, Integer.parseInt(Nam.getSelectedItem().toString()));
                 mystm.setString(2, Hocky.getSelectedItem().toString());
                 mystm.setString(3, Mon.getSelectedItem().toString());
@@ -512,10 +538,21 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_SaveTableButtonActionPerformed
 
     private void LamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LamMoiActionPerformed
-          bangDuLieu.setRowCount(0);
-          tableDiem.setModel(bangDuLieu);
+        bangDuLieu.setRowCount(0);
+        tableDiem.setModel(bangDuLieu);
 
     }//GEN-LAST:event_LamMoiActionPerformed
+
+    private void tableDiemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDiemMousePressed
+
+        try {
+            DiemBanDau = tableDiem.getValueAt(tableDiem.getSelectedRow(), tableDiem.getSelectedColumn()).toString();
+        } catch (Exception e) {
+            DiemBanDau = "";
+        }
+
+
+    }//GEN-LAST:event_tableDiemMousePressed
     // phuong thuc nghe lenh click button 
 
 
