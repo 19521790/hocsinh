@@ -12,7 +12,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import popupframe.DiemHocSinh_DanhSachLopPanel;
 
 /**
  *
@@ -23,6 +26,7 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
     /**
      * Creates new form DanhSachLop
      */
+       DiemHocSinh_DanhSachLopPanel diemhs ;
     void createClassList() {
         String sql = "select * from  LOP";
         try {
@@ -65,7 +69,7 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
 
                 i++;
                 String arr[] = {Integer.toString(i), r.getString("MaHocSinh"), r.getString("HoTen"), r.getString("MaLop"), r.getString("TBHK1"), r.getString("TBHK2")};
-                DefaultTableModel tblM = (DefaultTableModel) this.infotable.getModel();
+                DefaultTableModel tblM = (DefaultTableModel) this.infoTable.getModel();
                 tblM.addRow(arr);
             }
         } catch (SQLException e) {
@@ -91,7 +95,7 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        infotable = new javax.swing.JTable();
+        infoTable = new javax.swing.JTable();
         clasBox = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         yearBox = new javax.swing.JComboBox<>();
@@ -100,7 +104,7 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
 
         jLabel1.setText("Lớp");
 
-        infotable.setModel(new javax.swing.table.DefaultTableModel(
+        infoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -108,7 +112,13 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
                 "STT", "MSSV", "Họ tên", "Lớp", "TBHK1", "TBHK2"
             }
         ));
-        jScrollPane1.setViewportView(infotable);
+        jScrollPane1.setViewportView(infoTable);
+        if (infoTable.getColumnModel().getColumnCount() > 0) {
+            infoTable.getColumnModel().getColumn(0).setResizable(false);
+            infoTable.getColumnModel().getColumn(1).setResizable(false);
+            infoTable.getColumnModel().getColumn(2).setResizable(false);
+            infoTable.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         jLabel2.setText("Năm:");
 
@@ -121,6 +131,11 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
         });
 
         jButton1.setText("Điểm số");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -167,14 +182,33 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
 
     private void seekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seekButtonActionPerformed
         // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) this.infoTable.getModel();
+model.setRowCount(0);
         loadtable();
 
     }//GEN-LAST:event_seekButtonActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+         if(!(this.infoTable.getSelectedColumn()!=-1)) {
+         
+         JOptionPane.showMessageDialog(this, "Chưa chọn học sinh để xem điểm");
+         return;
+         }
+         int index =this.infoTable.getSelectedRow();
+        TableModel md= this.infoTable.getModel();
+        String mshs= md.getValueAt(index,1).toString();
+        
+        
+        this.diemhs= new DiemHocSinh_DanhSachLopPanel(this.clasBox.getSelectedItem().toString(),this.yearBox.getSelectedItem().toString(),mshs);
+       // this.getInfo(this.mshsChosen=md.getValueAt(index, 0).toString());
+       this.diemhs.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> clasBox;
-    private javax.swing.JTable infotable;
+    private javax.swing.JTable infoTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

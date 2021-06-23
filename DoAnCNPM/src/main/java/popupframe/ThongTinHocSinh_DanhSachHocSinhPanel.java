@@ -16,33 +16,44 @@ public class ThongTinHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
     /**
      * Creates new form ThongTinHocSinh_DanhSachHocSinhPanel
      */
-   public String ten="";
-   public String diachi="";
-   public String email="";
-   public String ngaysinh="";
-   public String s="Nữ"; 
-  public void loaddata(){
-  this.nameBox.setText(ten);
-  this.addressBox.setText(diachi);
-  this.emailBox.setText(email);
-   this.dateBox.setText(ngaysinh);
-   System.out.println(s);
-   if("Nu".equals(s)){
-          this.rbNam2.setSelected(true);
-           this.rbNu2.setSelected(false);
+    public String ten = "";
+    public String diachi = "";
+    public String email = "";
+    public String ngaysinh = "";
+    public String s = "Nữ";
+
+    public void loaddata() {
+        this.nameBox.setText(ten);
+        this.addressBox.setText(diachi);
+        this.emailBox.setText(email);
+        this.dateBox.setText(ngaysinh);
+        System.out.println(s);
+        if ("Nam".equals(s)) {
+            this.rbNam2.setSelected(true);
+            this.rbNu2.setSelected(false);
+        } else {
+            this.rbNam2.setSelected(false);
+            this.rbNu2.setSelected(true);
         }
-    else{
-         this.rbNam2.setSelected(false);
-         this.rbNu2.setSelected(true);
-          }
-   
-   }
+
+    }
+
+    void refereshTextBox() {
+        this.nameBox.setText("");
+        this.addressBox.setText("");
+        this.emailBox.setText("");
+        this.dateBox.setText("");
+        this.rbNam2.setSelected(false);
+        this.rbNu2.setSelected(true);
+
+    }
+
     public ThongTinHocSinh_DanhSachHocSinhPanel() {
         initComponents();
-         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE );
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         //Đặt 
         setLocationRelativeTo(null);
-        
+
     }
 
     /**
@@ -220,20 +231,19 @@ public class ThongTinHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
 
     private void rbNam2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbNam2ActionPerformed
         // TODO add your handling code here:
-        if(this.rbNam2.isSelected())
-        {
+        if (this.rbNam2.isSelected()) {
             this.rbNu2.setSelected(false);
         }
     }//GEN-LAST:event_rbNam2ActionPerformed
 
     private void rbNu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbNu2ActionPerformed
         // TODO add your handling code here:
-        if(this.rbNu2.isSelected())
+        if (this.rbNu2.isSelected())
 
-        this.rbNam2.setSelected(false);
+            this.rbNam2.setSelected(false);
     }//GEN-LAST:event_rbNu2ActionPerformed
 
-   
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea addressBox;
     private javax.swing.JTextField dateBox;
