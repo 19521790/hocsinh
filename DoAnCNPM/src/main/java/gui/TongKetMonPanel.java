@@ -293,7 +293,7 @@ public class TongKetMonPanel extends javax.swing.JPanel {
             mystm.setInt(1, namhoc);
             mystm.setString(2, hocki);
             mystm.setString(3, monhoc);
-            mystm.setString(4, "10A1");
+            mystm.setString(4, lop);
             ResultSet rs = mystm.executeQuery();
             while (rs.next()) {
                 String HoTen = rs.getString("HoTen");
