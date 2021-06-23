@@ -483,8 +483,12 @@ public class TiepNhanHocSinhPanel extends javax.swing.JPanel {
                 } else if (rbNu.isSelected()) {
                     gioiTinh = "Nu";
                 }
+                String duoiGmail = gmail.getSelectedItem().toString();
+                if (txtEmail.getText().isEmpty()) {
+                    duoiGmail = "";
+                }
 
-                String data[] = {Integer.toString(STT), txtHoTen.getText(), txtNgaysinh, gioiTinh, txtAreaDiaChi.getText(), txtEmail.getText() + gmail.getSelectedItem()};
+                String data[] = {Integer.toString(STT), txtHoTen.getText(), txtNgaysinh, gioiTinh, txtAreaDiaChi.getText(), txtEmail.getText() + duoiGmail};
                 //Lưu data vào bangDuLieu
                 bangDuLieu.addRow(data);
 

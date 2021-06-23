@@ -76,16 +76,16 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
                             break;
                         }
                     }
-                    float x=Float.parseFloat(ArrayDiemSauKhiSua[i]);
-                    if (x>10 ){
-                         Kiemtra = false;
-                         JOptionPane.showMessageDialog(null, "Vui long nhap diem so <= 10 ");
-                         break;
+                    float x = Float.parseFloat(ArrayDiemSauKhiSua[i]);
+                    if (x > 10) {
+                        Kiemtra = false;
+                        JOptionPane.showMessageDialog(null, "Vui long nhap diem so <= 10 ");
+                        break;
                     }
-                    if ( x<0){
-                    Kiemtra = false;
-                         JOptionPane.showMessageDialog(null, "Vui long nhap diem so >0 ");
-                         break;
+                    if (x < 0) {
+                        Kiemtra = false;
+                        JOptionPane.showMessageDialog(null, "Vui long nhap diem so >0 ");
+                        break;
                     }
                 }
                 //neu nhap dung thi tinh diem trung binh
@@ -132,7 +132,6 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
                     DecimalFormat df = new DecimalFormat("#.00");
                     DiemTb = Float.valueOf(df.format(DiemTb));
                     tableDiem.setValueAt(Float.toString(DiemTb), SelectedRow, 5);
-
 
                 } else {
 
@@ -477,9 +476,9 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
     private void TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TimKiemActionPerformed
         bangDuLieu.setRowCount(0);
         tableDiem.setModel(bangDuLieu);
-        Connection con = JDBCConnection.ketNoiJBDC();
+       Connection con = JDBCConnection.ketNoiJBDC();
         try {
-            CallableStatement mystm = con.prepareCall("{call sp_BangDiemMon_InBangDiem(?,?,?,?)}");
+            CallableStatement mystm =con.prepareCall("{call sp_BangDiemMon_InBangDiem(?,?,?,?)}");
             int STT = 1;
             mystm.setInt(1, Integer.parseInt(Nam.getSelectedItem().toString()));
             mystm.setString(2, Hocky.getSelectedItem().toString());
@@ -496,9 +495,10 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
                 String MaHocSinh = rs.getString("MaHocSinh");
                 String[] data = {Integer.toString(STT), HoTen, MaLop, Diem15p, Diem1tiet, DiemTB, MaHocSinh};
                 bangDuLieu.addRow(data);
-                tableDiem.setModel(bangDuLieu);
+
                 STT++;
             }
+            tableDiem.setModel(bangDuLieu);
 
         } catch (SQLException ex) {
             Logger.getLogger(BangDiemMonPanel.class.getName()).log(Level.SEVERE, null, ex);

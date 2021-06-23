@@ -5,17 +5,68 @@
  */
 package gui;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import popupframe.TongKetMon_BangDiemMonPanel;
+
 /**
  *
  * @author Admin
  */
 public class TongKetMonPanel extends javax.swing.JPanel {
 
+    TongKetMon_BangDiemMonPanel BangDiemMon = new TongKetMon_BangDiemMonPanel();
+
+    DefaultTableModel bangdulieu = new DefaultTableModel();
+    DefaultTableModel bangDiemMonTableModel = new DefaultTableModel();
+
     /**
      * Creates new form BaoCaoTongKetMon
      */
     public TongKetMonPanel() {
         initComponents();
+        XemThongTin.setVisible(false);
+        BangDiemMon.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        String[] colTitle = {"STT", "Lớp", "Sĩ Số", "Số lượng đạt", "Tỉ lệ"};
+        bangdulieu = new DefaultTableModel(colTitle, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+
+                return false;
+            }
+        };
+        String[] colTitle_bangdiemmon = {"STT", "Họ tên", "Điểm 15p", "Điểm 1 tiết", "Điểm TBM"};
+        bangDiemMonTableModel = new DefaultTableModel(colTitle_bangdiemmon, 0) {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+
+                return false;
+            }
+        };
+        BangDiemMon.tableDiem_BangDiemMon.setModel(bangDiemMonTableModel);
+        tableTongKet.setModel(bangdulieu);
+//event click đúp table
+        tableTongKet.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+
+                if (mouseEvent.getClickCount() == 2 && tableTongKet.getSelectedRow() != -1) {
+                    BangDiemMon.setVisible(true);
+                    showBangDiemMon();
+                }
+            }
+        });
+
     }
 
     /**
@@ -29,16 +80,17 @@ public class TongKetMonPanel extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        Mon = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        HocKi = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        Nam = new javax.swing.JComboBox<>();
+        TimKiem = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jButton5 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        XemThongTin = new javax.swing.JButton();
+        jScrollPane = new javax.swing.JScrollPane();
+        tableTongKet = new javax.swing.JTable();
+        jButton6 = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -46,28 +98,33 @@ public class TongKetMonPanel extends javax.swing.JPanel {
 
         jLabel2.setText("Môn:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn", "Toán", "Lý", "Hóa", "Sinh", "Sử", "Địa", "Văn", "Đạo Đức", "Thể Dục" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        Mon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Toán", "Lý", "Hóa", "Sinh", "Sử", "Địa", "Văn", "Đạo Đức", "Thể Dục" }));
+        Mon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                MonActionPerformed(evt);
             }
         });
 
         jLabel3.setText("Học kỳ:");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn", "Học kỳ I", "Học kỳ II" }));
-        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+        HocKi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Học kì 1", "Học kì 2" }));
+        HocKi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox3ActionPerformed(evt);
+                HocKiActionPerformed(evt);
             }
         });
 
         jLabel9.setText("Năm:");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2019", "2020", "2021" }));
+        Nam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2021", "2020", "2019" }));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/search.png"))); // NOI18N
-        jButton1.setText("Tìm kiếm");
+        TimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/search.png"))); // NOI18N
+        TimKiem.setText("Tìm kiếm");
+        TimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TimKiemActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -77,19 +134,19 @@ public class TongKetMonPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
+                .addComponent(Mon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(HocKi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Nam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(56, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(TimKiem)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -98,13 +155,13 @@ public class TongKetMonPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Mon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(HocKi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Nam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(TimKiem)
                 .addContainerGap())
         );
 
@@ -112,10 +169,15 @@ public class TongKetMonPanel extends javax.swing.JPanel {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Báo cáo tổng kết môn"));
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/printer (1).png"))); // NOI18N
-        jButton5.setText("In");
+        XemThongTin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/search.png"))); // NOI18N
+        XemThongTin.setText("Xem thông tin");
+        XemThongTin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                XemThongTinActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableTongKet.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -123,7 +185,25 @@ public class TongKetMonPanel extends javax.swing.JPanel {
                 "STT", "Lớp", "Sĩ số", "Số lượng đạt", "Tỉ lệ"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tableTongKet.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tableTongKetMousePressed(evt);
+            }
+        });
+        tableTongKet.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tableTongKetKeyPressed(evt);
+            }
+        });
+        jScrollPane.setViewportView(tableTongKet);
+
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/printer (1).png"))); // NOI18N
+        jButton6.setText("In");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -131,46 +211,158 @@ public class TongKetMonPanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton5)))
-                .addContainerGap())
+                .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 662, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(XemThongTin)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton6)
+                .addGap(21, 21, 21))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
-                .addGap(25, 25, 25)
-                .addComponent(jButton5)
-                .addContainerGap())
+                .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(XemThongTin)
+                    .addComponent(jButton6))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
-        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, 300));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void MonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_MonActionPerformed
 
-    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+    private void HocKiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HocKiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox3ActionPerformed
+    }//GEN-LAST:event_HocKiActionPerformed
+
+    private void TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TimKiemActionPerformed
+        bangdulieu.setRowCount(0);
+        tableTongKet.setModel(bangdulieu);
+        Connection con = JDBCConnection.ketNoiJBDC();
+        try {
+            CallableStatement mystm = con.prepareCall("{call sp_TongKetMon_Inbang(?,?,?)}");
+            //goi procedure update du lieu
+            CallableStatement updateMystm = con.prepareCall("{call sp_TongKetMon_CapNhatBang(?,?,?)}");
+            updateMystm.setString(1, Mon.getSelectedItem().toString());
+            updateMystm.setString(2, HocKi.getSelectedItem().toString());
+            updateMystm.setInt(3, Integer.parseInt(Nam.getSelectedItem().toString()));
+            int updaters = updateMystm.executeUpdate();
+
+            mystm.setString(1, Mon.getSelectedItem().toString());
+            mystm.setString(2, HocKi.getSelectedItem().toString());
+            mystm.setInt(3, Integer.parseInt(Nam.getSelectedItem().toString()));
+            ResultSet rs = mystm.executeQuery();
+            int STT = 0;
+            while (rs.next()) {
+                String MaLop = rs.getString("MaLop");
+                String SiSo = rs.getString("SiSo");
+                String SLDat = rs.getString("SLDat");
+                String TiLe = rs.getString("TiLe");
+                STT++;
+                String[] row = {Integer.toString(STT), MaLop, SiSo, SLDat, TiLe};
+                bangdulieu.addRow(row);
+
+            }
+            tableTongKet.setModel(bangdulieu);
+            XemThongTin.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(TongKetMonPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_TimKiemActionPerformed
+    public void showBangDiemMon() {
+        bangDiemMonTableModel.setRowCount(0);
+        BangDiemMon.tableDiem_BangDiemMon.setModel(bangDiemMonTableModel);
+        int row = tableTongKet.getSelectedRow();
+        int column = tableTongKet.getSelectedColumn();
+        String lop = tableTongKet.getValueAt(row, 1).toString().trim();
+        int namhoc = Integer.parseInt(this.Nam.getSelectedItem().toString());
+        String hocki = HocKi.getSelectedItem().toString();
+        String monhoc = Mon.getSelectedItem().toString();
+        BangDiemMon.Tittle.setBorder(javax.swing.BorderFactory.createTitledBorder("Bảng điểm môn chi tiết của lớp " + lop + ", môn " + monhoc + ", " + hocki + ", năm " + namhoc));
+        Connection con = JDBCConnection.ketNoiJBDC();
+        try {
+            CallableStatement mystm = con.prepareCall("{call sp_BangDiemMon_InBangDiem(?,?,?,?)}");
+            int STT = 1;
+            mystm.setInt(1, namhoc);
+            mystm.setString(2, hocki);
+            mystm.setString(3, monhoc);
+            mystm.setString(4, "10A1");
+            ResultSet rs = mystm.executeQuery();
+            while (rs.next()) {
+                String HoTen = rs.getString("HoTen");
+
+                String Diem15p = rs.getString("Diem15Phut");
+                String Diem1tiet = rs.getString("Diem1Tiet");
+                String DiemTB = rs.getString("DiemTBM");
+                System.out.println(Diem15p+" "+Diem1tiet+" "+HoTen);
+
+                String[] data = {Integer.toString(STT), HoTen, Diem15p, Diem1tiet, DiemTB};
+              
+                bangDiemMonTableModel.addRow(data);
+
+                STT++;
+            }
+            BangDiemMon.tableDiem_BangDiemMon.setModel(bangDiemMonTableModel);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TongKetMonPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    private void XemThongTinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_XemThongTinActionPerformed
+
+        if (tableTongKet.getSelectedRow() != -1) {
+            BangDiemMon.setVisible(true);
+            showBangDiemMon();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn một hàng để xem thông tin");
+
+        }
+
+    }//GEN-LAST:event_XemThongTinActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void tableTongKetKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableTongKetKeyPressed
+        if (tableTongKet.getSelectedRow() != -1) {
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                evt.consume();
+                BangDiemMon.setVisible(true);
+                showBangDiemMon();
+                
+
+            }
+        }
+    }//GEN-LAST:event_tableTongKetKeyPressed
+
+    private void tableTongKetMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableTongKetMousePressed
+            
+    }//GEN-LAST:event_tableTongKetMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> HocKi;
+    private javax.swing.JComboBox<String> Mon;
+    private javax.swing.JComboBox<String> Nam;
+    private javax.swing.JButton TimKiem;
+    private javax.swing.JButton XemThongTin;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane;
+    private javax.swing.JTable tableTongKet;
     // End of variables declaration//GEN-END:variables
 }

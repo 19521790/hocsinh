@@ -27,63 +27,68 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
     String namhoc;
     String mshs;
     String tenlop;
-    void loaddatabase(){
-   
-    String sqlkh1="EXEC sp_DanhSachLop_InDiemHocSinh "+namhoc+",N'Học kì 1','"+mshs+"'";
-    System.out.println(sqlkh1);
-     String sqlkh2="EXEC sp_DanhSachLop_InDiemHocSinh "+namhoc+",N'Học kì 2','"+mshs+"'";
- 
-    System.out.println(sqlkh2);
-   
-      try{
-             Connection  cn= JDBCConnection.ketNoiJBDC();
-         CallableStatement   cst=cn.prepareCall(sqlkh1);
-            ResultSet r = cst.executeQuery(); 
-            
-            while(r.next()){
-                 System.out.println("?????????????");
-            String arr[]={r.getString("TenMonHoc"),r.getString("Diem15Phut"),r.getString("Diem1Tiet"),r.getString("DiemTBM"),r.getString("DiemTBM")};
-            addItemTableKH1(arr);
+
+    void loaddatabase() {
+        DefaultTableModel model = (DefaultTableModel) this.hk1table.getModel();
+        model.setRowCount(0);
+        model = (DefaultTableModel) this.hk2table.getModel();
+        model.setRowCount(0);
+        String sqlkh1 = "EXEC sp_DanhSachLop_InDiemHocSinh " + namhoc + ",N'Học kì 1','" + mshs + "'";
+        System.out.println(sqlkh1);
+        String sqlkh2 = "EXEC sp_DanhSachLop_InDiemHocSinh " + namhoc + ",N'Học kì 2','" + mshs + "'";
+
+        System.out.println(sqlkh2);
+
+        try {
+            Connection cn = JDBCConnection.ketNoiJBDC();
+            CallableStatement cst = cn.prepareCall(sqlkh1);
+            ResultSet r = cst.executeQuery();
+
+            while (r.next()) {
+                System.out.println("?????????????");
+                String arr[] = {r.getString("TenMonHoc"), r.getString("Diem15Phut"), r.getString("Diem1Tiet"), r.getString("DiemTBM"), r.getString("DiemTBM")};
+                addItemTableKH1(arr);
             }
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("unfound");
-         return;       
+            return;
         }
-      try{
-            Connection  cn= JDBCConnection.ketNoiJBDC();
-         java.sql.CallableStatement cst=cn.prepareCall(sqlkh2);
-            ResultSet r = cst.executeQuery(); 
-             while(r.next()){
-                 System.out.println("?????????????");
-            String arr[]={r.getString("TenMonHoc"),r.getString("Diem15Phut"),r.getString("Diem1Tiet"),r.getString("DiemTBM"),r.getString("DiemTBM")};
-            addItemTableKH2(arr);
+        try {
+            Connection cn = JDBCConnection.ketNoiJBDC();
+            java.sql.CallableStatement cst = cn.prepareCall(sqlkh2);
+            ResultSet r = cst.executeQuery();
+            while (r.next()) {
+                System.out.println("?????????????");
+                String arr[] = {r.getString("TenMonHoc"), r.getString("Diem15Phut"), r.getString("Diem1Tiet"), r.getString("DiemTBM"), r.getString("DiemTBM")};
+                addItemTableKH2(arr);
             }
+        } catch (SQLException e) {
+
         }
-        catch(SQLException e){
-                
-        }
     }
-    void addItemTableKH1(String  data[]){
-    DefaultTableModel tblM= (DefaultTableModel)this.hk1table.getModel();
-          tblM.addRow(data);
+
+    void addItemTableKH1(String data[]) {
+        DefaultTableModel tblM = (DefaultTableModel) this.hk1table.getModel();
+        tblM.addRow(data);
     }
-    void addItemTableKH2(String data []){
-     DefaultTableModel tblM= (DefaultTableModel)this.hk2table.getModel();
-          tblM.addRow(data);
-    
+
+    void addItemTableKH2(String data[]) {
+        DefaultTableModel tblM = (DefaultTableModel) this.hk2table.getModel();
+        tblM.addRow(data);
+
     }
-    public DiemHocSinh_DanhSachLopPanel(String lop,String nam,String ms) {
+
+    public DiemHocSinh_DanhSachLopPanel(String lop, String nam, String ms) {
         initComponents();
         this.namhoc = nam;
         this.tenlop = lop;
-        this.mshs= ms;
+        this.mshs = ms;
         this.clasLabel.setText(lop);
         this.yearLabel.setText(nam);
         this.IDLabel.setText(ms);
         loaddatabase();
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE );
-        
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
     }
 
     /**
@@ -117,8 +122,22 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
             new String [] {
                 "Môn Học", "Điểm 15 phút", "Điểm 1 tiết", "Điểm thi học kì ", "Điểm trung bình"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(hk1table);
+        if (hk1table.getColumnModel().getColumnCount() > 0) {
+            hk1table.getColumnModel().getColumn(0).setResizable(false);
+            hk1table.getColumnModel().getColumn(1).setResizable(false);
+            hk1table.getColumnModel().getColumn(2).setResizable(false);
+            hk1table.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         hk2table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -127,8 +146,23 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
             new String [] {
                 "Môn học", "Điểm 15 phút", "Điểm 1 tiết", "Điểm thi học kì", "Điểm trung bình"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(hk2table);
+        if (hk2table.getColumnModel().getColumnCount() > 0) {
+            hk2table.getColumnModel().getColumn(0).setResizable(false);
+            hk2table.getColumnModel().getColumn(1).setResizable(false);
+            hk2table.getColumnModel().getColumn(2).setResizable(false);
+            hk2table.getColumnModel().getColumn(3).setResizable(false);
+            hk2table.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Mã số học sinh");

@@ -32,6 +32,7 @@ public class JDBCConnection {
 
             } catch (SQLException ex) {
                 Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("ket noi that bai !!!!!!!!!!!!!");
             }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ex);

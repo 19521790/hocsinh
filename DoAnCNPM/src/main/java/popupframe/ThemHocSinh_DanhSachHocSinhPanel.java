@@ -6,6 +6,11 @@
 package popupframe;
 
 import gui.DanhSachHocSinhPanel;
+import gui.JDBCConnection;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JFrame;
 
 /**
@@ -18,14 +23,49 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
      * Creates new form themhocsinhDialog
      */
     DanhSachHocSinhPanel dsl;
+
+    boolean check(String mshs) {
+        String sql1 = "select * from HOCSINH where MaHocSinh= '" + mshs + "'";
+        String sql2="select * from QUATRINHHOC where  MaHocSinh='"+mshs+"'and MaLop ='"+this.dsl.selectedClas+"' and MaHocKi LIKE'"+this.dsl.selectedYear+"%'";
+         System.out.println(sql2);
+        try {
+            Connection cn = JDBCConnection.ketNoiJBDC();
+            Statement sta = cn.createStatement();
+            ResultSet r = sta.executeQuery(sql1);
+
+            if (r.next()) {
+
+                this.warningLabel.setText("Hoc sinh:" + r.getString("HoTen"));
+                System.out.print("^^^^^^^^");
+            } else {
+                this.warningLabel.setText("Khong tim thay");
+                System.out.println("NO DATA");
+                return false;
+            }
+            r = sta.executeQuery(sql2);
+            if (r.next()) {
+                System.out.println(sql2);
+                System.out.println("data  sql2 in themhocsinh_danhsachhocsinh");
+                 this.warningLabel.setText("Hoc sinh da co trong lop");
+                return false;
+
+            }
+        } catch (SQLException e) {
+            System.out.println("errror");
+        }
+        return true;
+
+    }
+
     public ThemHocSinh_DanhSachHocSinhPanel() {
         initComponents();
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE );
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
-    public ThemHocSinh_DanhSachHocSinhPanel(DanhSachHocSinhPanel t){
+
+    public ThemHocSinh_DanhSachHocSinhPanel(DanhSachHocSinhPanel t) {
         initComponents();
-        dsl=t;
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE );
+        dsl = t;
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -41,6 +81,7 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
         okbutton = new javax.swing.JButton();
         cancelbutton = new javax.swing.JButton();
         txtMSSV = new javax.swing.JTextField();
+        warningLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,6 +104,9 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
             }
         });
 
+        warningLabel.setForeground(new java.awt.Color(255, 51, 102));
+        warningLabel.setText("             ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,6 +124,10 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
                         .addGap(37, 37, 37)
                         .addComponent(cancelbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(47, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(warningLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(75, 75, 75))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -88,7 +136,9 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMSSV, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(95, 95, 95)
+                .addGap(28, 28, 28)
+                .addComponent(warningLabel)
+                .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(okbutton, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                     .addComponent(cancelbutton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -100,15 +150,12 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
 
     private void okbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okbuttonActionPerformed
         // TODO add your handling code here:
-        if(this.dsl.addstu(this.txtMSSV.getText())){
-            
+        if (check(this.txtMSSV.getText())) {
+            this.dsl.addstu(this.txtMSSV.getText());
             this.dsl.addintoTable(this.txtMSSV.getText());
-           ;
-        }
-        else {
-        
-        }
-        this.setVisible(false);
+            this.setVisible(false);
+        } 
+
     }//GEN-LAST:event_okbuttonActionPerformed
 
     private void cancelbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelbuttonActionPerformed
@@ -120,5 +167,6 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton okbutton;
     private javax.swing.JTextField txtMSSV;
+    private javax.swing.JLabel warningLabel;
     // End of variables declaration//GEN-END:variables
 }

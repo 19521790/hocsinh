@@ -5,6 +5,13 @@
  */
 package gui;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
@@ -14,8 +21,43 @@ public class TongKetHocKyPanel extends javax.swing.JPanel {
     /**
      * Creates new form BaoCaoTongKetMon
      */
+    void fillTable() {
+        String sql2 = "";
+        String sql = "EXEC sp_TongKetHocKi_InDanhSach N'" + this.hocky.getSelectedItem().toString() + "'," + this.yearComboBox.getSelectedItem().toString();
+        if (this.hocky.getSelectedItem().toString() == "Học kì 1") {
+            sql2 = "EXEC sp_TongKetHocKi_CapNhatBang '" + this.yearComboBox.getSelectedItem().toString() + "K1' ";
+        } else if (this.hocky.getSelectedItem().toString() == "Học kì 2") {
+            sql2 = "EXEC sp_TongKetHocKi_CapNhatBang '" + this.yearComboBox.getSelectedItem().toString() + "K2' ";
+        }
+        System.out.println(sql);
+        Connection cn = JDBCConnection.ketNoiJBDC();
+
+        try {
+            CallableStatement cst = cn.prepareCall(sql2);
+            int i = cst.executeUpdate();
+        } catch (SQLException e) {
+
+            return;
+        }
+
+        try {
+            CallableStatement cst = cn.prepareCall(sql);
+            ResultSet r = cst.executeQuery();
+            while (r.next()) {
+                String arr[] = {r.getString("MaTongKetHocKi"), r.getString("MaLop"), r.getString("SiSo"), r.getString("SLDat"), r.getString("TiLe")};
+                DefaultTableModel tblM = (DefaultTableModel) this.infoTable.getModel();
+                tblM.addRow(arr);
+            }
+        } catch (SQLException e) {
+
+            return;
+        }
+
+    }
+
     public TongKetHocKyPanel() {
         initComponents();
+
     }
 
     /**
@@ -30,13 +72,13 @@ public class TongKetHocKyPanel extends javax.swing.JPanel {
         jPanel6 = new javax.swing.JPanel();
         jButton6 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        infoTable = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox6 = new javax.swing.JComboBox<>();
+        hocky = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
-        jComboBox7 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        yearComboBox = new javax.swing.JComboBox<>();
+        seekButton = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -45,7 +87,7 @@ public class TongKetHocKyPanel extends javax.swing.JPanel {
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/printer (1).png"))); // NOI18N
         jButton6.setText("In");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        infoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -53,7 +95,7 @@ public class TongKetHocKyPanel extends javax.swing.JPanel {
                 "STT", "Lớp", "Sĩ số", "Số lượng đạt", "Tỉ lệ"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(infoTable);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -83,19 +125,24 @@ public class TongKetHocKyPanel extends javax.swing.JPanel {
 
         jLabel5.setText("Học kỳ:");
 
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn", "Học kỳ I", "Học kỳ II" }));
-        jComboBox6.addActionListener(new java.awt.event.ActionListener() {
+        hocky.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn", "Học kì 1", "Học kì 2" }));
+        hocky.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox6ActionPerformed(evt);
+                hockyActionPerformed(evt);
             }
         });
 
         jLabel10.setText("Năm:");
 
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2019", "2020", "2021" }));
+        yearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn", "2019", "2020", "2021" }));
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/search.png"))); // NOI18N
-        jButton2.setText("Tìm kiếm");
+        seekButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/search.png"))); // NOI18N
+        seekButton.setText("Tìm kiếm");
+        seekButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seekButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -105,15 +152,15 @@ public class TongKetHocKyPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(hocky, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(yearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(207, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(seekButton)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -122,32 +169,45 @@ public class TongKetHocKyPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(hocky, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
-                    .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(yearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(seekButton)
                 .addContainerGap())
         );
 
         add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
+    private void hockyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hockyActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox6ActionPerformed
+
+    }//GEN-LAST:event_hockyActionPerformed
+
+    private void seekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seekButtonActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) this.infoTable.getModel();
+        model.setRowCount(0);
+        if (this.hocky.getSelectedItem().toString() == "Chọn" || this.yearComboBox.getSelectedItem().toString() == "Chọn") {
+            JOptionPane.showMessageDialog(this, "Chưa chọn năm hoặc học kỳ");
+            return;
+        }
+        this.fillTable();
+
+    }//GEN-LAST:event_seekButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> hocky;
+    private javax.swing.JTable infoTable;
     private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox<String> jComboBox6;
-    private javax.swing.JComboBox<String> jComboBox7;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JButton seekButton;
+    private javax.swing.JComboBox<String> yearComboBox;
     // End of variables declaration//GEN-END:variables
 }

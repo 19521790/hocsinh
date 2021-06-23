@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import popupframe.ThongTinHocSinh_DanhSachHocSinhPanel;
      
 /**
@@ -29,14 +30,23 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
      * Creates new form NhapLop
      */
     ThongTinHocSinh_DanhSachHocSinhPanel  infoPanel=new ThongTinHocSinh_DanhSachHocSinhPanel();
-    String selectedClas="";
-    String selectedYear="";
+  public  String selectedClas;
+  public  String selectedYear;
     String mshsChosen="";
     ThemHocSinh_DanhSachHocSinhPanel addstudent= new ThemHocSinh_DanhSachHocSinhPanel(this);
     DiemHocSinh_DanhSachLopPanel diemhs ;
     List<String > deletequery= new ArrayList<>();
     List<String> mahsList = new ArrayList<>();
     List<String> procquery= new ArrayList<>();
+    boolean checkhaveSelected(){
+     
+     if(this.selectedClas=="Chọn"||this.selectedYear=="Chọn"){
+         System.out.println("checkhaveSelected");
+         JOptionPane.showMessageDialog(this, "Chua chon Lop va Nam Hoc");
+         return  true;
+     }
+     return false;
+    }
     void modifyDB(){
         for(var t :procquery){
             System.out.println(t);
@@ -99,6 +109,7 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
                  
        }
        catch(SQLException e){
+           System.out.println(" loi ############");
            return  false;
        }
             return true;
@@ -200,16 +211,27 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
         jLabel12 = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         showinfo = new javax.swing.JButton();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nhập lớp cần tìm"));
 
         jLabel1.setText("Lớp:");
 
-        clasList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10A1", "10A2", "10A3", "10A4", "11A1", "11A2", "11A3", "12A1", "12A2" }));
+        clasList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn", "10A1", "10A2", "10A3", "10A4", "11A1", "11A2", "11A3", "12A1", "12A2" }));
+        clasList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clasListActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Năm học:");
+
+        yearList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn" }));
+        yearList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yearListActionPerformed(evt);
+            }
+        });
 
         seekButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/search.png"))); // NOI18N
         seekButton.setText("Tìm kiếm");
@@ -322,13 +344,6 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setText("Điểm số");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         showinfo.setText("Thông tin học sinh");
         showinfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -352,9 +367,7 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
                         .addComponent(addButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
-                        .addGap(26, 26, 26)
+                        .addGap(109, 109, 109)
                         .addComponent(showinfo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(deleteButton)
@@ -373,7 +386,6 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
                         .addComponent(addButton)
                         .addComponent(saveButton)
                         .addComponent(jLabel12)
-                        .addComponent(jButton1)
                         .addComponent(showinfo))
                     .addComponent(deleteButton)
                     .addGroup(layout.createSequentialGroup()
@@ -388,12 +400,15 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
         
     }
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-            this.addstudent.setVisible(true);
+         if(this.checkhaveSelected()) return;    
+        this.addstudent.setVisible(true);
             
             
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+          if(this.checkhaveSelected()) return;
+        if(this.checkhaveSelected()) return;
         if(this.mshsChosen=="") return;
         int index =this.infoTable.getSelectedRow();
         TableModel md= this.infoTable.getModel();
@@ -408,6 +423,7 @@ for(int i=0; i<numRows ; i++ ) {
 
     private void seekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seekButtonActionPerformed
         // TODO add your handling code here:
+        if(this.checkhaveSelected()) return;
         this.mshsChosen="";
         this.deletequery=new  ArrayList<>();
             this.procquery=new  ArrayList<>();
@@ -428,26 +444,19 @@ model.setRowCount(0);
     }//GEN-LAST:event_infoTableMouseClicked
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+       if(this.checkhaveSelected()) return;
+       if(this.deletequery.isEmpty()||this.procquery.isEmpty()) {
+       JOptionPane.showMessageDialog(this, "Chua co su thay doi nao ");
+       return;
+       }
         this.modifyDB();
         this.deletequery=new  ArrayList<>();
         this.procquery=new  ArrayList<>();
     }//GEN-LAST:event_saveButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        if(this.mshsChosen=="")return;
-         int index =this.infoTable.getSelectedRow();
-        TableModel md= this.infoTable.getModel();
-        
-        this.diemhs= new DiemHocSinh_DanhSachLopPanel(this.selectedClas,this.selectedYear,this.mshsChosen);
-       // this.getInfo(this.mshsChosen=md.getValueAt(index, 0).toString());
-       this.diemhs.setVisible(true);
-        
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void showinfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showinfoActionPerformed
         // TODO add your handling code here:
+         if(this.checkhaveSelected()) return;
         if(mshsChosen=="") return;
         this.infoPanel.setVisible(true);
          String sql="select * from HOCSINH where HOCSINH.MaHocSinh='"+mshsChosen+"'";
@@ -472,6 +481,19 @@ model.setRowCount(0);
         
     }//GEN-LAST:event_showinfoActionPerformed
 
+    private void clasListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clasListActionPerformed
+        // TODO add your handling code here:
+        this.selectedClas=this.clasList.getSelectedItem().toString();
+        System.out.println("DanhSachLop_ lop combobox:   "+this.selectedClas);
+
+    }//GEN-LAST:event_clasListActionPerformed
+
+    private void yearListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearListActionPerformed
+        // TODO add your handling code here:
+         this.selectedYear=this.yearList.getSelectedItem().toString();
+        System.out.println("DanhSachLop_ NAM combobox:   "+this.selectedYear);
+    }//GEN-LAST:event_yearListActionPerformed
+
         
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -479,7 +501,6 @@ model.setRowCount(0);
     private javax.swing.JComboBox<String> clasList;
     private javax.swing.JButton deleteButton;
     private javax.swing.JTable infoTable;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
