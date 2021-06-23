@@ -21,51 +21,43 @@ public class TongKetHocKyPanel extends javax.swing.JPanel {
     /**
      * Creates new form BaoCaoTongKetMon
      */
-    void fillTable(){
-        String sql2="";
-       String sql="EXEC sp_TongKetHocKi_InDanhSach N'"+this.hocky.getSelectedItem().toString()+"',"+this.yearComboBox.getSelectedItem().toString();
-       if(this.hocky.getSelectedItem().toString()=="Học kì 1"){
-        sql2="EXEC sp_TongKetHocKi_CapNhatBang '"+this.yearComboBox.getSelectedItem().toString()+"K1' ";
-       }
-       else if (this.hocky.getSelectedItem().toString()=="Học kì 2")
-       {
-         sql2="EXEC sp_TongKetHocKi_CapNhatBang '"+this.yearComboBox.getSelectedItem().toString()+"K2' ";
-       }
-       System.out.println(sql);
+    void fillTable() {
+        String sql2 = "";
+        String sql = "EXEC sp_TongKetHocKi_InDanhSach N'" + this.hocky.getSelectedItem().toString() + "'," + this.yearComboBox.getSelectedItem().toString();
+        if (this.hocky.getSelectedItem().toString() == "Học kì 1") {
+            sql2 = "EXEC sp_TongKetHocKi_CapNhatBang '" + this.yearComboBox.getSelectedItem().toString() + "K1' ";
+        } else if (this.hocky.getSelectedItem().toString() == "Học kì 2") {
+            sql2 = "EXEC sp_TongKetHocKi_CapNhatBang '" + this.yearComboBox.getSelectedItem().toString() + "K2' ";
+        }
+        System.out.println(sql);
         Connection cn = JDBCConnection.ketNoiJBDC();
-     
-      
-         try {
-             CallableStatement cst = cn.prepareCall(sql2);
-           int i=cst.executeUpdate();
-        }
-        catch (SQLException e) {
-          
-            return;
-        }
-       
-       
-      
+
         try {
-             CallableStatement cst = cn.prepareCall(sql);
-            ResultSet r= cst.executeQuery();
-           while(r.next()){
-           String arr[] ={r.getString("MaTongKetHocKi"),r.getString("MaLop"),r.getString("SiSo"),r.getString("SLDat"),r.getString("TiLe")};
-             DefaultTableModel tblM = (DefaultTableModel) this.infoTable.getModel();
-                tblM.addRow(arr);
-           }
-        }
-        catch (SQLException e) {
-          
+            CallableStatement cst = cn.prepareCall(sql2);
+            int i = cst.executeUpdate();
+        } catch (SQLException e) {
+
             return;
         }
 
-    
-    
+        try {
+            CallableStatement cst = cn.prepareCall(sql);
+            ResultSet r = cst.executeQuery();
+            while (r.next()) {
+                String arr[] = {r.getString("MaTongKetHocKi"), r.getString("MaLop"), r.getString("SiSo"), r.getString("SLDat"), r.getString("TiLe")};
+                DefaultTableModel tblM = (DefaultTableModel) this.infoTable.getModel();
+                tblM.addRow(arr);
+            }
+        } catch (SQLException e) {
+
+            return;
+        }
+
     }
+
     public TongKetHocKyPanel() {
         initComponents();
-        
+
     }
 
     /**
@@ -190,17 +182,19 @@ public class TongKetHocKyPanel extends javax.swing.JPanel {
 
     private void hockyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hockyActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_hockyActionPerformed
 
     private void seekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seekButtonActionPerformed
         // TODO add your handling code here:
-        if(this.hocky.getSelectedItem().toString() =="Chọn"||this.yearComboBox.getSelectedItem().toString()=="Chọn"){
+        DefaultTableModel model = (DefaultTableModel) this.infoTable.getModel();
+        model.setRowCount(0);
+        if (this.hocky.getSelectedItem().toString() == "Chọn" || this.yearComboBox.getSelectedItem().toString() == "Chọn") {
             JOptionPane.showMessageDialog(this, "Chưa chọn năm hoặc học kỳ");
-            return;      
+            return;
         }
         this.fillTable();
-        
+
     }//GEN-LAST:event_seekButtonActionPerformed
 
 
