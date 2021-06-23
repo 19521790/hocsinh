@@ -241,6 +241,7 @@ public class TongKetHocKyPanel extends javax.swing.JPanel {
             int row = infoTable.getSelectedRow();
             danhsach.lop = infoTable.getModel().getValueAt(row, column).toString();
             danhsach.nam = this.yearComboBox.getSelectedItem().toString();
+            System.out.println(danhsach.lop+"     "+danhsach.nam);
             danhsach.loaddata();
             danhsach.setVisible(true);
             

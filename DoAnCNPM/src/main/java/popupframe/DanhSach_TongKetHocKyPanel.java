@@ -25,7 +25,10 @@ public class DanhSach_TongKetHocKyPanel extends javax.swing.JFrame {
     public String nam;
     public String lop;
     public void loaddata(){
+          DefaultTableModel model = (DefaultTableModel) this.infoTable.getModel();
+model.setRowCount(0);
       String sql = "exec sp_DanhSachLop_InDanhSach " +nam + ",'" + lop + "'";
+      System.out.println(sql);
         try {
             Connection cn = JDBCConnection.ketNoiJBDC();
             CallableStatement cst = cn.prepareCall(sql);
