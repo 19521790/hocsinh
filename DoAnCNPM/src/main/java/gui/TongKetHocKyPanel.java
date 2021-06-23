@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import popupframe.DanhSach_TongKetHocKyPanel;
 
 /**
  *
@@ -21,6 +22,8 @@ public class TongKetHocKyPanel extends javax.swing.JPanel {
     /**
      * Creates new form BaoCaoTongKetMon
      */
+    DanhSach_TongKetHocKyPanel danhsach = new DanhSach_TongKetHocKyPanel();
+
     void fillTable() {
         String sql2 = "";
         String sql = "EXEC sp_TongKetHocKi_InDanhSach N'" + this.hocky.getSelectedItem().toString() + "'," + this.yearComboBox.getSelectedItem().toString();
@@ -86,6 +89,11 @@ public class TongKetHocKyPanel extends javax.swing.JPanel {
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/printer (1).png"))); // NOI18N
         jButton6.setText("In");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         infoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -94,8 +102,28 @@ public class TongKetHocKyPanel extends javax.swing.JPanel {
             new String [] {
                 "STT", "Lớp", "Sĩ số", "Số lượng đạt", "Tỉ lệ"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        infoTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                infoTableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(infoTable);
+        if (infoTable.getColumnModel().getColumnCount() > 0) {
+            infoTable.getColumnModel().getColumn(0).setResizable(false);
+            infoTable.getColumnModel().getColumn(1).setResizable(false);
+            infoTable.getColumnModel().getColumn(2).setResizable(false);
+            infoTable.getColumnModel().getColumn(3).setResizable(false);
+            infoTable.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -187,6 +215,7 @@ public class TongKetHocKyPanel extends javax.swing.JPanel {
 
     private void seekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seekButtonActionPerformed
         // TODO add your handling code here:
+        
         DefaultTableModel model = (DefaultTableModel) this.infoTable.getModel();
         model.setRowCount(0);
         if (this.hocky.getSelectedItem().toString() == "Chọn" || this.yearComboBox.getSelectedItem().toString() == "Chọn") {
@@ -196,6 +225,28 @@ public class TongKetHocKyPanel extends javax.swing.JPanel {
         this.fillTable();
 
     }//GEN-LAST:event_seekButtonActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+       
+
+
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void infoTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_infoTableMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2 && infoTable.getSelectedRow() != -1) {
+            // your valueChanged overridden method 
+            int column = 1;
+            int row = infoTable.getSelectedRow();
+            danhsach.lop = infoTable.getModel().getValueAt(row, column).toString();
+            danhsach.nam = this.yearComboBox.getSelectedItem().toString();
+            danhsach.loaddata();
+            danhsach.setVisible(true);
+            
+
+        }
+    }//GEN-LAST:event_infoTableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
