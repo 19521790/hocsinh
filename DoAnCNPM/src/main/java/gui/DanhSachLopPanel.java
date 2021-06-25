@@ -35,7 +35,7 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
             ResultSet r = sta.executeQuery(sql);
             while (r.next()) {
 
-                this.clasBox.addItem(r.getString("TenLop"));
+                this.clasBox.addItem(r.getString("MaLop"));
             }
         } catch (SQLException e) {
             return;
@@ -65,6 +65,7 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
             CallableStatement cst = cn.prepareCall(sql);
             ResultSet r = cst.executeQuery();
             int i = 0;
+            System.out.println(sql);
             while (r.next()) {
 
                 i++;

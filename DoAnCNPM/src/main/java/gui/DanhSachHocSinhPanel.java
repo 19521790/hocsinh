@@ -4,9 +4,10 @@
  * and open the template in the editor.
  */
 package gui;
+
 import popupframe.ThemHocSinh_DanhSachHocSinhPanel;
 import popupframe.DiemHocSinh_DanhSachLopPanel;
-import java.util.Date; 
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.table.TableModel;
@@ -19,7 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import popupframe.ThongTinHocSinh_DanhSachHocSinhPanel;
-     
+
 /**
  *
  * @author Admin
@@ -29,161 +30,160 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
     /**
      * Creates new form NhapLop
      */
-    ThongTinHocSinh_DanhSachHocSinhPanel  infoPanel=new ThongTinHocSinh_DanhSachHocSinhPanel();
-  public  String selectedClas;
-  public  String selectedYear;
-    String mshsChosen="";
-    ThemHocSinh_DanhSachHocSinhPanel addstudent= new ThemHocSinh_DanhSachHocSinhPanel(this);
-    DiemHocSinh_DanhSachLopPanel diemhs ;
-    List<String > deletequery= new ArrayList<>();
+    ThongTinHocSinh_DanhSachHocSinhPanel infoPanel = new ThongTinHocSinh_DanhSachHocSinhPanel();
+    public String selectedClas;
+    public String selectedYear;
+    String mshsChosen = "";
+    ThemHocSinh_DanhSachHocSinhPanel addstudent = new ThemHocSinh_DanhSachHocSinhPanel(this);
+    DiemHocSinh_DanhSachLopPanel diemhs;
+    List<String> deletequery = new ArrayList<>();
     List<String> mahsList = new ArrayList<>();
-    List<String> procquery= new ArrayList<>();
-    boolean checkhaveSelected(){
-     
-     if(this.selectedClas=="Chọn"||this.selectedYear=="Chọn"){
-         System.out.println("checkhaveSelected");
-         JOptionPane.showMessageDialog(this, "Chua chon Lop va Nam Hoc");
-         return  true;
-     }
-     return false;
-    }
-    void modifyDB(){
-        for(var t :procquery){
-            System.out.println(t);
-        try{
-             Connection  cn= JDBCConnection.ketNoiJBDC();
-          java.sql.CallableStatement cst=cn.prepareCall(t);
-            ResultSet r = cst.executeQuery(); 
-        }
-        catch(SQLException e){
-                
-        }
-        }
-        
-        for(var t :deletequery){
-         try {
-             Connection  cn= JDBCConnection.ketNoiJBDC();
-             Statement cst=cn.createStatement();
-               int  r = cst.executeUpdate(t);
-             
-         }
-         catch(SQLException e){
-             
-         }
-        
-        }
-    }
-    public void addintoTable(String ms){
-         String sql="select HOCSINH.HoTen ,HOCSINH.MaHocSinh, HOCSINH.Email, HOCSINH.GioiTinh,HOCSINH.DiaChi, HOCSINH.NgaySinh  from HOCSINH where HOCSINH.MaHocSinh ='"+ms+"'";
-          try{
-          Connection  cn= JDBCConnection.ketNoiJBDC();
-          Statement sta=cn.createStatement();
-          ResultSet r = sta.executeQuery(sql); 
-          while(r.next()){
-          String name =r.getString("HoTen");
-          String date= r.getString("NgaySinh");
-          String mahs =r.getString("MaHocSinh");
-          System.out.println(mahs);
-          String email= r.getString("Email");
-          String address=  r.getString("DiaChi");
-          String s= r.getString("GioiTinh");
-          String datab[]={mahs,name,s,date,address};
-          DefaultTableModel tblM= (DefaultTableModel)this.infoTable.getModel();
-          tblM.addRow(datab);
-          }
-          }
-          catch (SQLException e){
-          
-          }
-     
-     }
-    public boolean  addstu(String ms){
-       String sql="select * from HOCSINH where HOCSINH.MaHocSinh='"+ms+"'";
-       try{
-             Connection  cn= JDBCConnection.ketNoiJBDC();
-            Statement sta=cn.createStatement();
-             ResultSet r = sta.executeQuery(sql); 
-             if(!r.next()) return false;
-             System.out.println(r.getString("HoTen"));
-             procquery.add("exec sp_DanhSachHocSinh_ThemHocSinhVaoLop '"+ms+"','"+this.selectedClas+"','"+this.selectedYear+"'");
-                 
-       }
-       catch(SQLException e){
-           System.out.println(" loi ############");
-           return  false;
-       }
+    List<String> procquery = new ArrayList<>();
+
+    boolean checkhaveSelected() {
+
+        if (this.selectedClas == "Chọn" || this.selectedYear == "Chọn") {
+            System.out.println("checkhaveSelected");
+            JOptionPane.showMessageDialog(this, "Chua chon Lop va Nam Hoc");
             return true;
+        }
+        return false;
     }
-    
-    void getInfo(String mshs){
-        String sql="select * from HOCSINH where HOCSINH.MaHocSinh='"+mshs+"'";
-       try{
-          Connection  cn= JDBCConnection.ketNoiJBDC();
-          Statement sta=cn.createStatement();
-          ResultSet r = sta.executeQuery(sql); 
-          while(r.next()){
+
+    void modifyDB() {
+        for (var t : procquery) {
+            System.out.println(t);
+            try {
+                Connection cn = JDBCConnection.ketNoiJBDC();
+                java.sql.CallableStatement cst = cn.prepareCall(t);
+                ResultSet r = cst.executeQuery();
+                System.out.println(t);
+            } catch (SQLException e) {
+
+            }
+        }
+
+        for (var t : deletequery) {
+            try {
+                Connection cn = JDBCConnection.ketNoiJBDC();
+                Statement cst = cn.createStatement();
+                int r = cst.executeUpdate(t);
+                System.out.println(t);
+            } catch (SQLException e) {
+
+            }
+
+        }
+    }
+
+    public void addintoTable(String ms) {
+        String sql = "select HOCSINH.HoTen ,HOCSINH.MaHocSinh, HOCSINH.Email, HOCSINH.GioiTinh,HOCSINH.DiaChi, HOCSINH.NgaySinh  from HOCSINH where HOCSINH.MaHocSinh ='" + ms + "'";
+        try {
+            Connection cn = JDBCConnection.ketNoiJBDC();
+            Statement sta = cn.createStatement();
+            ResultSet r = sta.executeQuery(sql);
+            while (r.next()) {
+                String name = r.getString("HoTen");
+                String date = r.getString("NgaySinh");
+                String mahs = r.getString("MaHocSinh");
+                System.out.println(mahs);
+                String email = r.getString("Email");
+                String address = r.getString("DiaChi");
+                String s = r.getString("GioiTinh");
+                String datab[] = {mahs, name, s, date, address};
+                DefaultTableModel tblM = (DefaultTableModel) this.infoTable.getModel();
+                tblM.addRow(datab);
+            }
+        } catch (SQLException e) {
+
+        }
+
+    }
+
+    public boolean addstu(String ms) {
+        String sql = "select * from HOCSINH where HOCSINH.MaHocSinh='" + ms + "'";
+        try {
+            Connection cn = JDBCConnection.ketNoiJBDC();
+            Statement sta = cn.createStatement();
+            ResultSet r = sta.executeQuery(sql);
+            if (!r.next()) {
+                return false;
+            }
+            System.out.println(r.getString("HoTen"));
+            procquery.add("exec sp_DanhSachHocSinh_ThemHocSinhVaoLop '" + ms + "','" + this.selectedClas + "','" + this.selectedYear + "'");
+
+        } catch (SQLException e) {
+            System.out.println(" loi ############");
+            return false;
+        }
+        return true;
+    }
+
+    void getInfo(String mshs) {
+        String sql = "select * from HOCSINH where HOCSINH.MaHocSinh='" + mshs + "'";
+        try {
+            Connection cn = JDBCConnection.ketNoiJBDC();
+            Statement sta = cn.createStatement();
+            ResultSet r = sta.executeQuery(sql);
+            while (r.next()) {
 //          this.nameBox.setText(r.getString("HoTen"));
 //         this.dateBox.setText(r.getString("NgaySinh"));
 //         this.emailBox.setText(r.getString("Email"));
 //         this.addressBox.setText(r.getString("DiaChi"));
-          
-          String s= r.getString("GioiTinh");
-        if(s=="0"){
+
+                String s = r.getString("GioiTinh");
+                if (s == "0") {
 //            this.rbNam2.setSelected(true);
 //            this.rbNu2.setSelected(false);
-        }
-        else{
+                } else {
 //           this.rbNam2.setSelected(false);
 //            this.rbNu2.setSelected(true);
-          }
-         
-          
-          }
-          }
-          catch (SQLException e){
-          
-          }
-    
-    
-    }
-    void seek(String c, String y){
-        
-          
-          String sql ="select DISTINCT  HOCSINH.HoTen ,HOCSINH.MaHocSinh, HOCSINH.Email, HOCSINH.GioiTinh,HOCSINH.DiaChi, HOCSINH.NgaySinh  from HOCSINH  , QUATRINHHOC,HOCKI_NAM ,LOP WHERE HOCSINH.MaHocSinh=QUATRINHHOC.MaHocSinh AND QUATRINHHOC.MaHocKi=HOCKI_NAM.MaHocKi  AND QUATRINHHOC.MaLop=LOP.MaLop AND LOP.MaLop='"+c+"' AND HOCKI_NAM.Nam="+y;
-        try{
-          Connection  cn= JDBCConnection.ketNoiJBDC();
-          Statement sta=cn.createStatement();
-          ResultSet r = sta.executeQuery(sql); 
-          while(r.next()){
-          String name =r.getString("HoTen");
-          String date= r.getString("NgaySinh");
-          String mahs =r.getString("MaHocSinh");
-          System.out.println(mahs);
-          String email= r.getString("Email");
-          String address=  r.getString("DiaChi");
-          String s= r.getString("GioiTinh");
-          String datab[]={mahs,name,s,date,address};
-          DefaultTableModel tblM= (DefaultTableModel)this.infoTable.getModel();
-          tblM.addRow(datab);
-          }
-        }
-          catch (SQLException e){
-           
-          }
-    
-   
-    }
-    void loadContentYearList(int curYear){
-    this.yearList.addItem(Integer.toString(curYear));
-    this.yearList.addItem(Integer.toString(curYear-1));
-    this.yearList.addItem(Integer.toString(curYear-2));
+                }
 
-}
+            }
+        } catch (SQLException e) {
+
+        }
+
+    }
+
+    void seek(String c, String y) {
+
+        String sql = "select DISTINCT  HOCSINH.HoTen ,HOCSINH.MaHocSinh, HOCSINH.Email, HOCSINH.GioiTinh,HOCSINH.DiaChi, HOCSINH.NgaySinh  from HOCSINH  , QUATRINHHOC,HOCKI_NAM ,LOP WHERE HOCSINH.MaHocSinh=QUATRINHHOC.MaHocSinh AND QUATRINHHOC.MaHocKi=HOCKI_NAM.MaHocKi  AND QUATRINHHOC.MaLop=LOP.MaLop AND LOP.MaLop='" + c + "' AND HOCKI_NAM.Nam=" + y;
+        try {
+            Connection cn = JDBCConnection.ketNoiJBDC();
+            Statement sta = cn.createStatement();
+            ResultSet r = sta.executeQuery(sql);
+            while (r.next()) {
+                String name = r.getString("HoTen");
+                String date = r.getString("NgaySinh");
+                String mahs = r.getString("MaHocSinh");
+                System.out.println(mahs);
+                String email = r.getString("Email");
+                String address = r.getString("DiaChi");
+                String s = r.getString("GioiTinh");
+                String datab[] = {mahs, name, s, date, address};
+                DefaultTableModel tblM = (DefaultTableModel) this.infoTable.getModel();
+                tblM.addRow(datab);
+            }
+        } catch (SQLException e) {
+
+        }
+
+    }
+
+    void loadContentYearList(int curYear) {
+        this.yearList.addItem(Integer.toString(curYear));
+        this.yearList.addItem(Integer.toString(curYear - 1));
+        this.yearList.addItem(Integer.toString(curYear - 2));
+
+    }
+
     public DanhSachHocSinhPanel() {
-           initComponents();
-         Date d= new Date();
-          System.out.println("ọ");
-    this.loadContentYearList(d.getYear()+1900);
+        initComponents();
+        Date d = new Date();
+        System.out.println("ọ");
+        this.loadContentYearList(d.getYear() + 1900);
     }
 
     /**
@@ -192,7 +192,7 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -396,105 +396,123 @@ public class DanhSachHocSinhPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-    private void saveTABLE(java.awt.event.ActionEvent evt){
-        
+    private void saveTABLE(java.awt.event.ActionEvent evt) {
+
     }
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-         if(this.checkhaveSelected()) return;    
+        if (this.checkhaveSelected()) {
+            return;
+        }
         this.addstudent.setVisible(true);
-            
-            
+
+
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-          if(this.checkhaveSelected()) return;
-        if(this.checkhaveSelected()) return;
-        if(this.mshsChosen=="") return;
-        int index =this.infoTable.getSelectedRow();
-        TableModel md= this.infoTable.getModel();
-       this.deletequery.add("update QUATRINHHOC set MaLop=null where MaHocSinh='"+md.getValueAt(index, 0).toString()+"'");
-       int numRows = infoTable.getSelectedRows().length;
+        if (this.checkhaveSelected()) {
+            return;
+        }
+        if (this.checkhaveSelected()) {
+            return;
+        }
+        if (this.mshsChosen == "") {
+            return;
+        }
+        int index = this.infoTable.getSelectedRow();
+        TableModel md = this.infoTable.getModel();
+        this.deletequery.add("update QUATRINHHOC set MaLop=null where MaHocSinh='" + md.getValueAt(index, 0).toString() + "'");
+        int numRows = infoTable.getSelectedRows().length;
         DefaultTableModel model = (DefaultTableModel) this.infoTable.getModel();
-for(int i=0; i<numRows ; i++ ) {
+        for (int i = 0; i < numRows; i++) {
 
-    model.removeRow(infoTable.getSelectedRow());
-}
+            model.removeRow(infoTable.getSelectedRow());
+        }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void seekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seekButtonActionPerformed
         // TODO add your handling code here:
-        if(this.checkhaveSelected()) return;
-        this.mshsChosen="";
-        this.deletequery=new  ArrayList<>();
-            this.procquery=new  ArrayList<>();
+        if (this.checkhaveSelected()) {
+            return;
+        }
+        this.mshsChosen = "";
+        this.deletequery = new ArrayList<>();
+        this.procquery = new ArrayList<>();
         DefaultTableModel model = (DefaultTableModel) this.infoTable.getModel();
-model.setRowCount(0);
-         System.out.println((String)this.yearList.getSelectedItem());
-         this.selectedClas=(String)this.clasList.getSelectedItem();
-         this.selectedYear= (String)this.yearList.getSelectedItem();
-        seek((String)this.clasList.getSelectedItem(),(String)this.yearList.getSelectedItem());
+        model.setRowCount(0);
+        System.out.println((String) this.yearList.getSelectedItem());
+        this.selectedClas = (String) this.clasList.getSelectedItem();
+        this.selectedYear = (String) this.yearList.getSelectedItem();
+        seek((String) this.clasList.getSelectedItem(), (String) this.yearList.getSelectedItem());
     }//GEN-LAST:event_seekButtonActionPerformed
 
     private void infoTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_infoTableMouseClicked
         // TODO add your handling code here:
-         int index =this.infoTable.getSelectedRow();
-        TableModel md= this.infoTable.getModel();
-        this.getInfo(this.mshsChosen=md.getValueAt(index, 0).toString());
-        
+        int index = this.infoTable.getSelectedRow();
+        TableModel md = this.infoTable.getModel();
+        this.getInfo(this.mshsChosen = md.getValueAt(index, 0).toString());
+
     }//GEN-LAST:event_infoTableMouseClicked
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-       if(this.checkhaveSelected()) return;
-       if(this.deletequery.isEmpty()||this.procquery.isEmpty()) {
-       JOptionPane.showMessageDialog(this, "Chua co su thay doi nao ");
-       return;
-       }
+      for(var  i :deletequery){
+      System.out.println(i);
+          
+      }
+        if (this.checkhaveSelected()) {
+            return;
+        }
+        if (this.deletequery.isEmpty() && this.procquery.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Chua co su thay doi nao ");
+            return;
+        }
         this.modifyDB();
-        this.deletequery=new  ArrayList<>();
-        this.procquery=new  ArrayList<>();
+        this.deletequery = new ArrayList<>();
+        this.procquery = new ArrayList<>();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void showinfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showinfoActionPerformed
         // TODO add your handling code here:
-         if(this.checkhaveSelected()) return;
-        if(mshsChosen=="") return;
+        if (this.checkhaveSelected()) {
+            return;
+        }
+        if (mshsChosen == "") {
+            return;
+        }
         this.infoPanel.setVisible(true);
-         String sql="select * from HOCSINH where HOCSINH.MaHocSinh='"+mshsChosen+"'";
-       try{
-          Connection  cn= JDBCConnection.ketNoiJBDC();
-          Statement sta=cn.createStatement();
-          ResultSet r = sta.executeQuery(sql); 
-          while(r.next()){
-    this.infoPanel.ten=r.getString("HoTen");
-     this.infoPanel.ngaysinh=r.getString("NgaySinh");
-     this.infoPanel.email=r.getString("Email");
-     this.infoPanel.diachi=r.getString("DiaChi");
-     this.infoPanel.s=r.getString("GioiTinh");
+        String sql = "select * from HOCSINH where HOCSINH.MaHocSinh='" + mshsChosen + "'";
+        try {
+            Connection cn = JDBCConnection.ketNoiJBDC();
+            Statement sta = cn.createStatement();
+            ResultSet r = sta.executeQuery(sql);
+            while (r.next()) {
+                this.infoPanel.ten = r.getString("HoTen");
+                this.infoPanel.ngaysinh = r.getString("NgaySinh");
+                this.infoPanel.email = r.getString("Email");
+                this.infoPanel.diachi = r.getString("DiaChi");
+                this.infoPanel.s = r.getString("GioiTinh");
 //         this.emailBox.setText(r.getString("Email"));
 //         this.addressBox.setText(r.getString("DiaChi"));
-             }
-          }
-          catch (SQLException e){
-          
-          }
-       this.infoPanel.loaddata();
-        
+            }
+        } catch (SQLException e) {
+
+        }
+        this.infoPanel.loaddata();
+
     }//GEN-LAST:event_showinfoActionPerformed
 
     private void clasListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clasListActionPerformed
         // TODO add your handling code here:
-        this.selectedClas=this.clasList.getSelectedItem().toString();
-        System.out.println("DanhSachLop_ lop combobox:   "+this.selectedClas);
+        this.selectedClas = this.clasList.getSelectedItem().toString();
+        System.out.println("DanhSachLop_ lop combobox:   " + this.selectedClas);
 
     }//GEN-LAST:event_clasListActionPerformed
 
     private void yearListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearListActionPerformed
         // TODO add your handling code here:
-         this.selectedYear=this.yearList.getSelectedItem().toString();
-        System.out.println("DanhSachLop_ NAM combobox:   "+this.selectedYear);
+        this.selectedYear = this.yearList.getSelectedItem().toString();
+        System.out.println("DanhSachLop_ NAM combobox:   " + this.selectedYear);
     }//GEN-LAST:event_yearListActionPerformed
 
-        
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

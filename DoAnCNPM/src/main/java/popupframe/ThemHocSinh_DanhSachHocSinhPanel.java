@@ -26,7 +26,7 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
 
     boolean check(String mshs) {
         String sql1 = "select * from HOCSINH where MaHocSinh= '" + mshs + "'";
-        String sql2="select * from QUATRINHHOC where  MaHocSinh='"+mshs+"'and MaLop ='"+this.dsl.selectedClas+"' and MaHocKi LIKE'"+this.dsl.selectedYear+"%'";
+        String sql2 ="select * from QUATRINHHOC WHERE MaHocSinh='"+mshs+"'AND  MaLop is null";
          System.out.println(sql2);
         try {
             Connection cn = JDBCConnection.ketNoiJBDC();
@@ -43,10 +43,10 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
                 return false;
             }
             r = sta.executeQuery(sql2);
-            if (r.next()) {
+            if (!r.next()) {
                 System.out.println(sql2);
                 System.out.println("data  sql2 in themhocsinh_danhsachhocsinh");
-                 this.warningLabel.setText("Hoc sinh da co trong lop");
+                 this.warningLabel.setText("Hoc sinh da co lop");
                 return false;
 
             }
