@@ -46,8 +46,10 @@ public class TongKetHocKyPanel extends javax.swing.JPanel {
         try {
             CallableStatement cst = cn.prepareCall(sql);
             ResultSet r = cst.executeQuery();
+            int i=0;
             while (r.next()) {
-                String arr[] = {r.getString("MaTongKetHocKi"), r.getString("MaLop"), r.getString("SiSo"), r.getString("SLDat"), r.getString("TiLe")};
+                i++;
+                String arr[] = {Integer.toString(i), r.getString("MaLop"), r.getString("SiSo"), r.getString("SLDat"), r.getString("TiLe")};
                 DefaultTableModel tblM = (DefaultTableModel) this.infoTable.getModel();
                 tblM.addRow(arr);
             }
