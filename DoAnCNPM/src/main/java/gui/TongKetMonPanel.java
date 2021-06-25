@@ -5,6 +5,7 @@
  */
 package gui;
 
+import gui.JDBCConnection;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -301,10 +302,10 @@ public class TongKetMonPanel extends javax.swing.JPanel {
                 String Diem15p = rs.getString("Diem15Phut");
                 String Diem1tiet = rs.getString("Diem1Tiet");
                 String DiemTB = rs.getString("DiemTBM");
-                System.out.println(Diem15p+" "+Diem1tiet+" "+HoTen);
+                System.out.println(Diem15p + " " + Diem1tiet + " " + HoTen);
 
                 String[] data = {Integer.toString(STT), HoTen, Diem15p, Diem1tiet, DiemTB};
-              
+
                 bangDiemMonTableModel.addRow(data);
 
                 STT++;
@@ -339,14 +340,13 @@ public class TongKetMonPanel extends javax.swing.JPanel {
                 evt.consume();
                 BangDiemMon.setVisible(true);
                 showBangDiemMon();
-                
 
             }
         }
     }//GEN-LAST:event_tableTongKetKeyPressed
 
     private void tableTongKetMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableTongKetMousePressed
-            
+
     }//GEN-LAST:event_tableTongKetMousePressed
 
 

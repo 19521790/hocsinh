@@ -5,9 +5,11 @@
  */
 package gui;
 
+import de.javasoft.synthetica.plain.SyntheticaPlainLookAndFeel;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 import thamso.LayThamSo;
 /**
  *
@@ -24,8 +26,6 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
     
     //Hàm chuyển đổi các giữa các JPanel 
     public void chenPanel(JPanel panel, String tieuDe){
-        //Xóa toàn bộ bảng trên tblMainBoard
-        tblMainBoard.removeAll();
         tblMainBoard.addTab(tieuDe, panel);
         tblMainBoard.setSelectedComponent(panel);
     }
@@ -58,10 +58,13 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new LayThamSo().ketNoiCoSoDulieu();
+                QuanLyHocSinhPanel quanLyHocSinh = new QuanLyHocSinhPanel();
+                BangDiemMonPanel bangDiemMon = new BangDiemMonPanel();
+                QuanLyLopPanel danhSachLop = new QuanLyLopPanel();
+                
                 new ManHinhChinhFrame().setVisible(true);
 
             }
@@ -73,48 +76,31 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jToolBar1 = new javax.swing.JToolBar();
-        Main_exit = new javax.swing.JButton();
-        jSeparator6 = new javax.swing.JToolBar.Separator();
         mnuManageStudent = new javax.swing.JButton();
         jSeparator9 = new javax.swing.JToolBar.Separator();
-        NhaplopBtn = new javax.swing.JButton();
-        jSeparator3 = new javax.swing.JToolBar.Separator();
         NhaplopBtn1 = new javax.swing.JButton();
         jSeparator7 = new javax.swing.JToolBar.Separator();
         NhanBangDiem = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
         BaoCaoTongKet = new javax.swing.JButton();
         jSeparator8 = new javax.swing.JToolBar.Separator();
-        BaoCaoTongKet1 = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JToolBar.Separator();
         ThayDoiQuyDinh = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jSeparator6 = new javax.swing.JToolBar.Separator();
+        Main_exit = new javax.swing.JButton();
         tblMainBoard = new javax.swing.JTabbedPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         Menu_exiy = new javax.swing.JMenu();
         Menu_exit = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jToolBar1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jToolBar1.setRollover(true);
-
-        Main_exit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        Main_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/exit (1).png"))); // NOI18N
-        Main_exit.setText("Exit");
-        Main_exit.setFocusable(false);
-        Main_exit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Main_exit.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        Main_exit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Main_exitActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(Main_exit);
-        jToolBar1.add(jSeparator6);
 
         mnuManageStudent.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         mnuManageStudent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/graduated.png"))); // NOI18N
-        mnuManageStudent.setText("Tiếp nhận học sinh");
+        mnuManageStudent.setText("Quản lý học sinh");
         mnuManageStudent.setFocusable(false);
         mnuManageStudent.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         mnuManageStudent.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -126,23 +112,9 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
         jToolBar1.add(mnuManageStudent);
         jToolBar1.add(jSeparator9);
 
-        NhaplopBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        NhaplopBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/presentation.png"))); // NOI18N
-        NhaplopBtn.setText("Quản lý học sinh");
-        NhaplopBtn.setFocusable(false);
-        NhaplopBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        NhaplopBtn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        NhaplopBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NhaplopBtnActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(NhaplopBtn);
-        jToolBar1.add(jSeparator3);
-
         NhaplopBtn1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         NhaplopBtn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/presentation.png"))); // NOI18N
-        NhaplopBtn1.setText("Danh sách lớp");
+        NhaplopBtn1.setText("Quản lý lớp");
         NhaplopBtn1.setFocusable(false);
         NhaplopBtn1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         NhaplopBtn1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -156,7 +128,7 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
 
         NhanBangDiem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         NhanBangDiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/score (1).png"))); // NOI18N
-        NhanBangDiem.setText("Nhận bảng điểm môn");
+        NhanBangDiem.setText("Quản lý điểm số");
         NhanBangDiem.setFocusable(false);
         NhanBangDiem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         NhanBangDiem.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -170,7 +142,7 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
 
         BaoCaoTongKet.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         BaoCaoTongKet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/report (1).png"))); // NOI18N
-        BaoCaoTongKet.setText("Tổng kết môn");
+        BaoCaoTongKet.setText("Tổng kết");
         BaoCaoTongKet.setFocusable(false);
         BaoCaoTongKet.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         BaoCaoTongKet.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -181,20 +153,6 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
         });
         jToolBar1.add(BaoCaoTongKet);
         jToolBar1.add(jSeparator8);
-
-        BaoCaoTongKet1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        BaoCaoTongKet1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/report (1).png"))); // NOI18N
-        BaoCaoTongKet1.setText("Tổng kết học kì");
-        BaoCaoTongKet1.setFocusable(false);
-        BaoCaoTongKet1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        BaoCaoTongKet1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        BaoCaoTongKet1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BaoCaoTongKet1ActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(BaoCaoTongKet1);
-        jToolBar1.add(jSeparator1);
 
         ThayDoiQuyDinh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         ThayDoiQuyDinh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/exchange_1.png"))); // NOI18N
@@ -208,10 +166,25 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(ThayDoiQuyDinh);
+        jToolBar1.add(jSeparator6);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/main2.png"))); // NOI18N
+        Main_exit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Main_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/exit (1).png"))); // NOI18N
+        Main_exit.setText("Exit");
+        Main_exit.setFocusable(false);
+        Main_exit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Main_exit.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        Main_exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Main_exitActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(Main_exit);
+
+        getContentPane().add(jToolBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 174, 651));
 
         tblMainBoard.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        getContentPane().add(tblMainBoard, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, -38, 1040, 700));
 
         Menu_exiy.setText("Hệ thống");
         Menu_exiy.addAncestorListener(new javax.swing.event.AncestorListener() {
@@ -238,36 +211,6 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 998, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tblMainBoard)
-                .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(234, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addContainerGap(234, Short.MAX_VALUE)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tblMainBoard, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(152, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(88, Short.MAX_VALUE)))
-        );
-
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -279,7 +222,7 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
 
     private void BaoCaoTongKetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BaoCaoTongKetActionPerformed
         String tieuDe = "Tổng kết môn";
-        chenPanel(new TongKetMonPanel(), tieuDe);
+        chenPanel(new TongKetPanel(), tieuDe);
     }//GEN-LAST:event_BaoCaoTongKetActionPerformed
 
     private void NhanBangDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NhanBangDiemActionPerformed
@@ -287,14 +230,9 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
         chenPanel(new BangDiemMonPanel(), tieuDe);
     }//GEN-LAST:event_NhanBangDiemActionPerformed
 
-    private void NhaplopBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NhaplopBtnActionPerformed
-        String tieuDe = "Quản lý học sinh";
-        chenPanel(new DanhSachHocSinhPanel(), tieuDe);
-    }//GEN-LAST:event_NhaplopBtnActionPerformed
-
     private void mnuManageStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuManageStudentActionPerformed
         String tieuDe = "Tiếp nhận học sinh";
-        chenPanel(new TiepNhanHocSinhPanel(), tieuDe);
+        chenPanel(new QuanLyHocSinhPanel(), tieuDe);
     }//GEN-LAST:event_mnuManageStudentActionPerformed
 
     private void Main_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Main_exitActionPerformed
@@ -313,14 +251,9 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_Menu_exitActionPerformed
 
     private void NhaplopBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NhaplopBtn1ActionPerformed
-        String tieuDe = "Danh sách lớp";
-        chenPanel(new DanhSachLopPanel(), tieuDe);
+         String tieuDe = "Quản lý lớp";
+        chenPanel(new QuanLyLopPanel(), tieuDe);
     }//GEN-LAST:event_NhaplopBtn1ActionPerformed
-
-    private void BaoCaoTongKet1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BaoCaoTongKet1ActionPerformed
-        String tieuDe = "Tổng kết học kỳ";
-        chenPanel(new TongKetHocKyPanel(), tieuDe);
-    }//GEN-LAST:event_BaoCaoTongKet1ActionPerformed
             private void SetIcon(){
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/edu/poly/poly/app/icons/16x16/graduated.png")));
     }
@@ -329,18 +262,13 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BaoCaoTongKet;
-    private javax.swing.JButton BaoCaoTongKet1;
     private javax.swing.JButton Main_exit;
     private javax.swing.JMenuItem Menu_exit;
     private javax.swing.JMenu Menu_exiy;
     private javax.swing.JButton NhanBangDiem;
-    private javax.swing.JButton NhaplopBtn;
     private javax.swing.JButton NhaplopBtn1;
     private javax.swing.JButton ThayDoiQuyDinh;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JToolBar.Separator jSeparator1;
-    private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator6;
     private javax.swing.JToolBar.Separator jSeparator7;
