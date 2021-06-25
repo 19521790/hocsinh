@@ -65,6 +65,7 @@ public class DanhSachLopPanel extends javax.swing.JPanel {
             CallableStatement cst = cn.prepareCall(sql);
             ResultSet r = cst.executeQuery();
             int i = 0;
+            System.out.println(sql);
             while (r.next()) {
 
                 i++;
