@@ -247,7 +247,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         System.out.println("ọ");
         this.createClassList();
         this.createYearList();
-        this.loadContentYearList(d.getYear() + 1900);
+       // this.loadContentYearList(d.getYear() + 1900);
     }
 
     /**

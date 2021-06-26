@@ -10,6 +10,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import popupframe.DanhSach_TongKetHocKyPanel;
@@ -31,7 +32,21 @@ public class TongKetPanel extends javax.swing.JPanel {
 
     DefaultTableModel bangdulieu = new DefaultTableModel();
     DefaultTableModel bangDiemMonTableModel = new DefaultTableModel();
+    void createYearList() {
+        String sql = " select distinct  HOCKI_NAM.NAM from HOCKI_NAM";
+        try {
+            Connection cn = JDBCConnection.ketNoiJBDC();
+            Statement sta = cn.createStatement();
+            ResultSet r = sta.executeQuery(sql);
+            while (r.next()) {
 
+                this.yearComboBox.addItem(r.getString("Nam"));
+                
+            }
+        } catch (SQLException e) {
+            return;
+        }
+    }
     void fillTable() {
         String sql2 = "";
         String sql = "EXEC sp_TongKetHocKi_InDanhSach N'" + this.hocky.getSelectedItem().toString() + "'," + this.yearComboBox.getSelectedItem().toString();
@@ -109,6 +124,7 @@ public class TongKetPanel extends javax.swing.JPanel {
      
     public TongKetPanel() {
         initComponents();
+         createYearList();
 
     }
 
@@ -163,7 +179,7 @@ public class TongKetPanel extends javax.swing.JPanel {
 
         jLabel10.setText("Năm:");
 
-        yearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn", "2019", "2020", "2021" }));
+        yearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn" }));
 
         seekButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/search.png"))); // NOI18N
         seekButton.setText("Tìm kiếm");
