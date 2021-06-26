@@ -5,6 +5,7 @@
  */
 package gui;
 
+import java.sql.CallableStatement;
 import popupframe.ThemHocSinh_DanhSachHocSinhPanel;
 import popupframe.DiemHocSinh_DanhSachLopPanel;
 import java.util.Date;
@@ -31,14 +32,73 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
      * Creates new form NhapLop
      */
     ThongTinHocSinh_DanhSachHocSinhPanel infoPanel = new ThongTinHocSinh_DanhSachHocSinhPanel();
-    public String selectedClas;
-    public String selectedYear;
+    public String selectedClas = "Chọn";
+    public String selectedYear = "Chọn";
     String mshsChosen = "";
-    ThemHocSinh_DanhSachHocSinhPanel addstudent = new ThemHocSinh_DanhSachHocSinhPanel(this);
+    ThemHocSinh_DanhSachHocSinhPanel addstudent;
     DiemHocSinh_DanhSachLopPanel diemhs;
     List<String> deletequery = new ArrayList<>();
     List<String> mahsList = new ArrayList<>();
     List<String> procquery = new ArrayList<>();
+
+    public void loadtable() {
+        String sql = "exec sp_DanhSachLop_InDanhSach " + this.yearBox.getSelectedItem().toString() + ",'" + this.clasBox.getSelectedItem().toString() + "'";
+        try {
+            Connection cn = JDBCConnection.ketNoiJBDC();
+            CallableStatement cst = cn.prepareCall(sql);
+            ResultSet r = cst.executeQuery();
+            int i = 0;
+            System.out.println(sql);
+            while (r.next()) {
+
+                i++;
+                String arr[] = {Integer.toString(i), r.getString("MaHocSinh"), r.getString("HoTen"), r.getString("MaLop"), r.getString("TBHK1"), r.getString("TBHK2")};
+                DefaultTableModel tblM = (DefaultTableModel) this.infoTable1.getModel();
+                tblM.addRow(arr);
+            }
+             if(i==0){
+                    JOptionPane.showMessageDialog(this, "KHÔNG TÌM THẤY THÔNG TIN");
+
+        }
+        } catch (SQLException e) {
+            return;
+        }
+       
+
+    }
+
+    void createClassList() {
+        String sql = "select * from  LOP";
+        try {
+            Connection cn = JDBCConnection.ketNoiJBDC();
+            Statement sta = cn.createStatement();
+            ResultSet r = sta.executeQuery(sql);
+            while (r.next()) {
+
+                this.clasBox.addItem(r.getString("MaLop"));
+                this.clasList.addItem(r.getString("MaLop"));
+            }
+        } catch (SQLException e) {
+            return;
+        }
+
+    }
+
+    void createYearList() {
+        String sql = " select distinct  HOCKI_NAM.NAM from HOCKI_NAM";
+        try {
+            Connection cn = JDBCConnection.ketNoiJBDC();
+            Statement sta = cn.createStatement();
+            ResultSet r = sta.executeQuery(sql);
+            while (r.next()) {
+
+                this.yearBox.addItem(r.getString("Nam"));
+                this.yearList.addItem(r.getString("Nam"));
+            }
+        } catch (SQLException e) {
+            return;
+        }
+    }
 
     boolean checkhaveSelected() {
 
@@ -154,7 +214,9 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
             Connection cn = JDBCConnection.ketNoiJBDC();
             Statement sta = cn.createStatement();
             ResultSet r = sta.executeQuery(sql);
+            int i = 0;
             while (r.next()) {
+                i++;
                 String name = r.getString("HoTen");
                 String date = r.getString("NgaySinh");
                 String mahs = r.getString("MaHocSinh");
@@ -162,7 +224,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
                 String email = r.getString("Email");
                 String address = r.getString("DiaChi");
                 String s = r.getString("GioiTinh");
-                String datab[] = {mahs, name, s, date, address};
+                String datab[] = {Integer.toString(i), mahs, name, s, date, address};
                 DefaultTableModel tblM = (DefaultTableModel) this.infoTable.getModel();
                 tblM.addRow(datab);
             }
@@ -183,6 +245,8 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         initComponents();
         Date d = new Date();
         System.out.println("ọ");
+        this.createClassList();
+        this.createYearList();
         this.loadContentYearList(d.getYear() + 1900);
     }
 
@@ -261,7 +325,11 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(infoTable1);
 
+        clasBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn" }));
+
         jLabel4.setText("Năm:");
+
+        yearBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn" }));
 
         seekButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/search.png"))); // NOI18N
         seekButton1.setText("Tìm kiếm");
@@ -326,7 +394,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
 
         jLabel1.setText("Lớp:");
 
-        clasList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn", "10A1", "10A2", "10A3", "10A4", "11A1", "11A2", "11A3", "12A1", "12A2" }));
+        clasList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn" }));
         clasList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clasListActionPerformed(evt);
@@ -385,7 +453,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "STT", "Mã học sinh", "Giới tính", "Họ tên", "Năm sinh", "Địa chỉ"
+                "STT", "Mã học sinh", "Họ tên", "Giới tính", "Năm sinh", "Địa chỉ"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -414,10 +482,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -496,6 +561,8 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         if (this.checkhaveSelected()) {
             return;
         }
+        addstudent = new ThemHocSinh_DanhSachHocSinhPanel(this);
+        addstudent.loadtable();
         this.addstudent.setVisible(true);
 
 
@@ -513,7 +580,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         }
         int index = this.infoTable.getSelectedRow();
         TableModel md = this.infoTable.getModel();
-        this.deletequery.add("update QUATRINHHOC set MaLop=null where MaHocSinh='" + md.getValueAt(index, 0).toString() + "'");
+        this.deletequery.add("update QUATRINHHOC set MaLop=null where MaHocSinh='" + md.getValueAt(index, 1).toString() + "'");
         int numRows = infoTable.getSelectedRows().length;
         DefaultTableModel model = (DefaultTableModel) this.infoTable.getModel();
         for (int i = 0; i < numRows; i++) {
@@ -547,10 +614,10 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_infoTableMouseClicked
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-      for(var  i :deletequery){
-      System.out.println(i);
-          
-      }
+        for (var i : deletequery) {
+            System.out.println(i);
+
+        }
         if (this.checkhaveSelected()) {
             return;
         }
@@ -578,23 +645,28 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
 
     private void seekButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seekButton1ActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) this.infoTable.getModel();
+                if(this.clasBox.getSelectedItem().toString()=="Chọn"||this.yearBox.getSelectedItem().toString()=="Chọn")
+                {
+                            JOptionPane.showMessageDialog(this, "Bạn chưa chọn lớp hoặc năm ");
+                            return;
+                }
+        DefaultTableModel model = (DefaultTableModel) this.infoTable1.getModel();
         model.setRowCount(0);
-//        loadtable();
+        loadtable();
     }//GEN-LAST:event_seekButton1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if(!(this.infoTable.getSelectedColumn()!=-1)) {
+        if (!(this.infoTable1.getSelectedColumn() != -1)) {
 
             JOptionPane.showMessageDialog(this, "Chưa chọn học sinh để xem điểm");
             return;
         }
-        int index =this.infoTable.getSelectedRow();
-        TableModel md= this.infoTable.getModel();
-        String mshs= md.getValueAt(index,1).toString();
+        int index = this.infoTable1.getSelectedRow();
+        TableModel md = this.infoTable1.getModel();
+        String mshs = md.getValueAt(index, 1).toString();
 
-        this.diemhs= new DiemHocSinh_DanhSachLopPanel(this.clasBox.getSelectedItem().toString(),this.yearBox.getSelectedItem().toString(),mshs);
+        this.diemhs = new DiemHocSinh_DanhSachLopPanel(this.clasBox.getSelectedItem().toString(), this.yearBox.getSelectedItem().toString(), mshs);
         // this.getInfo(this.mshsChosen=md.getValueAt(index, 0).toString());
         this.diemhs.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed

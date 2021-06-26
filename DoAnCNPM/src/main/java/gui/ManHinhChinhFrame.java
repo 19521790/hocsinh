@@ -5,7 +5,7 @@
  */
 package gui;
 
-import de.javasoft.synthetica.plain.SyntheticaPlainLookAndFeel;
+
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;

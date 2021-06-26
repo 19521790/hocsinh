@@ -12,6 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,7 +26,9 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
      * Creates new form themhocsinhDialog
      */
     QuanLyLopPanel dsl;
-
+    ListSelectionModel listSelectionModel;
+    String malop;
+    String nam;
 //    boolean check(String mshs) {
 //        String sql1 = "select * from HOCSINH where MaHocSinh= '" + mshs + "'";
 //        String sql2 ="select * from QUATRINHHOC WHERE MaHocSinh='"+mshs+"'AND  MaLop is null";
@@ -57,14 +62,73 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
 //
 //    }
 
+    private void addStudent(int indicesRow[]) {
+
+        if (!(indicesRow.length > 0)) {
+             JOptionPane.showMessageDialog(this, "Chưa có học sinh nào đc chọn");
+            return;
+        }
+        String thongbao="";
+        String mshs = "";
+        for (int indices : indicesRow) {
+            mshs = this.tableHocSinh.getValueAt(indices, 1).toString();
+            thongbao=thongbao+mshs+" ";
+            System.out.println(mshs);
+            dsl.addintoTable(mshs);
+            dsl.addstu(mshs);
+            
+            
+
+        }
+         JOptionPane.showMessageDialog(this, "đã thêm các học sinh có mã số "+thongbao+" vào lớp "+malop+" nam học "+nam);
+        
+
+    }
+
+    public void loadtable() {
+         DefaultTableModel model = (DefaultTableModel) this.tableHocSinh.getModel();
+        model.setRowCount(0);
+        String sql = "select DISTINCT HOCSINH.MaHocSinh,HoTen,NgaySinh,GioiTinh,DiaChi,Email from HOCSINH ,QUATRINHHOC WHERE HOCSINH.MaHocSinh=QUATRINHHOC.MaHocSinh and QUATRINHHOC.MaLop IS NULL";
+        try {
+            Connection cn = JDBCConnection.ketNoiJBDC();
+            Statement sta = cn.createStatement();
+            ResultSet r = sta.executeQuery(sql);
+            int i = 0;
+            while (r.next()) {
+                i++;
+                String name = r.getString("HoTen");
+                String date = r.getString("NgaySinh");
+                String mahs = r.getString("MaHocSinh");
+                System.out.println(mahs);
+                String email = r.getString("Email");
+                String address = r.getString("DiaChi");
+                String s = r.getString("GioiTinh");
+                String datab[] = {Integer.toString(i), mahs, name, date, s, address, email};
+                DefaultTableModel tblM = (DefaultTableModel) this.tableHocSinh.getModel();
+                tblM.addRow(datab);
+            }
+        } catch (SQLException e) {
+
+        }
+
+    }
+
     public ThemHocSinh_DanhSachHocSinhPanel() {
         initComponents();
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        //  tableHocSinh.setRowSelectionAllowed(true);
+        //  tableHocSinh.setSelectionMode(listSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
 
     public ThemHocSinh_DanhSachHocSinhPanel(QuanLyLopPanel t) {
         initComponents();
+        System.out.println(" ThemHocSinh_DanhSachHocSinhPanel");
         dsl = t;
+        loadtable();
+        malop = dsl.selectedClas;
+        nam = dsl.selectedYear;
+        System.out.println(nam + ":::" + malop);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
@@ -108,6 +172,11 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
 
         ThemMoi1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/plus.png"))); // NOI18N
         ThemMoi1.setText("Thêm");
+        ThemMoi1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ThemMoi1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -142,6 +211,18 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
 //            DiemBanDau = "";
 //        }
     }//GEN-LAST:event_tableHocSinhMousePressed
+
+    private void ThemMoi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThemMoi1ActionPerformed
+        // TODO add your handling code here:
+        int index[] = this.tableHocSinh.getSelectedRows();
+        System.out.println("them HS");
+        for (var i : index) {
+            System.out.println(Integer.toString(i));
+        }
+        addStudent(index);
+
+
+    }//GEN-LAST:event_ThemMoi1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ThemMoi1;
