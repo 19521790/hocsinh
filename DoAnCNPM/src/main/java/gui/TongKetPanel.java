@@ -123,7 +123,7 @@ public class TongKetPanel extends javax.swing.JPanel {
             BangDiemMon.tableDiem_BangDiemMon.setModel(bangDiemMonTableModel);
 
         } catch (SQLException ex) {
-            Logger.getLogger(TongKetMonPanel.class.getName()).log(Level.SEVERE, null, ex);
+           
         }
 
     }
@@ -571,7 +571,7 @@ public class TongKetPanel extends javax.swing.JPanel {
             tableTongKet.setModel(bangdulieu);
             XemThongTin.setVisible(true);
         } catch (SQLException ex) {
-            Logger.getLogger(TongKetMonPanel.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
     }//GEN-LAST:event_TimKiemActionPerformed
 

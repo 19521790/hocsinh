@@ -107,7 +107,7 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
                             int year = date.getYear() + 1900;
 
                             if (NamSinhCuaTuoiToiDa > year || year > NamSinhCuaTuoiToiThieu) {
-                                JOptionPane.showMessageDialog(null, "Ngày sinh bạn nhập đã sai");
+                                JOptionPane.showMessageDialog(null, "Ngày sinh bạn nhập đã sai");   
                                 tableHocSinh.setValueAt(DiemBanDau, row, column);
 
                             } else {
@@ -428,7 +428,7 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
         if (indexTB == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng bạn cần xóa!");
         } else {
-            int xacNhan = JOptionPane.showConfirmDialog(null, "Bạn muốn xóa thông tin học sinh này", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            int xacNhan = JOptionPane.showConfirmDialog(null, "Thông tin học sinh sẽ bị xóa vĩnh viễn", "Xác nhận", JOptionPane.YES_NO_OPTION);
             if (xacNhan == JOptionPane.YES_OPTION) {
                 bangDuLieu.removeRow(indexTB);
 
@@ -471,9 +471,9 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
             bangDuLieu.setRowCount(0);
             tableHocSinh.setModel(bangDuLieu);
             if (!MaHs.isEmpty()) {
-                sql = "SELECT * FROM HOCSINH WHERE MaHocSinh='" + MaHs + "'";
+                sql = "SELECT * FROM HOCSINH WHERE MaHocSinh like '%" + MaHs + "%'";
             } else {
-                sql = "SELECT * FROM HOCSINH WHERE HoTen=" + HoTenHS;
+                sql = "SELECT * FROM HOCSINH WHERE HoTen like N'%" + HoTenHS + "%'";
             }
 
             Connection con = JDBCConnection.ketNoiJBDC();
