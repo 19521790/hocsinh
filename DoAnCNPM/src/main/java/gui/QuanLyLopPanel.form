@@ -26,7 +26,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="0" y="0" width="1080" height="-1"/>
+          <AbsoluteConstraints x="0" y="0" width="1050" height="50"/>
         </Constraint>
       </Constraints>
 
@@ -36,7 +36,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="976" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -45,7 +45,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="28" max="32767" attributes="0"/>
+                  <EmptySpace pref="17" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -270,7 +270,7 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="addButton" pref="0" max="32767" attributes="0"/>
-                                  <Component id="deleteButton" pref="97" max="32767" attributes="0"/>
+                                  <Component id="deleteButton" pref="126" max="32767" attributes="0"/>
                                   <Component id="saveButton" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="164" max="-2" attributes="0"/>

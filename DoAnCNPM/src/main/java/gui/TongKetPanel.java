@@ -54,14 +54,11 @@ public class TongKetPanel extends javax.swing.JPanel {
     }
 
     void fillTable() {
-        String sql2 = "";
+       
         String sql = "EXEC sp_TongKetHocKi_InDanhSach N'" + this.hocky.getSelectedItem().toString() + "'," + this.yearComboBox.getSelectedItem().toString();
-        if (this.hocky.getSelectedItem().toString() == "Học kì 1") {
-            sql2 = "EXEC sp_TongKetHocKi_CapNhatBang '" + this.yearComboBox.getSelectedItem().toString() + "K1' ";
-        } else if (this.hocky.getSelectedItem().toString() == "Học kì 2") {
-            sql2 = "EXEC sp_TongKetHocKi_CapNhatBang '" + this.yearComboBox.getSelectedItem().toString() + "K2' ";
-        }
+        String sql2 ="EXEC sp_TongKetHocKi_CapNhatBang N'" + this.hocky.getSelectedItem().toString() + "'," + this.yearComboBox.getSelectedItem().toString();
         System.out.println(sql);
+        System.out.println(sql2);
         Connection cn = JDBCConnection.ketNoiJBDC();
 
         try {
@@ -75,8 +72,10 @@ public class TongKetPanel extends javax.swing.JPanel {
         try {
             CallableStatement cst = cn.prepareCall(sql);
             ResultSet r = cst.executeQuery();
+            int i=0;
             while (r.next()) {
-                String arr[] = {r.getString("MaTongKetHocKi"), r.getString("MaLop"), r.getString("SiSo"), r.getString("SLDat"), r.getString("TiLe")};
+                i++;
+                String arr[] = {Integer.toString(i), r.getString("IDLop"), r.getString("SiSo"), r.getString("SLDat"), r.getString("TiLe")};
                 DefaultTableModel tblM = (DefaultTableModel) this.infoTable.getModel();
                 tblM.addRow(arr);
             }
