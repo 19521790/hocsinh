@@ -5,13 +5,16 @@
  */
 package popupframe;
 
-import gui.DanhSachHocSinhPanel;
+import gui.QuanLyLopPanel;
 import gui.JDBCConnection;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,49 +25,110 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
     /**
      * Creates new form themhocsinhDialog
      */
-    DanhSachHocSinhPanel dsl;
+    QuanLyLopPanel dsl;
+    ListSelectionModel listSelectionModel;
+    String malop;
+    String nam;
+//    boolean check(String mshs) {
+//        String sql1 = "select * from HOCSINH where MaHocSinh= '" + mshs + "'";
+//        String sql2 ="select * from QUATRINHHOC WHERE MaHocSinh='"+mshs+"'AND  MaLop is null";
+//         System.out.println(sql2);
+//        try {
+//            Connection cn = JDBCConnection.ketNoiJBDC();
+//            Statement sta = cn.createStatement();
+//            ResultSet r = sta.executeQuery(sql1);
+//
+//            if (r.next()) {
+//
+//                this.warningLabel.setText("Hoc sinh:" + r.getString("HoTen"));
+//                System.out.print("^^^^^^^^");
+//            } else {
+//                this.warningLabel.setText("Khong tim thay");
+//                System.out.println("NO DATA");
+//                return false;
+//            }
+//            r = sta.executeQuery(sql2);
+//            if (!r.next()) {
+//                System.out.println(sql2);
+//                System.out.println("data  sql2 in themhocsinh_danhsachhocsinh");
+//                 this.warningLabel.setText("Hoc sinh da co lop");
+//                return false;
+//
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("errror");
+//        }
+//        return true;
+//
+//    }
 
-    boolean check(String mshs) {
-        String sql1 = "select * from HOCSINH where MaHocSinh= '" + mshs + "'";
-        String sql2 ="select * from QUATRINHHOC WHERE MaHocSinh='"+mshs+"'AND  MaLop is null";
-         System.out.println(sql2);
+    private void addStudent(int indicesRow[]) {
+
+        if (!(indicesRow.length > 0)) {
+             JOptionPane.showMessageDialog(this, "Chưa có học sinh nào đc chọn");
+            return;
+        }
+        String thongbao="";
+        String mshs = "";
+        for (int indices : indicesRow) {
+            mshs = this.tableHocSinh.getValueAt(indices, 1).toString();
+            thongbao=thongbao+mshs+" ";
+            System.out.println(mshs);
+            dsl.addintoTable(mshs);
+            dsl.addstu(mshs);
+            
+            
+
+        }
+         JOptionPane.showMessageDialog(this, "đã thêm các học sinh có mã số "+thongbao+" vào lớp "+malop+" nam học "+nam);
+        
+
+    }
+
+    public void loadtable() {
+         DefaultTableModel model = (DefaultTableModel) this.tableHocSinh.getModel();
+        model.setRowCount(0);
+        String sql = "select DISTINCT HOCSINH.MaHocSinh,HoTen,NgaySinh,GioiTinh,DiaChi,Email from HOCSINH ,QUATRINHHOC WHERE HOCSINH.MaHocSinh=QUATRINHHOC.MaHocSinh and QUATRINHHOC.MaLop IS NULL";
         try {
             Connection cn = JDBCConnection.ketNoiJBDC();
             Statement sta = cn.createStatement();
-            ResultSet r = sta.executeQuery(sql1);
-
-            if (r.next()) {
-
-                this.warningLabel.setText("Hoc sinh:" + r.getString("HoTen"));
-                System.out.print("^^^^^^^^");
-            } else {
-                this.warningLabel.setText("Khong tim thay");
-                System.out.println("NO DATA");
-                return false;
-            }
-            r = sta.executeQuery(sql2);
-            if (!r.next()) {
-                System.out.println(sql2);
-                System.out.println("data  sql2 in themhocsinh_danhsachhocsinh");
-                 this.warningLabel.setText("Hoc sinh da co lop");
-                return false;
-
+            ResultSet r = sta.executeQuery(sql);
+            int i = 0;
+            while (r.next()) {
+                i++;
+                String name = r.getString("HoTen");
+                String date = r.getString("NgaySinh");
+                String mahs = r.getString("MaHocSinh");
+                System.out.println(mahs);
+                String email = r.getString("Email");
+                String address = r.getString("DiaChi");
+                String s = r.getString("GioiTinh");
+                String datab[] = {Integer.toString(i), mahs, name, date, s, address, email};
+                DefaultTableModel tblM = (DefaultTableModel) this.tableHocSinh.getModel();
+                tblM.addRow(datab);
             }
         } catch (SQLException e) {
-            System.out.println("errror");
+
         }
-        return true;
 
     }
 
     public ThemHocSinh_DanhSachHocSinhPanel() {
         initComponents();
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        //  tableHocSinh.setRowSelectionAllowed(true);
+        //  tableHocSinh.setSelectionMode(listSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
 
-    public ThemHocSinh_DanhSachHocSinhPanel(DanhSachHocSinhPanel t) {
+    public ThemHocSinh_DanhSachHocSinhPanel(QuanLyLopPanel t) {
         initComponents();
+        System.out.println(" ThemHocSinh_DanhSachHocSinhPanel");
         dsl = t;
+        loadtable();
+        malop = dsl.selectedClas;
+        nam = dsl.selectedYear;
+        System.out.println(nam + ":::" + malop);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
@@ -77,96 +141,92 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        okbutton = new javax.swing.JButton();
-        cancelbutton = new javax.swing.JButton();
-        txtMSSV = new javax.swing.JTextField();
-        warningLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableHocSinh = new javax.swing.JTable();
+        ThemMoi1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("MSSV:");
+        tableHocSinh.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        okbutton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        okbutton.setText("OK");
-        okbutton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                okbuttonActionPerformed(evt);
+            },
+            new String [] {
+                "STT", "Mã học sinh", "Họ tên", "Ngày sinh", "Giới tính", "Địa chỉ", "Email"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-
-        cancelbutton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cancelbutton.setText("CANCEL");
-        cancelbutton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelbuttonActionPerformed(evt);
+        tableHocSinh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tableHocSinhMousePressed(evt);
             }
         });
+        jScrollPane1.setViewportView(tableHocSinh);
 
-        warningLabel.setForeground(new java.awt.Color(255, 51, 102));
-        warningLabel.setText("             ");
+        ThemMoi1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/plus.png"))); // NOI18N
+        ThemMoi1.setText("Thêm");
+        ThemMoi1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ThemMoi1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
-                        .addComponent(txtMSSV, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(okbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(cancelbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(47, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(warningLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(75, 75, 75))
+                .addGap(25, 25, 25)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(ThemMoi1)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(51, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMSSV, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addComponent(warningLabel)
-                .addGap(53, 53, 53)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(okbutton, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                    .addComponent(cancelbutton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addGap(117, 117, 117)
+                .addComponent(ThemMoi1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void okbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okbuttonActionPerformed
+    private void tableHocSinhMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableHocSinhMousePressed
+//        try {
+//            DiemBanDau = tableHocSinh.getValueAt(tableHocSinh.getSelectedRow(), tableHocSinh.getSelectedColumn()).toString();
+//        } catch (Exception e) {
+//            DiemBanDau = "";
+//        }
+    }//GEN-LAST:event_tableHocSinhMousePressed
+
+    private void ThemMoi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThemMoi1ActionPerformed
         // TODO add your handling code here:
-        if (check(this.txtMSSV.getText())) {
-            this.dsl.addstu(this.txtMSSV.getText());
-            this.dsl.addintoTable(this.txtMSSV.getText());
-            this.setVisible(false);
-        } 
+        int index[] = this.tableHocSinh.getSelectedRows();
+        System.out.println("them HS");
+        for (var i : index) {
+            System.out.println(Integer.toString(i));
+        }
+        addStudent(index);
 
-    }//GEN-LAST:event_okbuttonActionPerformed
 
-    private void cancelbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelbuttonActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_cancelbuttonActionPerformed
+    }//GEN-LAST:event_ThemMoi1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cancelbutton;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JButton okbutton;
-    private javax.swing.JTextField txtMSSV;
-    private javax.swing.JLabel warningLabel;
+    private javax.swing.JButton ThemMoi1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tableHocSinh;
     // End of variables declaration//GEN-END:variables
 }

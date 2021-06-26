@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.DefaultTableModel;
-import popupframe.SuaDiemBangDiemMonPanel;
+import popupframe.SuaDiem_BangDiemMonPanel;
 
 /**
  *
@@ -29,7 +29,7 @@ import popupframe.SuaDiemBangDiemMonPanel;
 public class BangDiemMonPanel extends javax.swing.JPanel {
 
     DefaultTableModel bangDuLieu = new DefaultTableModel();
-    SuaDiemBangDiemMonPanel editBangdiem = new SuaDiemBangDiemMonPanel();
+    SuaDiem_BangDiemMonPanel editBangdiem = new SuaDiem_BangDiemMonPanel();
     String DiemBanDau = "";
     /**
      * Creates new form BangDiemMonPanel
@@ -202,7 +202,6 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
         tableDiem = new javax.swing.JTable();
         SaveTableButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        LamMoi = new javax.swing.JButton();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Lớp cần nhận"));
 
@@ -326,14 +325,6 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
         jLabel4.setText("Cách điền cột điểm: VD: 7,7.5,8");
 
-        LamMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/recycle.png"))); // NOI18N
-        LamMoi.setText("LamMoi");
-        LamMoi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LamMoiActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -345,8 +336,6 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(LamMoi)
-                        .addGap(18, 18, 18)
                         .addComponent(EditTableButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(SaveTableButton)
@@ -365,8 +354,7 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
                     .addComponent(EditTableButton)
                     .addComponent(jButton5)
                     .addComponent(SaveTableButton)
-                    .addComponent(jLabel4)
-                    .addComponent(LamMoi))
+                    .addComponent(jLabel4))
                 .addGap(13, 13, 13))
         );
 
@@ -380,7 +368,7 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 97, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -537,12 +525,6 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_SaveTableButtonActionPerformed
 
-    private void LamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LamMoiActionPerformed
-        bangDuLieu.setRowCount(0);
-        tableDiem.setModel(bangDuLieu);
-
-    }//GEN-LAST:event_LamMoiActionPerformed
-
     private void tableDiemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDiemMousePressed
 
         try {
@@ -559,7 +541,6 @@ public class BangDiemMonPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton EditTableButton;
     private javax.swing.JComboBox<String> Hocky;
-    private javax.swing.JButton LamMoi;
     private javax.swing.JComboBox<String> Lop;
     private javax.swing.JComboBox<String> Mon;
     private javax.swing.JComboBox<String> Nam;

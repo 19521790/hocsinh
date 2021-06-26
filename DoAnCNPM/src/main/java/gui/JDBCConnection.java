@@ -15,20 +15,18 @@ import java.util.logging.Logger;
  */
 public class JDBCConnection {
 
-    public static  Connection ketNoiJBDC() {
+    public static Connection ketNoiJBDC() {
 
-        String url = "jdbc:sqlserver://LAPTOP-6LEAMI4B\\SQLEXPRESS01:1466;databaseName=customer";
-        String user = "vuong";
-        String password = "1";
+        String url = "jdbc:sqlserver://DESKTOP-8066J6E;databaseName=customer";
+        String user = "sa";
+        String password = "long";
 
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
             try {
-                 System.out.println("Kết nối thành công");
-               return  DriverManager.getConnection(url, user, password);
-               
-               
+                System.out.println("Kết nối thành công");
+                return DriverManager.getConnection(url, user, password);
 
             } catch (SQLException ex) {
                 Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ex);
@@ -39,7 +37,7 @@ public class JDBCConnection {
             System.out.println("Kết nối thất bại");
 
         }
-       return null;
-       
+        return null;
+
     }
 }
