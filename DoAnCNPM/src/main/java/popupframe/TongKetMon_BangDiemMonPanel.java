@@ -36,14 +36,23 @@ public class TongKetMon_BangDiemMonPanel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        Close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/exit (1).png"))); // NOI18N
+        Close.setBackground(new java.awt.Color(254, 193, 6));
+        Close.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        Close.setForeground(new java.awt.Color(255, 255, 255));
+        Close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_exit_24px_1.png"))); // NOI18N
         Close.setText("Close");
+        Close.setBorder(null);
         Close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CloseActionPerformed(evt);
             }
         });
 
+        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jScrollPane2.setFocusable(false);
+
+        tableDiem_BangDiemMon.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tableDiem_BangDiemMon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -60,6 +69,9 @@ public class TongKetMon_BangDiemMonPanel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tableDiem_BangDiemMon.setGridColor(new java.awt.Color(255, 255, 255));
+        tableDiem_BangDiemMon.setIntercellSpacing(new java.awt.Dimension(0, 1));
+        tableDiem_BangDiemMon.setRowHeight(25);
         tableDiem_BangDiemMon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tableDiem_BangDiemMonMousePressed(evt);
@@ -73,7 +85,7 @@ public class TongKetMon_BangDiemMonPanel extends javax.swing.JFrame {
             TittleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TittleLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Close)
+                .addComponent(Close, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
             .addGroup(TittleLayout.createSequentialGroup()
                 .addContainerGap()
@@ -86,7 +98,7 @@ public class TongKetMon_BangDiemMonPanel extends javax.swing.JFrame {
                 .addContainerGap(31, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
-                .addComponent(Close)
+                .addComponent(Close, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
 

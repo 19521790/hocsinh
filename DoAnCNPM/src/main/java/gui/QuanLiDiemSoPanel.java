@@ -7,6 +7,7 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -17,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.DefaultTableModel;
@@ -93,7 +95,7 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
                         if (x < 0) {
 
                             Kiemtra = false;
-                            JOptionPane.showMessageDialog(null, "Vui long nhap diem so >0 ");
+                            JOptionPane.showMessageDialog(null, "Vui long nhap diem so >=0 ");
                             break;
 
                         }
@@ -145,7 +147,8 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
                 "Lớp").setWidth(0);
 
     }
-     void createLopList() {
+
+    void createLopList() {
         String sql = "  Select TenLop from LOP";
         try {
             Connection cn = JDBCConnection.ketNoiJBDC();
@@ -285,7 +288,6 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
         SaveTableButton = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -295,10 +297,8 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel1.setText("Lớp:");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel2.setText("Môn:");
 
         TimKiem.setBackground(new java.awt.Color(0, 176, 239));
@@ -314,24 +314,22 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
             }
         });
 
-        Lop.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        Lop.setFocusable(false);
 
-        Mon.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        Mon.setFocusable(false);
         Mon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MonActionPerformed(evt);
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel3.setText("Học kỳ:");
 
-        Hocky.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        Hocky.setFocusable(false);
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel9.setText("Năm:");
 
-        Nam.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        Nam.setFocusable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -383,7 +381,6 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
         jScrollPane1.setOpaque(false);
 
         tableDiem.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        tableDiem.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tableDiem.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -413,7 +410,7 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tableDiem);
 
-        EditTableButton.setBackground(new java.awt.Color(0, 176, 239));
+        EditTableButton.setBackground(new java.awt.Color(254, 193, 6));
         EditTableButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         EditTableButton.setForeground(new java.awt.Color(255, 255, 255));
         EditTableButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_pencil_24px_1.png"))); // NOI18N
@@ -439,20 +436,22 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(0, 176, 239));
+        jButton5.setBackground(new java.awt.Color(128, 99, 246));
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_print_24px.png"))); // NOI18N
         jButton5.setText("In");
         jButton5.setBorder(null);
         jButton5.setFocusable(false);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 51, 51));
         jLabel4.setText("Cách điền cột điểm: VD: 7,7.5,8");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setText("Tìm kiếm học sinh");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Thông tin điểm môn học");
@@ -491,11 +490,6 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
                             .addComponent(SaveTableButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(EditTableButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(36, 36, 36))))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 516, Short.MAX_VALUE)
-                    .addComponent(jLabel5)
-                    .addGap(0, 516, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -513,20 +507,14 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
                             .addComponent(jLabel6)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(7, 7, 7))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(SaveTableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
                         .addComponent(EditTableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(245, 245, 245))))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel5)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(SaveTableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(263, 263, 263))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -567,16 +555,35 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
             String diem1tiet = editBangdiem.Diem1Tiet.getText();
             String diem15p = editBangdiem.Diem15p.getText();
 
+            while (diem15p.trim().endsWith(",") == true) {
+                diem15p = diem15p.substring(0, diem15p.length() - 1);
+
+            };
+            while (diem1tiet.trim().endsWith(",") == true) {
+                diem1tiet = diem1tiet.substring(0, diem1tiet.length() - 1);
+
+            };
+            int whatFault = -1;
             String[] chuoi1tiet = diem1tiet.split(",");
             String[] chuoi15p = diem15p.split(",");
             //kiem tra xem diem tai vi tri nay da hop le chua
             Boolean kiemtra = true;
             for (int i = 0; i < chuoi15p.length; i++) {
                 try {
-                    Float.parseFloat(chuoi15p[i]);
+                    if (Float.parseFloat(chuoi15p[i]) > 10) {
+                        kiemtra = false;
+                        whatFault = 1;
+                        break;
+                    }
+                    if (Float.parseFloat(chuoi15p[i]) < 0) {
+                        kiemtra = false;
+                        whatFault = 2;
+                        break;
+                    }
+
                 } catch (NumberFormatException evt) {
                     if (!diem15p.isEmpty()) {
-
+                        whatFault = 3;
                         kiemtra = false;
                         break;
                     }
@@ -585,17 +592,26 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
             if (kiemtra == true) {
                 for (int i = 0; i < chuoi1tiet.length; i++) {
                     try {
-                        Float.parseFloat(chuoi1tiet[i]);
+                        if (Float.parseFloat(chuoi1tiet[i]) > 10) {
+
+                            kiemtra = false;
+                            whatFault = 1;
+                            break;
+                        }
+                        if (Float.parseFloat(chuoi1tiet[i]) < 0) {
+                            kiemtra = false;
+                            whatFault = 2;
+                            break;
+                        }
                     } catch (NumberFormatException evt) {
 
                         if (!diem1tiet.isEmpty()) {
-
+                            whatFault = 3;
                             kiemtra = false;
                             break;
                         }
                     }
                 }
-
             }
             if (kiemtra == true) {
 
@@ -605,7 +621,16 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
                 editBangdiem.setVisible(false);
 
             } else {
-                JOptionPane.showMessageDialog(null, "Bạn đã điền sai form !!");
+                if (whatFault == 3) {
+
+                    JOptionPane.showMessageDialog(null, "Bạn đã điền sai quy tắc form!");
+                } else if (whatFault == 1) {
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập điểm số <= 10!");
+
+                } else if (whatFault == 2) {
+
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập điểm số >= 0!");
+                }
             }
         }
     }
@@ -635,7 +660,9 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
                 STT++;
             }
             tableDiem.setModel(bangDuLieu);
-
+            if (tableDiem.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "KHÔNG TÌM THẤY THÔNG TIN!");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(QuanLiDiemSoPanel.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -685,6 +712,21 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
 
 
     }//GEN-LAST:event_tableDiemMousePressed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        if (tableDiem.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Không có thông tin gì để in");
+
+        } else {
+        
+            try {
+
+                tableDiem.print(JTable.PrintMode.FIT_WIDTH, null, null);
+            } catch (PrinterException ex) {
+                Logger.getLogger(QuanLiDiemSoPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
     // phuong thuc nghe lenh click button 
 
 
@@ -701,7 +743,6 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;

@@ -53,9 +53,11 @@ public class SuaHocSinh_QuanLiHocSinh extends javax.swing.JDialog {
 
         int STT = -1;
         boolean KiemTra = true;
-        if (!(txtEmailHocSinh.getText().contains("@") && txtEmailHocSinh.getText().contains("."))) {
-            KiemTra = false;
-            STT = 1;
+        if (!txtEmailHocSinh.getText().isEmpty()) {
+            if (!(txtEmailHocSinh.getText().contains("@") && txtEmailHocSinh.getText().contains("."))) {
+                KiemTra = false;
+                STT = 1;
+            }
         }
         Date checkYear = datechooseHocSinh.getDate();
         int year = checkYear.getYear() + 1900;
@@ -128,7 +130,6 @@ public class SuaHocSinh_QuanLiHocSinh extends javax.swing.JDialog {
         rbNuHocSinh = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel10.setText("Họ tên:");
@@ -137,6 +138,7 @@ public class SuaHocSinh_QuanLiHocSinh extends javax.swing.JDialog {
         jLabel11.setText("Ngày sinh:");
         jLabel11.setAlignmentY(0.8F);
 
+        txtHoTenHocSinh.setBackground(new java.awt.Color(240, 240, 240));
         txtHoTenHocSinh.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         datechooseHocSinh.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
@@ -150,6 +152,7 @@ public class SuaHocSinh_QuanLiHocSinh extends javax.swing.JDialog {
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel12.setText("Email:");
 
+        txtEmailHocSinh.setBackground(new java.awt.Color(240, 240, 240));
         txtEmailHocSinh.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         CapNhatHocSinh.setBackground(new java.awt.Color(0, 176, 239));
@@ -206,9 +209,9 @@ public class SuaHocSinh_QuanLiHocSinh extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel11)
@@ -219,22 +222,23 @@ public class SuaHocSinh_QuanLiHocSinh extends javax.swing.JDialog {
                                 .addComponent(datechooseHocSinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtHoTenHocSinh, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(textChuThichTuoi)
-                            .addComponent(txtEmailHocSinh, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
+                            .addComponent(txtEmailHocSinh, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(58, 58, 58)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel14))
+                        .addGap(16, 16, 16))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(CapNhatHocSinh, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addComponent(Close, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(58, 58, 58)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel14))
-                .addGap(16, 16, 16)
+                        .addGap(47, 47, 47)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(rbNamHocSinh)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(rbNuHocSinh))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Close, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(66, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
