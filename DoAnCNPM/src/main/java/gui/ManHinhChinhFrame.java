@@ -62,7 +62,7 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
             public void run() {
                 new LayThamSo().ketNoiCoSoDulieu();
                 QuanLyHocSinhPanel quanLyHocSinh = new QuanLyHocSinhPanel();
-                BangDiemMonPanel bangDiemMon = new BangDiemMonPanel();
+                QuanLiDiemSo bangDiemMon = new QuanLiDiemSo();
                 QuanLyLopPanel danhSachLop = new QuanLyLopPanel();
                 
                 new ManHinhChinhFrame().setVisible(true);
@@ -227,7 +227,7 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
 
     private void NhanBangDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NhanBangDiemActionPerformed
         String tieuDe = "Bảng điểm môn";
-        chenPanel(new BangDiemMonPanel(), tieuDe);
+        chenPanel(new QuanLiDiemSo(), tieuDe);
     }//GEN-LAST:event_NhanBangDiemActionPerformed
 
     private void mnuManageStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuManageStudentActionPerformed

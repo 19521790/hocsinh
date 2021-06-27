@@ -32,8 +32,8 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
      * Creates new form NhapLop
      */
     ThongTinHocSinh_DanhSachHocSinhPanel infoPanel = new ThongTinHocSinh_DanhSachHocSinhPanel();
-    public String selectedClas = "Chọn";
-    public String selectedYear = "Chọn";
+    public String selectedClas = "";
+    public String selectedYear = "";
     String mshsChosen = "";
     ThemHocSinh_DanhSachHocSinhPanel addstudent;
     DiemHocSinh_DanhSachLopPanel diemhs;
@@ -52,7 +52,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
             while (r.next()) {
 
                 i++;
-                String arr[] = {Integer.toString(i), r.getString("MaHocSinh"), r.getString("HoTen"), r.getString("MaLop"), r.getString("TBHK1"), r.getString("TBHK2")};
+                String arr[] = {Integer.toString(i), r.getString("MaHocSinh"), r.getString("HoTen"), r.getString("TenLop"), r.getString("TBHK1"), r.getString("TBHK2")};
                 DefaultTableModel tblM = (DefaultTableModel) this.infoTable1.getModel();
                 tblM.addRow(arr);
             }
@@ -75,8 +75,8 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
             ResultSet r = sta.executeQuery(sql);
             while (r.next()) {
 
-                this.clasBox.addItem(r.getString("MaLop"));
-                this.clasList.addItem(r.getString("MaLop"));
+                this.clasBox.addItem(r.getString("TenLop"));
+                this.clasList.addItem(r.getString("TenLop"));
             }
         } catch (SQLException e) {
             return;
@@ -142,7 +142,9 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
             Connection cn = JDBCConnection.ketNoiJBDC();
             Statement sta = cn.createStatement();
             ResultSet r = sta.executeQuery(sql);
+            int i=0;
             while (r.next()) {
+                i++;
                 String name = r.getString("HoTen");
                 String date = r.getString("NgaySinh");
                 String mahs = r.getString("MaHocSinh");
@@ -150,7 +152,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
                 String email = r.getString("Email");
                 String address = r.getString("DiaChi");
                 String s = r.getString("GioiTinh");
-                String datab[] = {mahs, name, s, date, address};
+                String datab[] = {Integer.toString(i),mahs, name, s, date, address};
                 DefaultTableModel tblM = (DefaultTableModel) this.infoTable.getModel();
                 tblM.addRow(datab);
             }
@@ -209,11 +211,13 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
 
     void seek(String c, String y) {
 
-        String sql = "select DISTINCT  HOCSINH.HoTen ,HOCSINH.MaHocSinh, HOCSINH.Email, HOCSINH.GioiTinh,HOCSINH.DiaChi, HOCSINH.NgaySinh  from HOCSINH  , QUATRINHHOC,HOCKI_NAM ,LOP WHERE HOCSINH.MaHocSinh=QUATRINHHOC.MaHocSinh AND QUATRINHHOC.MaHocKi=HOCKI_NAM.MaHocKi  AND QUATRINHHOC.MaLop=LOP.MaLop AND LOP.MaLop='" + c + "' AND HOCKI_NAM.Nam=" + y;
+        String sql = "select DISTINCT  HOCSINH.HoTen ,HOCSINH.MaHocSinh, HOCSINH.Email, HOCSINH.GioiTinh,HOCSINH.DiaChi, HOCSINH.NgaySinh from HOCSINH  , QUATRINHHOC,HOCKI_NAM ,LOP WHERE HOCSINH.IDHocSinh=QUATRINHHOC.IDHocSinh AND QUATRINHHOC.IDHocKi=HOCKI_NAM.IDHocKi  AND QUATRINHHOC.IDLop=LOP.IDLop AND LOP.TenLop='"+c+"' AND HOCKI_NAM.Nam="+y;
+         System.out.println(sql);
         try {
             Connection cn = JDBCConnection.ketNoiJBDC();
             Statement sta = cn.createStatement();
             ResultSet r = sta.executeQuery(sql);
+           
             int i = 0;
             while (r.next()) {
                 i++;
@@ -281,9 +285,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         seekButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
         deleteButton = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         infoTable = new javax.swing.JTable();
@@ -301,17 +303,17 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jLabel5)
-                .addContainerGap(976, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLabel5)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, -1));
+        add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1050, 50));
 
         jLabel3.setText("Lớp");
 
@@ -434,8 +436,6 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel12.setText("Thêm học sinh vào danh sách. (Thêm bằng MSSV)");
-
         deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/remove.png"))); // NOI18N
         deleteButton.setText("Xóa");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -443,8 +443,6 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
                 deleteButtonActionPerformed(evt);
             }
         });
-
-        jLabel11.setText("Xóa học sinh trong danh sách");
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Danh sách lớp"));
 
@@ -482,7 +480,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -490,64 +488,57 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(saveButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(addButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel12))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(266, 266, 266)
-                                .addComponent(deleteButton)
-                                .addGap(39, 39, 39)
-                                .addComponent(jLabel11)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                            .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(164, 164, 164))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 279, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
-                                .addComponent(clasList, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(52, 52, 52)
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(yearList, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(32, 32, 32)
-                                .addComponent(seekButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(validateSiSo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(clasList, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(yearList, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(seekButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(validateSiSo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(clasList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(validateSiSo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(yearList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(seekButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addButton)
-                    .addComponent(saveButton)
-                    .addComponent(jLabel12))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(deleteButton)
-                    .addComponent(jLabel11))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(clasList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(validateSiSo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addComponent(seekButton)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(yearList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addComponent(deleteButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(addButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(saveButton)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         jTabbedPane1.addTab("Quản lý lớp", jPanel1);
@@ -578,9 +569,11 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         if (this.mshsChosen == "") {
             return;
         }
-        int index = this.infoTable.getSelectedRow();
+        int index[] = this.infoTable.getSelectedRows();
         TableModel md = this.infoTable.getModel();
-        this.deletequery.add("update QUATRINHHOC set MaLop=null where MaHocSinh='" + md.getValueAt(index, 1).toString() + "'");
+         for(int i=0;i<index.length;i++){
+        this.deletequery.add("update QUATRINHHOC set IDLop =  NULL from HOCSINH where QUATRINHHOC.IDHocSinh =HOCSINH.IDHocSinh and HOCSINH.MaHocSinh = '" + md.getValueAt(index[i], 1).toString() + "'");
+         }
         int numRows = infoTable.getSelectedRows().length;
         DefaultTableModel model = (DefaultTableModel) this.infoTable.getModel();
         for (int i = 0; i < numRows; i++) {
@@ -681,8 +674,6 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
     private javax.swing.JTable infoTable1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

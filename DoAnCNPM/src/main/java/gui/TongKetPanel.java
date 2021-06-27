@@ -17,8 +17,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import popupframe.DanhSach_TongKetHocKyPanel;
 import popupframe.TongKetMon_BangDiemMonPanel;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -38,7 +36,7 @@ public class TongKetPanel extends javax.swing.JPanel {
     DefaultTableModel bangDiemMonTableModel = new DefaultTableModel();
 
     void createYearList() {
-        String sql = " select distinct  HOCKI_NAM.NAM from HOCKI_NAM";
+        String sql = " select distinct  NAM from HOCKI_NAM order by Nam DESC";
         try {
             Connection cn = JDBCConnection.ketNoiJBDC();
             Statement sta = cn.createStatement();
@@ -46,7 +44,40 @@ public class TongKetPanel extends javax.swing.JPanel {
             while (r.next()) {
 
                 this.yearComboBox.addItem(r.getString("Nam"));
+                this.Nam.addItem(r.getString("Nam"));
+            }
+        } catch (SQLException e) {
+            return;
+        }
+    }
 
+    void createHocKiList() {
+        String sql = "select distinct  TenHocKi from HOCKI_NAM ";
+        try {
+            Connection cn = JDBCConnection.ketNoiJBDC();
+            Statement sta = cn.createStatement();
+            ResultSet r = sta.executeQuery(sql);
+            while (r.next()) {
+
+                this.hocky.addItem(r.getString("TenHocKi"));
+
+                this.HocKi.addItem(r.getString("TenHocKi"));
+            }
+        } catch (SQLException e) {
+            return;
+        }
+    }
+    void createMonHocList() {
+        String sql = "select TenMonHoc from MONHOC";
+        try {
+            Connection cn = JDBCConnection.ketNoiJBDC();
+            Statement sta = cn.createStatement();
+            ResultSet r = sta.executeQuery(sql);
+            while (r.next()) {
+
+                this.Mon.addItem(r.getString("TenMonHoc"));
+
+          
             }
         } catch (SQLException e) {
             return;
@@ -54,14 +85,11 @@ public class TongKetPanel extends javax.swing.JPanel {
     }
 
     void fillTable() {
-        String sql2 = "";
+
         String sql = "EXEC sp_TongKetHocKi_InDanhSach N'" + this.hocky.getSelectedItem().toString() + "'," + this.yearComboBox.getSelectedItem().toString();
-        if (this.hocky.getSelectedItem().toString() == "Học kì 1") {
-            sql2 = "EXEC sp_TongKetHocKi_CapNhatBang '" + this.yearComboBox.getSelectedItem().toString() + "K1' ";
-        } else if (this.hocky.getSelectedItem().toString() == "Học kì 2") {
-            sql2 = "EXEC sp_TongKetHocKi_CapNhatBang '" + this.yearComboBox.getSelectedItem().toString() + "K2' ";
-        }
+        String sql2 = "EXEC sp_TongKetHocKi_CapNhatBang N'" + this.hocky.getSelectedItem().toString() + "'," + this.yearComboBox.getSelectedItem().toString();
         System.out.println(sql);
+        System.out.println(sql2);
         Connection cn = JDBCConnection.ketNoiJBDC();
 
         try {
@@ -75,8 +103,10 @@ public class TongKetPanel extends javax.swing.JPanel {
         try {
             CallableStatement cst = cn.prepareCall(sql);
             ResultSet r = cst.executeQuery();
+            int i = 0;
             while (r.next()) {
-                String arr[] = {r.getString("MaTongKetHocKi"), r.getString("MaLop"), r.getString("SiSo"), r.getString("SLDat"), r.getString("TiLe")};
+                i++;
+                String arr[] = {Integer.toString(i), r.getString("IDLop"), r.getString("SiSo"), r.getString("SLDat"), r.getString("TiLe")};
                 DefaultTableModel tblM = (DefaultTableModel) this.infoTable.getModel();
                 tblM.addRow(arr);
             }
@@ -123,7 +153,7 @@ public class TongKetPanel extends javax.swing.JPanel {
             BangDiemMon.tableDiem_BangDiemMon.setModel(bangDiemMonTableModel);
 
         } catch (SQLException ex) {
-            Logger.getLogger(TongKetMonPanel.class.getName()).log(Level.SEVERE, null, ex);
+
         }
 
     }
@@ -131,7 +161,8 @@ public class TongKetPanel extends javax.swing.JPanel {
     public TongKetPanel() {
         initComponents();
         createYearList();
-
+        createHocKiList();
+        createMonHocList();
         XemThongTin.setVisible(false);
         BangDiemMon.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         String[] colTitle = {"STT", "Lớp", "Sĩ Số", "Số lượng đạt", "Tỉ lệ"};
@@ -208,7 +239,7 @@ public class TongKetPanel extends javax.swing.JPanel {
 
         jLabel5.setText("Học kỳ:");
 
-        hocky.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn", "Học kì 1", "Học kì 2" }));
+        hocky.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn" }));
         hocky.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 hockyActionPerformed(evt);
@@ -353,7 +384,6 @@ public class TongKetPanel extends javax.swing.JPanel {
 
         jLabel2.setText("Môn:");
 
-        Mon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Toán", "Lý", "Hóa", "Sinh", "Sử", "Địa", "Văn", "Đạo Đức", "Thể Dục" }));
         Mon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MonActionPerformed(evt);
@@ -362,7 +392,6 @@ public class TongKetPanel extends javax.swing.JPanel {
 
         jLabel3.setText("Học kỳ:");
 
-        HocKi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Học kì 1", "Học kì 2" }));
         HocKi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 HocKiActionPerformed(evt);
@@ -370,8 +399,6 @@ public class TongKetPanel extends javax.swing.JPanel {
         });
 
         jLabel9.setText("Năm:");
-
-        Nam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2021", "2020", "2019" }));
 
         TimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/search.png"))); // NOI18N
         TimKiem.setText("Tìm kiếm");
@@ -559,7 +586,7 @@ public class TongKetPanel extends javax.swing.JPanel {
             ResultSet rs = mystm.executeQuery();
             int STT = 0;
             while (rs.next()) {
-                String MaLop = rs.getString("MaLop");
+                String MaLop = rs.getString("TenLop");
                 String SiSo = rs.getString("SiSo");
                 String SLDat = rs.getString("SLDat");
                 String TiLe = rs.getString("TiLe");
@@ -571,7 +598,7 @@ public class TongKetPanel extends javax.swing.JPanel {
             tableTongKet.setModel(bangdulieu);
             XemThongTin.setVisible(true);
         } catch (SQLException ex) {
-            Logger.getLogger(TongKetMonPanel.class.getName()).log(Level.SEVERE, null, ex);
+
         }
     }//GEN-LAST:event_TimKiemActionPerformed
 

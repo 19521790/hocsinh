@@ -7,6 +7,7 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -167,6 +168,7 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
             }
         });
     }
+    
 
     public void HocSinhTrongTruong() {
 
@@ -423,21 +425,25 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
 
     private void XoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_XoaActionPerformed
         //Lấy vị trí đang chọn trên tableHocSinh
-        int indexTB = tableHocSinh.getSelectedRow();
+        int row = tableHocSinh.getSelectedRow();
         //check xem chua chon dong nao
-        if (indexTB == -1) {
+        if (row == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng bạn cần xóa!");
         } else {
-            int xacNhan = JOptionPane.showConfirmDialog(null, "Bạn muốn xóa thông tin học sinh này", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            int xacNhan = JOptionPane.showConfirmDialog(null, "Thông tin học sinh sẽ bị xóa vĩnh viễn", "Xác nhận", JOptionPane.YES_NO_OPTION);
             if (xacNhan == JOptionPane.YES_OPTION) {
-                bangDuLieu.removeRow(indexTB);
+                Connection con = JDBCConnection.ketNoiJBDC();
+                try {
+                    CallableStatement mystm = con.prepareCall("{call sp_DanhSachHocSinh_XoaHocSinh(?)}");
+                    mystm.setString(1, tableHocSinh.getValueAt(row, 1).toString());
+                    mystm.executeQuery();
+              
 
-                int row = tableHocSinh.getRowCount();
-
-                for (int i = 0; i < row; i++) {
-                    tableHocSinh.setValueAt(i + 1, i, 0);
-
+                } catch (SQLException ex) {
+                  
                 }
+                JOptionPane.showMessageDialog(null, "Xóa thành công!");
+                HocSinhTrongTruong();
 
             }
         }
@@ -471,9 +477,9 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
             bangDuLieu.setRowCount(0);
             tableHocSinh.setModel(bangDuLieu);
             if (!MaHs.isEmpty()) {
-                sql = "SELECT * FROM HOCSINH WHERE MaHocSinh='" + MaHs + "'";
+                sql = "SELECT * FROM HOCSINH WHERE MaHocSinh like '%" + MaHs + "%'";
             } else {
-                sql = "SELECT * FROM HOCSINH WHERE HoTen=" + HoTenHS;
+                sql = "SELECT * FROM HOCSINH WHERE HoTen like N'%" + HoTenHS + "%'";
             }
 
             Connection con = JDBCConnection.ketNoiJBDC();
