@@ -85,9 +85,15 @@ public class TongKetPanel extends javax.swing.JPanel {
     }
 
     void fillTable() {
+<<<<<<< HEAD
 
         String sql = "EXEC sp_TongKetHocKi_InDanhSach N'" + this.hocky.getSelectedItem().toString() + "'," + this.yearComboBox.getSelectedItem().toString();
         String sql2 = "EXEC sp_TongKetHocKi_CapNhatBang N'" + this.hocky.getSelectedItem().toString() + "'," + this.yearComboBox.getSelectedItem().toString();
+=======
+       
+        String sql = "EXEC sp_TongKetHocKi_InDanhSach N'" + this.hocky.getSelectedItem().toString() + "'," + this.yearComboBox.getSelectedItem().toString();
+        String sql2 ="EXEC sp_TongKetHocKi_CapNhatBang N'" + this.hocky.getSelectedItem().toString() + "'," + this.yearComboBox.getSelectedItem().toString();
+>>>>>>> 9de58ce0253327421d880e89c1aa26250a1785d1
         System.out.println(sql);
         System.out.println(sql2);
         Connection cn = JDBCConnection.ketNoiJBDC();
@@ -103,7 +109,11 @@ public class TongKetPanel extends javax.swing.JPanel {
         try {
             CallableStatement cst = cn.prepareCall(sql);
             ResultSet r = cst.executeQuery();
+<<<<<<< HEAD
             int i = 0;
+=======
+            int i=0;
+>>>>>>> 9de58ce0253327421d880e89c1aa26250a1785d1
             while (r.next()) {
                 i++;
                 String arr[] = {Integer.toString(i), r.getString("IDLop"), r.getString("SiSo"), r.getString("SLDat"), r.getString("TiLe")};
@@ -153,7 +163,11 @@ public class TongKetPanel extends javax.swing.JPanel {
             BangDiemMon.tableDiem_BangDiemMon.setModel(bangDiemMonTableModel);
 
         } catch (SQLException ex) {
+<<<<<<< HEAD
 
+=======
+           
+>>>>>>> 9de58ce0253327421d880e89c1aa26250a1785d1
         }
 
     }
@@ -598,7 +612,11 @@ public class TongKetPanel extends javax.swing.JPanel {
             tableTongKet.setModel(bangdulieu);
             XemThongTin.setVisible(true);
         } catch (SQLException ex) {
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> 9de58ce0253327421d880e89c1aa26250a1785d1
         }
     }//GEN-LAST:event_TimKiemActionPerformed
 
