@@ -56,10 +56,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
                 DefaultTableModel tblM = (DefaultTableModel) this.infoTable1.getModel();
                 tblM.addRow(arr);
             }
-             if(i==0){
-                    JOptionPane.showMessageDialog(this, "KHÔNG TÌM THẤY THÔNG TIN");
-
-        }
+          
         } catch (SQLException e) {
             return;
         }
@@ -211,7 +208,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
 
     void seek(String c, String y) {
 
-        String sql = "select DISTINCT  HOCSINH.HoTen ,HOCSINH.MaHocSinh, HOCSINH.Email, HOCSINH.GioiTinh,HOCSINH.DiaChi, HOCSINH.NgaySinh from HOCSINH  , QUATRINHHOC,HOCKI_NAM ,LOP WHERE HOCSINH.IDHocSinh=QUATRINHHOC.IDHocSinh AND QUATRINHHOC.IDHocKi=HOCKI_NAM.IDHocKi  AND QUATRINHHOC.IDLop=LOP.IDLop AND LOP.TenLop='"+c+"' AND HOCKI_NAM.Nam="+y;
+        String sql = "select DISTINCT  HOCSINH.HoTen ,HOCSINH.MaHocSinh, HOCSINH.Email, HOCSINH.GioiTinh,HOCSINH.DiaChi, HOCSINH.NgaySinh from HOCSINH  , QUATRINHHOC,HOCKI_NAM ,LOP WHERE HOCSINH.IDHocSinh=QUATRINHHOC.IDHocSinh AND QUATRINHHOC.IDHocKi=HOCKI_NAM.IDHocKi  AND QUATRINHHOC.IDLop=LOP.IDLop AND LOP.TenLop='"+c+"' AND HOCKI_NAM.Nam="+y+" ORDER BY MaHocSinh ASC";
          System.out.println(sql);
         try {
             Connection cn = JDBCConnection.ketNoiJBDC();
@@ -237,7 +234,14 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         }
 
     }
-
+    public void  refreshSTT(){
+    
+    int sohang= infoTable.getColumnCount();
+    for(int i=0; i<sohang;i++){
+        this.infoTable.setValueAt(Integer.toString(i+1), i, 0);
+    }
+    
+    }
     void loadContentYearList(int curYear) {
         this.yearList.addItem(Integer.toString(curYear));
         this.yearList.addItem(Integer.toString(curYear - 1));
@@ -251,6 +255,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         System.out.println("ọ");
         this.createClassList();
         this.createYearList();
+        loadtable();
        // this.loadContentYearList(d.getYear() + 1900);
     }
 
@@ -327,11 +332,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(infoTable1);
 
-        clasBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn" }));
-
         jLabel4.setText("Năm:");
-
-        yearBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn" }));
 
         seekButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/search.png"))); // NOI18N
         seekButton1.setText("Tìm kiếm");
@@ -385,9 +386,9 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButton1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Tra cứu điểm", jPanel2);
@@ -396,7 +397,6 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
 
         jLabel1.setText("Lớp:");
 
-        clasList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn" }));
         clasList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clasListActionPerformed(evt);
@@ -405,7 +405,6 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
 
         jLabel2.setText("Năm học:");
 
-        yearList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn" }));
         yearList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 yearListActionPerformed(evt);
@@ -580,6 +579,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
 
             model.removeRow(infoTable.getSelectedRow());
         }
+        refreshSTT();
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void seekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seekButtonActionPerformed
@@ -596,6 +596,12 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         this.selectedClas = (String) this.clasList.getSelectedItem();
         this.selectedYear = (String) this.yearList.getSelectedItem();
         seek((String) this.clasList.getSelectedItem(), (String) this.yearList.getSelectedItem());
+          if(this.infoTable.getRowCount()<1){
+                    JOptionPane.showMessageDialog(this, "KHÔNG TÌM THẤY THÔNG TIN");
+
+        }
+
+        
     }//GEN-LAST:event_seekButtonActionPerformed
 
     private void infoTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_infoTableMouseClicked
@@ -647,6 +653,10 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) this.infoTable1.getModel();
         model.setRowCount(0);
         loadtable();
+           if(this.infoTable1.getRowCount()<1){
+                    JOptionPane.showMessageDialog(this, "KHÔNG TÌM THẤY THÔNG TIN");
+
+        }
     }//GEN-LAST:event_seekButton1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

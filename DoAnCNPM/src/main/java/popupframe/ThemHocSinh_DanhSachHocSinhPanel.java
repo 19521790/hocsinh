@@ -238,6 +238,7 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
             System.out.println(Integer.toString(i));
         }
         addStudent(index);
+        this.dsl.refreshSTT();
 
 
     }//GEN-LAST:event_ThemMoi1ActionPerformed

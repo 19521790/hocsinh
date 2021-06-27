@@ -37,7 +37,7 @@ model.setRowCount(0);
             while (r.next()) {
 
                 i++;
-                String arr[] = {Integer.toString(i), r.getString("MaHocSinh"), r.getString("HoTen"), r.getString("MaLop"), r.getString("TBHK1"), r.getString("TBHK2")};
+                String arr[] = {Integer.toString(i), r.getString("MaHocSinh"), r.getString("HoTen"), r.getString("TenLop"), r.getString("TBHK1"), r.getString("TBHK2")};
                 DefaultTableModel tblM = (DefaultTableModel) this.infoTable.getModel();
                 tblM.addRow(arr);
             }

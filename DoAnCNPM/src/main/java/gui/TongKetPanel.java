@@ -106,7 +106,7 @@ public class TongKetPanel extends javax.swing.JPanel {
             int i = 0;
             while (r.next()) {
                 i++;
-                String arr[] = {Integer.toString(i), r.getString("IDLop"), r.getString("SiSo"), r.getString("SLDat"), r.getString("TiLe")};
+                String arr[] = {Integer.toString(i), r.getString("TenLop"), r.getString("SiSo"), r.getString("SLDat"), r.getString("TiLe")};
                 DefaultTableModel tblM = (DefaultTableModel) this.infoTable.getModel();
                 tblM.addRow(arr);
             }
@@ -239,7 +239,6 @@ public class TongKetPanel extends javax.swing.JPanel {
 
         jLabel5.setText("Học kỳ:");
 
-        hocky.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn" }));
         hocky.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 hockyActionPerformed(evt);
@@ -247,8 +246,6 @@ public class TongKetPanel extends javax.swing.JPanel {
         });
 
         jLabel10.setText("Năm:");
-
-        yearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn" }));
 
         seekButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/search.png"))); // NOI18N
         seekButton.setText("Tìm kiếm");
