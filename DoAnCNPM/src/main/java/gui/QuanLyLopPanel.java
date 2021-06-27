@@ -84,7 +84,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
     }
 
     void createYearList() {
-        String sql = " select distinct  HOCKI_NAM.NAM from HOCKI_NAM";
+        String sql = " select distinct  HOCKI_NAM.NAM from HOCKI_NAM ORDER BY HOCKI_NAM.NAM DESC;";
         try {
             Connection cn = JDBCConnection.ketNoiJBDC();
             Statement sta = cn.createStatement();
