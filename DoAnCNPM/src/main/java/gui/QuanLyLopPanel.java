@@ -58,11 +58,10 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
                 DefaultTableModel tblM = (DefaultTableModel) this.infoTable1.getModel();
                 tblM.addRow(arr);
             }
-          
+
         } catch (SQLException e) {
             return;
         }
-       
 
     }
 
@@ -141,7 +140,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
             Connection cn = JDBCConnection.ketNoiJBDC();
             Statement sta = cn.createStatement();
             ResultSet r = sta.executeQuery(sql);
-            int i=0;
+            int i = 0;
             while (r.next()) {
                 i++;
                 String name = r.getString("HoTen");
@@ -151,7 +150,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
                 String email = r.getString("Email");
                 String address = r.getString("DiaChi");
                 String s = r.getString("GioiTinh");
-                String datab[] = {Integer.toString(i),mahs, name, s, date, address};
+                String datab[] = {Integer.toString(i), mahs, name, s, date, address};
                 DefaultTableModel tblM = (DefaultTableModel) this.infoTable.getModel();
                 tblM.addRow(datab);
             }
@@ -210,13 +209,13 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
 
     void seek(String c, String y) {
 
-        String sql = "select DISTINCT  HOCSINH.HoTen ,HOCSINH.MaHocSinh, HOCSINH.Email, HOCSINH.GioiTinh,HOCSINH.DiaChi, HOCSINH.NgaySinh from HOCSINH  , QUATRINHHOC,HOCKI_NAM ,LOP WHERE HOCSINH.IDHocSinh=QUATRINHHOC.IDHocSinh AND QUATRINHHOC.IDHocKi=HOCKI_NAM.IDHocKi  AND QUATRINHHOC.IDLop=LOP.IDLop AND LOP.TenLop='"+c+"' AND HOCKI_NAM.Nam="+y+" ORDER BY MaHocSinh ASC";
-         System.out.println(sql);
+        String sql = "select DISTINCT  HOCSINH.HoTen ,HOCSINH.MaHocSinh, HOCSINH.Email, HOCSINH.GioiTinh,HOCSINH.DiaChi, HOCSINH.NgaySinh from HOCSINH  , QUATRINHHOC,HOCKI_NAM ,LOP WHERE HOCSINH.IDHocSinh=QUATRINHHOC.IDHocSinh AND QUATRINHHOC.IDHocKi=HOCKI_NAM.IDHocKi  AND QUATRINHHOC.IDLop=LOP.IDLop AND LOP.TenLop='" + c + "' AND HOCKI_NAM.Nam=" + y + " ORDER BY MaHocSinh ASC";
+        System.out.println(sql);
         try {
             Connection cn = JDBCConnection.ketNoiJBDC();
             Statement sta = cn.createStatement();
             ResultSet r = sta.executeQuery(sql);
-           
+
             int i = 0;
             while (r.next()) {
                 i++;
@@ -236,14 +235,30 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         }
 
     }
-    public void  refreshSTT(){
-    
-    int sohang= infoTable.getColumnCount();
-    for(int i=0; i<sohang;i++){
-        this.infoTable.setValueAt(Integer.toString(i+1), i, 0);
+
+    public boolean kiemTraMaHocSinh(String ms) {
+
+       int sohang = infoTable.getRowCount();
+        
+        for (int i = 0; i < sohang; i++) {
+            System.out.println(this.infoTable.getValueAt(i, 1).toString()+">><<<"+ms);
+            if(this.infoTable.getValueAt(i, 1).toString().endsWith(ms)) 
+                return false;
+        }
+        return true;
     }
     
+    public void refreshSTT() {
+
+        int sohang = infoTable.getRowCount();
+        
+        for (int i = 0; i < sohang; i++) {
+            this.infoTable.setValueAt(Integer.toString(i + 1), i, 0);
+            System.out.println(this.infoTable.getValueAt(i, 0).toString());
+        }
+
     }
+
     void loadContentYearList(int curYear) {
         this.yearList.addItem(Integer.toString(curYear));
         this.yearList.addItem(Integer.toString(curYear - 1));
@@ -258,8 +273,8 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         this.createClassList();
         this.createYearList();
         loadtable();
-       // this.loadContentYearList(d.getYear() + 1900);
 
+        // this.loadContentYearList(d.getYear() + 1900);
     }
 
     /**
@@ -710,9 +725,9 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         }
         int index[] = this.infoTable.getSelectedRows();
         TableModel md = this.infoTable.getModel();
-         for(int i=0;i<index.length;i++){
-        this.deletequery.add("update QUATRINHHOC set IDLop =  NULL from HOCSINH where QUATRINHHOC.IDHocSinh =HOCSINH.IDHocSinh and HOCSINH.MaHocSinh = '" + md.getValueAt(index[i], 1).toString() + "'");
-         }
+        for (int i = 0; i < index.length; i++) {
+            this.deletequery.add("update QUATRINHHOC set IDLop =  NULL from HOCSINH where QUATRINHHOC.IDHocSinh =HOCSINH.IDHocSinh and HOCSINH.MaHocSinh = '" + md.getValueAt(index[i], 1).toString() + "'");
+        }
         int numRows = infoTable.getSelectedRows().length;
         DefaultTableModel model = (DefaultTableModel) this.infoTable.getModel();
         for (int i = 0; i < numRows; i++) {
@@ -736,12 +751,12 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         this.selectedClas = (String) this.clasList.getSelectedItem();
         this.selectedYear = (String) this.yearList.getSelectedItem();
         seek((String) this.clasList.getSelectedItem(), (String) this.yearList.getSelectedItem());
-          if(this.infoTable.getRowCount()<1){
-                    JOptionPane.showMessageDialog(this, "KHÔNG TÌM THẤY THÔNG TIN");
+        if (this.infoTable.getRowCount() < 1) {
+            JOptionPane.showMessageDialog(this, "KHÔNG TÌM THẤY THÔNG TIN");
 
         }
 
-        
+
     }//GEN-LAST:event_seekButtonActionPerformed
 
     private void infoTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_infoTableMouseClicked
@@ -785,16 +800,15 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
 
     private void seekButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seekButton1ActionPerformed
         // TODO add your handling code here:
-                if(this.clasBox.getSelectedItem().toString()=="Chọn"||this.yearBox.getSelectedItem().toString()=="Chọn")
-                {
-                            JOptionPane.showMessageDialog(this, "Bạn chưa chọn lớp hoặc năm ");
-                            return;
-                }
+        if (this.clasBox.getSelectedItem().toString() == "Chọn" || this.yearBox.getSelectedItem().toString() == "Chọn") {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn lớp hoặc năm ");
+            return;
+        }
         DefaultTableModel model = (DefaultTableModel) this.infoTable1.getModel();
         model.setRowCount(0);
         loadtable();
-           if(this.infoTable1.getRowCount()<1){
-                    JOptionPane.showMessageDialog(this, "KHÔNG TÌM THẤY THÔNG TIN");
+        if (this.infoTable1.getRowCount() < 1) {
+            JOptionPane.showMessageDialog(this, "KHÔNG TÌM THẤY THÔNG TIN");
 
         }
     }//GEN-LAST:event_seekButton1ActionPerformed
@@ -816,11 +830,11 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-          if (infoTable.getRowCount() == 0) {
+        if (infoTable.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "Không có thông tin gì để in");
 
         } else {
-        
+
             try {
 
                 infoTable.print(JTable.PrintMode.FIT_WIDTH, null, null);

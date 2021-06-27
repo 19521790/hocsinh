@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -97,6 +99,7 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
      model.removeRow(rows[i]-i);
    }
 }
+    
     public void loadtable() {
          DefaultTableModel model = (DefaultTableModel) this.tableHocSinh.getModel();
         model.setRowCount(0);
@@ -110,7 +113,7 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
             Statement sta = cn.createStatement();
          ResultSet   r = sta.executeQuery(sql);
              while (r.next()) {
-                i++;
+                
                 String name = r.getString("HoTen");
                 String date = r.getString("NgaySinh");
                 String mahs = r.getString("MaHocSinh");
@@ -118,9 +121,14 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
                 String email = r.getString("Email");
                 String address = r.getString("DiaChi");
                 String s = r.getString("GioiTinh");
+               // if(!checktable(mahs))continue;
+               if(this.dsl.kiemTraMaHocSinh(mahs)) 
+               {
+                i++;
                 String datab[] = {Integer.toString(i), mahs, name, date, s, address, email};
                 DefaultTableModel tblM = (DefaultTableModel) this.tableHocSinh.getModel();
                 tblM.addRow(datab);
+               }
             }
             
         } catch (SQLException e) {
@@ -130,7 +138,12 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
         
 
     }
-
+    void checktable(){
+        
+    
+    
+    
+    }
     public ThemHocSinh_DanhSachHocSinhPanel() {
         initComponents();
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
