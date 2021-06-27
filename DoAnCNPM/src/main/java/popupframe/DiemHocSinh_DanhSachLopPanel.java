@@ -88,7 +88,7 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
         this.IDLabel.setText(ms);
         loaddatabase();
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -115,6 +115,8 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+
         hk1table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -131,6 +133,10 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        hk1table.setFocusable(false);
+        hk1table.setGridColor(new java.awt.Color(255, 255, 255));
+        hk1table.setIntercellSpacing(new java.awt.Dimension(0, 1));
+        hk1table.setSelectionBackground(new java.awt.Color(0, 176, 239));
         jScrollPane1.setViewportView(hk1table);
         if (hk1table.getColumnModel().getColumnCount() > 0) {
             hk1table.getColumnModel().getColumn(0).setResizable(false);
@@ -138,6 +144,8 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
             hk1table.getColumnModel().getColumn(2).setResizable(false);
             hk1table.getColumnModel().getColumn(4).setResizable(false);
         }
+
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
         hk2table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -155,6 +163,10 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        hk2table.setFocusable(false);
+        hk2table.setGridColor(new java.awt.Color(255, 255, 255));
+        hk2table.setIntercellSpacing(new java.awt.Dimension(0, 1));
+        hk2table.setSelectionBackground(new java.awt.Color(0, 176, 239));
         jScrollPane2.setViewportView(hk2table);
         if (hk2table.getColumnModel().getColumnCount() > 0) {
             hk2table.getColumnModel().getColumn(0).setResizable(false);
@@ -164,26 +176,28 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
             hk2table.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Mã số học sinh");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Lớp");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Năm Học");
 
-        jLabel4.setText("Điểm học kì 1");
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel4.setText("Học kì 1");
 
-        jLabel5.setText("Điểm học kì 2");
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel5.setText("Học kì 2");
 
-        IDLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        IDLabel.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         IDLabel.setText("name");
 
-        yearLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        yearLabel.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         yearLabel.setText("year");
 
-        clasLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        clasLabel.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         clasLabel.setText("class");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -210,7 +224,7 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
                         .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,12 +239,12 @@ public class DiemHocSinh_DanhSachLopPanel extends javax.swing.JFrame {
                     .addComponent(clasLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

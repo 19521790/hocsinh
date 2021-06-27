@@ -44,37 +44,54 @@ public class SuaDiem_BangDiemMonPanel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Họ tên:");
 
+        HoVaTen.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         HoVaTen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 HoVaTenActionPerformed(evt);
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Lớp:");
 
+        Lop.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         Lop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LopActionPerformed(evt);
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Điểm 15p:");
 
+        Diem15p.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         Diem15p.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Diem15pActionPerformed(evt);
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Điểm 1 tiết:");
 
-        SaveWindowButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/diskette.png"))); // NOI18N
-        SaveWindowButton.setText("Lưu");
+        Diem1Tiet.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
 
-        ExitWindowButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/exit (1).png"))); // NOI18N
+        SaveWindowButton.setBackground(new java.awt.Color(0, 176, 239));
+        SaveWindowButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        SaveWindowButton.setForeground(new java.awt.Color(255, 255, 255));
+        SaveWindowButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_save_24px.png"))); // NOI18N
+        SaveWindowButton.setText("Lưu");
+        SaveWindowButton.setBorder(null);
+
+        ExitWindowButton.setBackground(new java.awt.Color(254, 193, 6));
+        ExitWindowButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        ExitWindowButton.setForeground(new java.awt.Color(255, 255, 255));
+        ExitWindowButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_exit_24px_1.png"))); // NOI18N
         ExitWindowButton.setText("Close");
+        ExitWindowButton.setBorder(null);
         ExitWindowButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ExitWindowButtonActionPerformed(evt);
@@ -102,13 +119,13 @@ public class SuaDiem_BangDiemMonPanel extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(SaveWindowButton)))
+                        .addComponent(SaveWindowButton, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(Diem1Tiet)
                         .addComponent(Lop, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))
-                    .addComponent(ExitWindowButton, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(ExitWindowButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(67, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -128,9 +145,9 @@ public class SuaDiem_BangDiemMonPanel extends javax.swing.JFrame {
                     .addComponent(Diem1Tiet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SaveWindowButton)
-                    .addComponent(ExitWindowButton))
-                .addContainerGap(33, Short.MAX_VALUE))
+                    .addComponent(SaveWindowButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ExitWindowButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();

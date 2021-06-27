@@ -164,7 +164,14 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
         ThemMoi1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(239, 247, 248));
 
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jScrollPane1.setFocusable(false);
+        jScrollPane1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+
+        tableHocSinh.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tableHocSinh.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -181,6 +188,10 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tableHocSinh.setFocusable(false);
+        tableHocSinh.setGridColor(new java.awt.Color(255, 255, 255));
+        tableHocSinh.setIntercellSpacing(new java.awt.Dimension(0, 1));
+        tableHocSinh.setSelectionBackground(new java.awt.Color(0, 176, 239));
         tableHocSinh.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tableHocSinhMousePressed(evt);
@@ -188,8 +199,14 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tableHocSinh);
 
+        ThemMoi1.setBackground(new java.awt.Color(0, 176, 239));
+        ThemMoi1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        ThemMoi1.setForeground(new java.awt.Color(255, 255, 255));
         ThemMoi1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/plus.png"))); // NOI18N
         ThemMoi1.setText("Thêm");
+        ThemMoi1.setBorder(null);
+        ThemMoi1.setFocusPainted(false);
+        ThemMoi1.setFocusable(false);
         ThemMoi1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ThemMoi1ActionPerformed(evt);
@@ -204,8 +221,8 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
-                .addComponent(ThemMoi1)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addComponent(ThemMoi1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,7 +232,7 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
                 .addGap(19, 19, 19))
             .addGroup(layout.createSequentialGroup()
                 .addGap(117, 117, 117)
-                .addComponent(ThemMoi1)
+                .addComponent(ThemMoi1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -238,6 +255,7 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
             System.out.println(Integer.toString(i));
         }
         addStudent(index);
+        this.dsl.refreshSTT();
 
 
     }//GEN-LAST:event_ThemMoi1ActionPerformed
