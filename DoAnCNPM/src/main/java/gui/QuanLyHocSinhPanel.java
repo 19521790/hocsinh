@@ -108,7 +108,7 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
                             int year = date.getYear() + 1900;
 
                             if (NamSinhCuaTuoiToiDa > year || year > NamSinhCuaTuoiToiThieu) {
-                                JOptionPane.showMessageDialog(null, "Ngày sinh bạn nhập đã sai");   
+                                JOptionPane.showMessageDialog(null, "Ngày sinh bạn nhập đã sai");
                                 tableHocSinh.setValueAt(DiemBanDau, row, column);
 
                             } else {
