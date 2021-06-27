@@ -49,7 +49,8 @@ model.setRowCount(0);
     }
     public DanhSach_TongKetHocKyPanel() {
         initComponents();
-         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -66,6 +67,10 @@ model.setRowCount(0);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        infoTable.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         infoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -74,6 +79,10 @@ model.setRowCount(0);
                 "STT", "MSSV", "Họ tên", "Lớp", "TBHK1", "TBHK2"
             }
         ));
+        infoTable.setGridColor(new java.awt.Color(255, 255, 255));
+        infoTable.setIntercellSpacing(new java.awt.Dimension(0, 1));
+        infoTable.setRowHeight(25);
+        infoTable.setSelectionBackground(new java.awt.Color(0, 176, 239));
         jScrollPane1.setViewportView(infoTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

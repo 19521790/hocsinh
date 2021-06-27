@@ -5,32 +5,62 @@
  */
 package gui;
 
-
+import java.awt.Color;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import thamso.LayThamSo;
+
 /**
  *
  * @author Admin
  */
 public class ManHinhChinhFrame extends javax.swing.JFrame {
 
+    //Gọi các panel
+    QuanLiDiemSoPanel quanLiDiemSo = new QuanLiDiemSoPanel();
+    QuanLyHocSinhPanel quanLiHocSinh = new QuanLyHocSinhPanel();
+    QuanLyLopPanel quanLiLop = new QuanLyLopPanel();
+    ThayDoiQuyDinhPanel thayDoiQuyDinh = new ThayDoiQuyDinhPanel();
+    TongKetPanel tongKet = new TongKetPanel();
+
+    //Khởi tạo màu mới
+    Color menuCL = new Color(74,75,115);
+    Color backgroundCL = new Color(52,56,68);
+    
     public ManHinhChinhFrame() {
         initComponents();
         //Đặt màn hình chính giữa màn hình
         setLocationRelativeTo(null);
         SetIcon();
+
+        //Thêm sẵn các panel vào tabbed panel
+        tblMainBoard.addTab("Quản lý học sinh", quanLiHocSinh);
+        tblMainBoard.addTab("Quản lý điểm số", quanLiDiemSo);
+        tblMainBoard.addTab("Quản lý lớp", quanLiLop);
+        tblMainBoard.addTab("Tổng kết", tongKet);
+        tblMainBoard.addTab("Thay đổi quy định", thayDoiQuyDinh);
     }
-    
+
     //Hàm chuyển đổi các giữa các JPanel 
-    public void chenPanel(JPanel panel, String tieuDe){
-        tblMainBoard.addTab(tieuDe, panel);
+    public void chenPanel(JPanel panel, JPanel menu, String tieuDe) {
+        if (panel == null) {
+            tblMainBoard.addTab(tieuDe, panel);
+        }
         tblMainBoard.setSelectedComponent(panel);
+        //Trả lại màu ban đầu cho menu
+        pnDashboard.setBackground(backgroundCL);
+        pnQuanLiDiemSo.setBackground(backgroundCL);
+        pnQuanLiHocSinh.setBackground(backgroundCL);
+        pnQuanLiLop.setBackground(backgroundCL);
+        pnThayDoiQuyDinh.setBackground(backgroundCL);
+        pnThoat.setBackground(backgroundCL);
+        pnTongKet.setBackground(backgroundCL);
+        //Đổi màu menu chuột click
+        menu.setBackground(menuCL);
     }
-    
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -39,7 +69,7 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -62,220 +92,482 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
             public void run() {
                 new LayThamSo().ketNoiCoSoDulieu();
                 QuanLyHocSinhPanel quanLyHocSinh = new QuanLyHocSinhPanel();
-                QuanLiDiemSo bangDiemMon = new QuanLiDiemSo();
+                QuanLiDiemSoPanel bangDiemMon = new QuanLiDiemSoPanel();
                 QuanLyLopPanel danhSachLop = new QuanLyLopPanel();
-                
+
                 new ManHinhChinhFrame().setVisible(true);
 
             }
         });
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jToolBar1 = new javax.swing.JToolBar();
-        mnuManageStudent = new javax.swing.JButton();
-        jSeparator9 = new javax.swing.JToolBar.Separator();
-        NhaplopBtn1 = new javax.swing.JButton();
-        jSeparator7 = new javax.swing.JToolBar.Separator();
-        NhanBangDiem = new javax.swing.JButton();
-        jSeparator4 = new javax.swing.JToolBar.Separator();
-        BaoCaoTongKet = new javax.swing.JButton();
-        jSeparator8 = new javax.swing.JToolBar.Separator();
-        ThayDoiQuyDinh = new javax.swing.JButton();
-        jSeparator6 = new javax.swing.JToolBar.Separator();
-        Main_exit = new javax.swing.JButton();
         tblMainBoard = new javax.swing.JTabbedPane();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        Menu_exiy = new javax.swing.JMenu();
-        Menu_exit = new javax.swing.JMenuItem();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        pnDashboard = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        pnQuanLiHocSinh = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        pnQuanLiLop = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        pnQuanLiDiemSo = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        pnTongKet = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        pnThayDoiQuyDinh = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        pnThoat = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jToolBar1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jToolBar1.setRollover(true);
-
-        mnuManageStudent.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        mnuManageStudent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/graduated.png"))); // NOI18N
-        mnuManageStudent.setText("Quản lý học sinh");
-        mnuManageStudent.setFocusable(false);
-        mnuManageStudent.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        mnuManageStudent.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        mnuManageStudent.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuManageStudentActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(mnuManageStudent);
-        jToolBar1.add(jSeparator9);
-
-        NhaplopBtn1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        NhaplopBtn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/presentation.png"))); // NOI18N
-        NhaplopBtn1.setText("Quản lý lớp");
-        NhaplopBtn1.setFocusable(false);
-        NhaplopBtn1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        NhaplopBtn1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        NhaplopBtn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NhaplopBtn1ActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(NhaplopBtn1);
-        jToolBar1.add(jSeparator7);
-
-        NhanBangDiem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        NhanBangDiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/score (1).png"))); // NOI18N
-        NhanBangDiem.setText("Quản lý điểm số");
-        NhanBangDiem.setFocusable(false);
-        NhanBangDiem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        NhanBangDiem.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        NhanBangDiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NhanBangDiemActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(NhanBangDiem);
-        jToolBar1.add(jSeparator4);
-
-        BaoCaoTongKet.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        BaoCaoTongKet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/report (1).png"))); // NOI18N
-        BaoCaoTongKet.setText("Tổng kết");
-        BaoCaoTongKet.setFocusable(false);
-        BaoCaoTongKet.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        BaoCaoTongKet.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        BaoCaoTongKet.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BaoCaoTongKetActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(BaoCaoTongKet);
-        jToolBar1.add(jSeparator8);
-
-        ThayDoiQuyDinh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ThayDoiQuyDinh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/exchange_1.png"))); // NOI18N
-        ThayDoiQuyDinh.setText("Thay đổi quy định");
-        ThayDoiQuyDinh.setFocusable(false);
-        ThayDoiQuyDinh.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        ThayDoiQuyDinh.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        ThayDoiQuyDinh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ThayDoiQuyDinhActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(ThayDoiQuyDinh);
-        jToolBar1.add(jSeparator6);
-
-        Main_exit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        Main_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/exit (1).png"))); // NOI18N
-        Main_exit.setText("Exit");
-        Main_exit.setFocusable(false);
-        Main_exit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Main_exit.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        Main_exit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Main_exitActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(Main_exit);
-
-        getContentPane().add(jToolBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 174, 651));
-
         tblMainBoard.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        getContentPane().add(tblMainBoard, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, -38, 1040, 700));
 
-        Menu_exiy.setText("Hệ thống");
-        Menu_exiy.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1145, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 766, Short.MAX_VALUE)
+        );
+
+        tblMainBoard.addTab("tab1", jPanel4);
+
+        getContentPane().add(tblMainBoard, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, -38, 1150, 800));
+
+        jPanel1.setBackground(new java.awt.Color(52, 56, 68));
+
+        jPanel2.setBackground(new java.awt.Color(52, 56, 68));
+
+        jPanel3.setBackground(new java.awt.Color(52, 56, 68));
+
+        pnDashboard.setBackground(new java.awt.Color(52, 56, 68));
+        pnDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pnDashboardMouseEntered(evt);
             }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-                Menu_exiyAncestorMoved(evt);
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                pnDashboardMouseExited(evt);
             }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnDashboardMousePressed(evt);
             }
         });
 
-        Menu_exit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        Menu_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/exit (1).png"))); // NOI18N
-        Menu_exit.setText("Exit");
-        Menu_exit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Menu_exitActionPerformed(evt);
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_yellow_file_32px.png"))); // NOI18N
+        jLabel2.setText("Dashboard");
+
+        javax.swing.GroupLayout pnDashboardLayout = new javax.swing.GroupLayout(pnDashboard);
+        pnDashboard.setLayout(pnDashboardLayout);
+        pnDashboardLayout.setHorizontalGroup(
+            pnDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnDashboardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addContainerGap(90, Short.MAX_VALUE))
+        );
+        pnDashboardLayout.setVerticalGroup(
+            pnDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnDashboardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        pnQuanLiHocSinh.setBackground(new java.awt.Color(52, 56, 68));
+        pnQuanLiHocSinh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pnQuanLiHocSinhMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                pnQuanLiHocSinhMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnQuanLiHocSinhMousePressed(evt);
             }
         });
-        Menu_exiy.add(Menu_exit);
 
-        jMenuBar1.add(Menu_exiy);
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/graduated.png"))); // NOI18N
+        jLabel1.setText("Quản lý học sinh");
 
-        setJMenuBar(jMenuBar1);
+        javax.swing.GroupLayout pnQuanLiHocSinhLayout = new javax.swing.GroupLayout(pnQuanLiHocSinh);
+        pnQuanLiHocSinh.setLayout(pnQuanLiHocSinhLayout);
+        pnQuanLiHocSinhLayout.setHorizontalGroup(
+            pnQuanLiHocSinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnQuanLiHocSinhLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(50, Short.MAX_VALUE))
+        );
+        pnQuanLiHocSinhLayout.setVerticalGroup(
+            pnQuanLiHocSinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnQuanLiHocSinhLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        pnQuanLiLop.setBackground(new java.awt.Color(52, 56, 68));
+        pnQuanLiLop.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pnQuanLiLopMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                pnQuanLiLopMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnQuanLiLopMousePressed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/presentation.png"))); // NOI18N
+        jLabel3.setText("Quản lý lớp");
+
+        javax.swing.GroupLayout pnQuanLiLopLayout = new javax.swing.GroupLayout(pnQuanLiLop);
+        pnQuanLiLop.setLayout(pnQuanLiLopLayout);
+        pnQuanLiLopLayout.setHorizontalGroup(
+            pnQuanLiLopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnQuanLiLopLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addContainerGap(86, Short.MAX_VALUE))
+        );
+        pnQuanLiLopLayout.setVerticalGroup(
+            pnQuanLiLopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnQuanLiLopLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        pnQuanLiDiemSo.setBackground(new java.awt.Color(52, 56, 68));
+        pnQuanLiDiemSo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pnQuanLiDiemSoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                pnQuanLiDiemSoMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnQuanLiDiemSoMousePressed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/score (1).png"))); // NOI18N
+        jLabel7.setText("Quản lý điểm số");
+
+        javax.swing.GroupLayout pnQuanLiDiemSoLayout = new javax.swing.GroupLayout(pnQuanLiDiemSo);
+        pnQuanLiDiemSo.setLayout(pnQuanLiDiemSoLayout);
+        pnQuanLiDiemSoLayout.setHorizontalGroup(
+            pnQuanLiDiemSoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnQuanLiDiemSoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addContainerGap(54, Short.MAX_VALUE))
+        );
+        pnQuanLiDiemSoLayout.setVerticalGroup(
+            pnQuanLiDiemSoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnQuanLiDiemSoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        pnTongKet.setBackground(new java.awt.Color(52, 56, 68));
+        pnTongKet.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pnTongKetMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                pnTongKetMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnTongKetMousePressed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/report (1).png"))); // NOI18N
+        jLabel8.setText("Tổng kết");
+
+        javax.swing.GroupLayout pnTongKetLayout = new javax.swing.GroupLayout(pnTongKet);
+        pnTongKet.setLayout(pnTongKetLayout);
+        pnTongKetLayout.setHorizontalGroup(
+            pnTongKetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnTongKetLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8)
+                .addContainerGap(103, Short.MAX_VALUE))
+        );
+        pnTongKetLayout.setVerticalGroup(
+            pnTongKetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnTongKetLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        pnThayDoiQuyDinh.setBackground(new java.awt.Color(52, 56, 68));
+        pnThayDoiQuyDinh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pnThayDoiQuyDinhMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                pnThayDoiQuyDinhMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnThayDoiQuyDinhMousePressed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/exchange_1.png"))); // NOI18N
+        jLabel9.setText("Thay đổi quy định");
+
+        javax.swing.GroupLayout pnThayDoiQuyDinhLayout = new javax.swing.GroupLayout(pnThayDoiQuyDinh);
+        pnThayDoiQuyDinh.setLayout(pnThayDoiQuyDinhLayout);
+        pnThayDoiQuyDinhLayout.setHorizontalGroup(
+            pnThayDoiQuyDinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnThayDoiQuyDinhLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel9)
+                .addContainerGap(41, Short.MAX_VALUE))
+        );
+        pnThayDoiQuyDinhLayout.setVerticalGroup(
+            pnThayDoiQuyDinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnThayDoiQuyDinhLayout.createSequentialGroup()
+                .addContainerGap(14, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addContainerGap())
+        );
+
+        pnThoat.setBackground(new java.awt.Color(52, 56, 68));
+        pnThoat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pnThoatMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                pnThoatMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnThoatMousePressed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/exit (1).png"))); // NOI18N
+        jLabel10.setText("Thoát");
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel10MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnThoatLayout = new javax.swing.GroupLayout(pnThoat);
+        pnThoat.setLayout(pnThoatLayout);
+        pnThoatLayout.setHorizontalGroup(
+            pnThoatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnThoatLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel10)
+                .addContainerGap(124, Short.MAX_VALUE))
+        );
+        pnThoatLayout.setVerticalGroup(
+            pnThoatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnThoatLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel10)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnQuanLiHocSinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnQuanLiLop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnQuanLiDiemSo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnTongKet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnThayDoiQuyDinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(3, 3, 3)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(pnDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(pnQuanLiHocSinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(pnQuanLiLop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(pnQuanLiDiemSo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(pnTongKet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(pnThayDoiQuyDinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)
+                .addComponent(pnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29))
+        );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 760));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ThayDoiQuyDinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThayDoiQuyDinhActionPerformed
-        String tieuDe = "Thay đổi quy định";
-        chenPanel(new ThayDoiQuyDinhPanel(), tieuDe);
-    }//GEN-LAST:event_ThayDoiQuyDinhActionPerformed
+    private void jLabel10MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel10MousePressed
 
-    private void BaoCaoTongKetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BaoCaoTongKetActionPerformed
-        String tieuDe = "Tổng kết môn";
-        chenPanel(new TongKetPanel(), tieuDe);
-    }//GEN-LAST:event_BaoCaoTongKetActionPerformed
-
-    private void NhanBangDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NhanBangDiemActionPerformed
-        String tieuDe = "Bảng điểm môn";
-        chenPanel(new QuanLiDiemSo(), tieuDe);
-    }//GEN-LAST:event_NhanBangDiemActionPerformed
-
-    private void mnuManageStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuManageStudentActionPerformed
-        String tieuDe = "Tiếp nhận học sinh";
-        chenPanel(new QuanLyHocSinhPanel(), tieuDe);
-    }//GEN-LAST:event_mnuManageStudentActionPerformed
-
-    private void Main_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Main_exitActionPerformed
-        int exit=JOptionPane.showConfirmDialog(null, "Bạn có muốn thoát ứng dụng", "Thoát", JOptionPane.YES_NO_OPTION);
-        if(exit==JOptionPane.YES_OPTION)
+    private void pnThoatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnThoatMousePressed
+        int exit = JOptionPane.showConfirmDialog(null, "Bạn có muốn thoát ứng dụng", "Thoát", JOptionPane.YES_NO_OPTION);
+        if (exit == JOptionPane.YES_OPTION)
             System.exit(0);
-    }//GEN-LAST:event_Main_exitActionPerformed
+    }//GEN-LAST:event_pnThoatMousePressed
 
-    private void Menu_exiyAncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_Menu_exiyAncestorMoved
+    private void pnQuanLiHocSinhMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnQuanLiHocSinhMousePressed
+        chenPanel(quanLiHocSinh, pnQuanLiHocSinh, "2");
+    }//GEN-LAST:event_pnQuanLiHocSinhMousePressed
+
+    private void pnQuanLiLopMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnQuanLiLopMousePressed
+        chenPanel(quanLiLop, pnQuanLiLop, "3");
+    }//GEN-LAST:event_pnQuanLiLopMousePressed
+
+    private void pnDashboardMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnDashboardMousePressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Menu_exiyAncestorMoved
+    }//GEN-LAST:event_pnDashboardMousePressed
 
-    private void Menu_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_exitActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_Menu_exitActionPerformed
+    private void pnDashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnDashboardMouseEntered
+        pnDashboard.setBackground(menuCL);
+    }//GEN-LAST:event_pnDashboardMouseEntered
 
-    private void NhaplopBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NhaplopBtn1ActionPerformed
-         String tieuDe = "Quản lý lớp";
-        chenPanel(new QuanLyLopPanel(), tieuDe);
-    }//GEN-LAST:event_NhaplopBtn1ActionPerformed
-            private void SetIcon(){
+    private void pnDashboardMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnDashboardMouseExited
+        pnDashboard.setBackground(backgroundCL);
+    }//GEN-LAST:event_pnDashboardMouseExited
+
+    private void pnQuanLiHocSinhMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnQuanLiHocSinhMouseEntered
+        pnQuanLiHocSinh.setBackground(menuCL);
+    }//GEN-LAST:event_pnQuanLiHocSinhMouseEntered
+
+    private void pnQuanLiHocSinhMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnQuanLiHocSinhMouseExited
+        if (tblMainBoard.getSelectedComponent()==quanLiHocSinh)
+            pnQuanLiHocSinh.setBackground(menuCL);
+        else pnQuanLiHocSinh.setBackground(backgroundCL);
+    }//GEN-LAST:event_pnQuanLiHocSinhMouseExited
+
+    private void pnQuanLiLopMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnQuanLiLopMouseEntered
+        pnQuanLiLop.setBackground(menuCL);
+    }//GEN-LAST:event_pnQuanLiLopMouseEntered
+
+    private void pnQuanLiLopMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnQuanLiLopMouseExited
+        if (tblMainBoard.getSelectedComponent()==quanLiLop)
+            pnQuanLiLop.setBackground(menuCL);
+        else pnQuanLiLop.setBackground(backgroundCL);
+    }//GEN-LAST:event_pnQuanLiLopMouseExited
+
+    private void pnQuanLiDiemSoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnQuanLiDiemSoMouseEntered
+        pnQuanLiDiemSo.setBackground(menuCL);
+    }//GEN-LAST:event_pnQuanLiDiemSoMouseEntered
+
+    private void pnQuanLiDiemSoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnQuanLiDiemSoMouseExited
+        if (tblMainBoard.getSelectedComponent()==quanLiDiemSo)
+            pnQuanLiDiemSo.setBackground(menuCL);
+        else pnQuanLiDiemSo.setBackground(backgroundCL);
+    }//GEN-LAST:event_pnQuanLiDiemSoMouseExited
+
+    private void pnTongKetMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnTongKetMouseEntered
+        pnTongKet.setBackground(menuCL);
+    }//GEN-LAST:event_pnTongKetMouseEntered
+
+    private void pnTongKetMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnTongKetMouseExited
+        if (tblMainBoard.getSelectedComponent()==tongKet)
+            pnTongKet.setBackground(menuCL);
+        else pnTongKet.setBackground(backgroundCL);
+    }//GEN-LAST:event_pnTongKetMouseExited
+
+    private void pnThayDoiQuyDinhMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnThayDoiQuyDinhMouseEntered
+        pnThayDoiQuyDinh.setBackground(menuCL);
+    }//GEN-LAST:event_pnThayDoiQuyDinhMouseEntered
+
+    private void pnThayDoiQuyDinhMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnThayDoiQuyDinhMouseExited
+        if (tblMainBoard.getSelectedComponent()==thayDoiQuyDinh)
+            pnThayDoiQuyDinh.setBackground(menuCL);
+        else pnThayDoiQuyDinh.setBackground(backgroundCL);
+    }//GEN-LAST:event_pnThayDoiQuyDinhMouseExited
+
+    private void pnQuanLiDiemSoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnQuanLiDiemSoMousePressed
+        chenPanel(quanLiDiemSo, pnQuanLiDiemSo, "4");
+    }//GEN-LAST:event_pnQuanLiDiemSoMousePressed
+
+    private void pnThoatMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnThoatMouseEntered
+        pnThoat.setBackground(menuCL);
+    }//GEN-LAST:event_pnThoatMouseEntered
+
+    private void pnThoatMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnThoatMouseExited
+        pnThoat.setBackground(backgroundCL);
+    }//GEN-LAST:event_pnThoatMouseExited
+
+    private void pnTongKetMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnTongKetMousePressed
+        chenPanel(tongKet, pnTongKet, "5");
+    }//GEN-LAST:event_pnTongKetMousePressed
+
+    private void pnThayDoiQuyDinhMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnThayDoiQuyDinhMousePressed
+        chenPanel(thayDoiQuyDinh, pnThayDoiQuyDinh, "6");
+    }//GEN-LAST:event_pnThayDoiQuyDinhMousePressed
+    private void SetIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/edu/poly/poly/app/icons/16x16/graduated.png")));
     }
 
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BaoCaoTongKet;
-    private javax.swing.JButton Main_exit;
-    private javax.swing.JMenuItem Menu_exit;
-    private javax.swing.JMenu Menu_exiy;
-    private javax.swing.JButton NhanBangDiem;
-    private javax.swing.JButton NhaplopBtn1;
-    private javax.swing.JButton ThayDoiQuyDinh;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JToolBar.Separator jSeparator4;
-    private javax.swing.JToolBar.Separator jSeparator6;
-    private javax.swing.JToolBar.Separator jSeparator7;
-    private javax.swing.JToolBar.Separator jSeparator8;
-    private javax.swing.JToolBar.Separator jSeparator9;
-    private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JButton mnuManageStudent;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel pnDashboard;
+    private javax.swing.JPanel pnQuanLiDiemSo;
+    private javax.swing.JPanel pnQuanLiHocSinh;
+    private javax.swing.JPanel pnQuanLiLop;
+    private javax.swing.JPanel pnThayDoiQuyDinh;
+    private javax.swing.JPanel pnThoat;
+    private javax.swing.JPanel pnTongKet;
     private javax.swing.JTabbedPane tblMainBoard;
     // End of variables declaration//GEN-END:variables
 }
