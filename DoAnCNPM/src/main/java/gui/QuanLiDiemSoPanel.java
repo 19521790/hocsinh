@@ -285,7 +285,6 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
         SaveTableButton = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -315,8 +314,10 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
         });
 
         Lop.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        Lop.setFocusable(false);
 
         Mon.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        Mon.setFocusable(false);
         Mon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MonActionPerformed(evt);
@@ -327,11 +328,13 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
         jLabel3.setText("Học kỳ:");
 
         Hocky.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        Hocky.setFocusable(false);
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel9.setText("Năm:");
 
         Nam.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        Nam.setFocusable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -413,7 +416,7 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tableDiem);
 
-        EditTableButton.setBackground(new java.awt.Color(0, 176, 239));
+        EditTableButton.setBackground(new java.awt.Color(254, 193, 6));
         EditTableButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         EditTableButton.setForeground(new java.awt.Color(255, 255, 255));
         EditTableButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_pencil_24px_1.png"))); // NOI18N
@@ -439,7 +442,7 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(0, 176, 239));
+        jButton5.setBackground(new java.awt.Color(128, 99, 246));
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_print_24px.png"))); // NOI18N
@@ -450,9 +453,6 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 51, 51));
         jLabel4.setText("Cách điền cột điểm: VD: 7,7.5,8");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setText("Tìm kiếm học sinh");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Thông tin điểm môn học");
@@ -491,11 +491,6 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
                             .addComponent(SaveTableButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(EditTableButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(36, 36, 36))))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 516, Short.MAX_VALUE)
-                    .addComponent(jLabel5)
-                    .addGap(0, 516, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -513,20 +508,14 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
                             .addComponent(jLabel6)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(7, 7, 7))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(SaveTableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
                         .addComponent(EditTableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(245, 245, 245))))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel5)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(SaveTableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(263, 263, 263))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -701,7 +690,6 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
