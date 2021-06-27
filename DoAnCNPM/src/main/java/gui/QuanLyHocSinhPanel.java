@@ -434,7 +434,7 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
             if (xacNhan == JOptionPane.YES_OPTION) {
                 Connection con = JDBCConnection.ketNoiJBDC();
                 try {
-                    CallableStatement mystm = con.prepareCall("{call sp_DanhSachHocSinh_XoaHocSinh(?)}");
+                    CallableStatement mystm = con.prepareCall("{call sp_TiepNhanHocSinh_XoaHocSinh(?)}");
                     mystm.setString(1, tableHocSinh.getValueAt(row, 1).toString());
                     mystm.executeQuery();
               

@@ -104,7 +104,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
 
         if (this.selectedClas == "Chọn" || this.selectedYear == "Chọn") {
             System.out.println("checkhaveSelected");
-            JOptionPane.showMessageDialog(this, "Chua chon Lop va Nam Hoc");
+            JOptionPane.showMessageDialog(this, "Chưa chọn lớp và năm học");
             return true;
         }
         return false;
@@ -615,12 +615,13 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
             return;
         }
         if (this.deletequery.isEmpty() && this.procquery.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Chua co su thay doi nao ");
+            JOptionPane.showMessageDialog(this, "Chưa có sự thay đổi nào");
             return;
         }
         this.modifyDB();
         this.deletequery = new ArrayList<>();
         this.procquery = new ArrayList<>();
+        JOptionPane.showMessageDialog(this, "Lưu thành công");
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void clasListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clasListActionPerformed
