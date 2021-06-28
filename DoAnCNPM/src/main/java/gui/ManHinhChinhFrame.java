@@ -27,8 +27,31 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
     TongKetPanel tongKet = new TongKetPanel();
     DashboardPanel dashBoard = new DashboardPanel();
     //Khởi tạo màu mới
+<<<<<<< HEAD
     Color menuCL = new Color(74, 75, 115);
     Color backgroundCL = new Color(52, 56, 68);
+=======
+    Color menuCL = new Color(74,75,115);
+    Color backgroundCL = new Color(52,56,68);
+    
+    public ManHinhChinhFrame() {
+        initComponents();
+        //Đặt màn hình chính giữa màn hình
+        setLocationRelativeTo(null);
+        SetIcon();
+
+        //Thêm sẵn các panel vào tabbed panel
+        tblMainBoard.addTab("Quản lý học sinh", quanLiHocSinh);
+        tblMainBoard.addTab("Quản lý điểm số", quanLiDiemSo);
+        tblMainBoard.addTab("Quản lý lớp", quanLiLop);
+        tblMainBoard.addTab("Tổng kết", tongKet);
+        tblMainBoard.addTab("Thay đổi quy định", thayDoiQuyDinh);
+        tblMainBoard.addTab("Dashboard", dashBoard);
+        //Chọn sẵn Dashboard
+        tblMainBoard.setSelectedComponent(dashBoard);
+        pnDashboard.setBackground(menuCL);
+    }
+>>>>>>> 20f1735219207045d75a13c049823880539b5d5c
 
     public void chenPanel(JPanel panel, JPanel menu, String tieuDe) {
         if (panel == null) {
@@ -566,10 +589,14 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_pnQuanLiLopMousePressed
 
     private void pnDashboardMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnDashboardMousePressed
+<<<<<<< HEAD
         dashBoard = new DashboardPanel();
         tblMainBoard.setComponentAt(0, dashBoard);
         chenPanel(dashBoard, pnDashboard, "1");
 
+=======
+        chenPanel(dashBoard, pnDashboard, "1");
+>>>>>>> 20f1735219207045d75a13c049823880539b5d5c
     }//GEN-LAST:event_pnDashboardMousePressed
 
     private void pnDashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnDashboardMouseEntered
@@ -578,10 +605,16 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_pnDashboardMouseEntered
 
     private void pnDashboardMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnDashboardMouseExited
+<<<<<<< HEAD
         if (tblMainBoard.getSelectedComponent() == dashBoard)
             pnDashboard.setBackground(menuCL);
         else
             pnDashboard.setBackground(backgroundCL);
+=======
+        if (tblMainBoard.getSelectedComponent()==dashBoard)
+            pnDashboard.setBackground(menuCL);
+        else pnDashboard.setBackground(backgroundCL);
+>>>>>>> 20f1735219207045d75a13c049823880539b5d5c
     }//GEN-LAST:event_pnDashboardMouseExited
 
     private void pnQuanLiHocSinhMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnQuanLiHocSinhMouseEntered

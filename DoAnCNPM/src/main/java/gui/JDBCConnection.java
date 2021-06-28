@@ -16,9 +16,15 @@ import java.util.logging.Logger;
 public class JDBCConnection {
 
     public static Connection ketNoiJBDC() {
+<<<<<<< HEAD
          String url = "jdbc:sqlserver://DESKTOP-8066J6E;databaseName=customer";
         String user = "sa";
         String password = "long";
+=======
+        String url = "jdbc:sqlserver://LAPTOP-6LEAMI4B\\SQLEXPRESS01:1466;databaseName=customer";
+        String user = "vuong";
+        String password = "1";
+>>>>>>> 20f1735219207045d75a13c049823880539b5d5c
 
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
