@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import popupframe.ThemLop_ThayDoiQuyDinhPanel;
@@ -58,7 +60,6 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
             }
         };
 
-      
         duLieuNam.addColumn("STT");
         duLieuNam.addColumn("Nam");
 
@@ -107,11 +108,28 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
     }
 
     public void ThemLopTrongTruongListen() {
-        themLop.setVisible(true);
-        if (themLop.isShowing()) {
-            Object data[] = themLop.getData();
-            duLieuLop.addRow(data);
+        int khoi = Integer.parseInt(JOptionPane.showInputDialog("Nhập khối"));
+
+        if (!(khoi == 10 || khoi == 11 || khoi == 12)) {
+            JOptionPane.showMessageDialog(null, "Điền sai. Khối bao gồm 10, 11, 12.");
+        } else {
+            String lop = String.valueOf(JOptionPane.showInputDialog("Nhập tên lớp"));
+            String khoi_string = "K" + String.valueOf(khoi);
+            Object data[] = {"", lop, khoi_string};
+            Connection con = JDBCConnection.ketNoiJBDC();
+
+            CallableStatement callStatement;
+            try {
+                callStatement = con.prepareCall("{call sp_ThayDoiQuyDinh_ThemLop(?,?)}");
+                callStatement.setString(1, khoi_string);
+                callStatement.setString(2, lop);
+                callStatement.execute();
+                duLieuLop.addRow(data);
+            } catch (SQLException ex) {
+                Logger.getLogger(ThayDoiQuyDinhPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
     }
 
     public void XoaLopTrongTruongListen() {
