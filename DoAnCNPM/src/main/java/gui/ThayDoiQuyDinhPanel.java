@@ -58,9 +58,16 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
             }
         };
 
-      
-        duLieuNam.addColumn("STT");
-        duLieuNam.addColumn("Nam");
+        //cho can them
+        String[] colTitle3 = {"STT", "Năm"};
+        boolean[] isEditable3 = {false, false};
+        duLieuNam = new DefaultTableModel(colTitle3, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+
+                return isEditable3[column];
+            }
+        };
 
         Connection con = JDBCConnection.ketNoiJBDC();
         String sql;
@@ -107,11 +114,28 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
     }
 
     public void ThemLopTrongTruongListen() {
-        themLop.setVisible(true);
-        if (themLop.isShowing()) {
-            Object data[] = themLop.getData();
-            duLieuLop.addRow(data);
+        int khoi = Integer.parseInt(JOptionPane.showInputDialog("Nhập khối"));
+
+        if (!(khoi == 10 || khoi == 11 || khoi == 12)) {
+            JOptionPane.showMessageDialog(null, "Điền sai. Khối bao gồm 10, 11, 12.");
+        } else {
+            String lop = String.valueOf(JOptionPane.showInputDialog("Nhập tên lớp"));
+            String khoi_string = "K" + String.valueOf(khoi);
+            Object data[] = {"", lop, khoi_string};
+            Connection con = JDBCConnection.ketNoiJBDC();
+
+            CallableStatement callStatement;
+            try {
+                callStatement = con.prepareCall("{call sp_ThayDoiQuyDinh_ThemLop(?,?)}");
+                callStatement.setString(1, khoi_string);
+                callStatement.setString(2, lop);
+                callStatement.execute();
+                duLieuLop.addRow(data);
+            } catch (SQLException ex) {
+                Logger.getLogger(ThayDoiQuyDinhPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
     }
 
     public void XoaLopTrongTruongListen() {
@@ -368,6 +392,11 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         tbLop.setGridColor(new java.awt.Color(255, 255, 255));
         tbLop.setIntercellSpacing(new java.awt.Dimension(0, 1));
         tbLop.setRowHeight(25);
+        tbLop.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tbLopMousePressed(evt);
+            }
+        });
         jScrollPane4.setViewportView(tbLop);
 
         jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 230, 250));
@@ -625,6 +654,11 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         tbMonHoc.setGridColor(new java.awt.Color(255, 255, 255));
         tbMonHoc.setIntercellSpacing(new java.awt.Dimension(0, 1));
         tbMonHoc.setRowHeight(25);
+        tbMonHoc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tbMonHocMousePressed(evt);
+            }
+        });
         jScrollPane5.setViewportView(tbMonHoc);
 
         ThemMonHoc.setBackground(new java.awt.Color(128, 99, 246));
@@ -882,6 +916,14 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
     private void ThemNamHocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThemNamHocActionPerformed
 
     }//GEN-LAST:event_ThemNamHocActionPerformed
+    String DiemBanDau = "";
+    private void tbLopMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbLopMousePressed
+        DiemBanDau = tbLop.getValueAt(tbLop.getSelectedRow(), tbLop.getSelectedColumn()).toString();
+    }//GEN-LAST:event_tbLopMousePressed
+
+    private void tbMonHocMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMonHocMousePressed
+        DiemBanDau = tbMonHoc.getValueAt(tbMonHoc.getSelectedRow(), tbMonHoc.getSelectedColumn()).toString();
+    }//GEN-LAST:event_tbMonHocMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -145,17 +145,40 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
 
                 int column = thayDoiQuyDinh.tbLop.getSelectedColumn();
                 int row = thayDoiQuyDinh.tbLop.getSelectedRow();
-                Connection con = JDBCConnection.ketNoiJBDC();
-                try {
-                    Statement mystm = con.createStatement();
-                    String sql = "  Update LOP\n"
-                            + "  SET TenLop='" + thayDoiQuyDinh.tbLop.getValueAt(row, column) + "'\n"
-                            + "  WHERE MaLop='" + thayDoiQuyDinh.tbLop.getValueAt(row, 0) + "'";
-                    mystm.executeUpdate(sql);
-                    resetPanel();
-                    JOptionPane.showMessageDialog(null, "Update tên lớp thành công");
-                } catch (SQLException ex) {
-                    Logger.getLogger(ManHinhChinhFrame.class.getName()).log(Level.SEVERE, null, ex);
+                //cho can them
+                Boolean kiemtraDung = true;
+                for (int i = 0; i < row - 1; i++) {
+                    if (thayDoiQuyDinh.tbLop.getValueAt(row, column).equals(thayDoiQuyDinh.tbLop.getValueAt(i, 1))) {
+                        JOptionPane.showMessageDialog(null, "Tên của bạn nhập đã trùng");
+
+                        kiemtraDung = false;
+                        thayDoiQuyDinh.tbLop.setValueAt(thayDoiQuyDinh.DiemBanDau, row, column);
+                        break;
+                    }
+                }
+                for (int i = row + 1; i < thayDoiQuyDinh.tbLop.getRowCount(); i++) {
+                    if (thayDoiQuyDinh.tbLop.getValueAt(row, column).equals(thayDoiQuyDinh.tbLop.getValueAt(i, 1))) {
+                        JOptionPane.showMessageDialog(null, "Tên của bạn nhập đã trùng");
+
+                        kiemtraDung = false;
+                        thayDoiQuyDinh.tbLop.setValueAt(thayDoiQuyDinh.DiemBanDau, row, column);
+                        break;
+                    }
+                }
+                if (kiemtraDung == true) {
+                    // cho can them
+                    Connection con = JDBCConnection.ketNoiJBDC();
+                    try {
+                        Statement mystm = con.createStatement();
+                        String sql = "  Update LOP\n"
+                                + "  SET TenLop='" + thayDoiQuyDinh.tbLop.getValueAt(row, column) + "'\n"
+                                + "  WHERE MaLop='" + thayDoiQuyDinh.tbLop.getValueAt(row, 0) + "'";
+                        mystm.executeUpdate(sql);
+                        resetPanel();
+                        JOptionPane.showMessageDialog(null, "Update tên lớp thành công");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ManHinhChinhFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
 
             }
@@ -172,17 +195,41 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
 
                 int column = thayDoiQuyDinh.tbMonHoc.getSelectedColumn();
                 int row = thayDoiQuyDinh.tbMonHoc.getSelectedRow();
-                Connection con = JDBCConnection.ketNoiJBDC();
-                try {
-                    Statement mystm = con.createStatement();
-                    String sql = "   Update MONHOC\n"
-                            + "  SET TenMonHoc='"+thayDoiQuyDinh.tbMonHoc.getValueAt(row, column)+"'\n"
-                            + "  WHERE MaMonHoc='"+thayDoiQuyDinh.tbMonHoc.getValueAt(row, 0)+"'";
-                    mystm.executeUpdate(sql);
-                    resetPanel();
-                    JOptionPane.showMessageDialog(null, "Update tên môn học thành công");
-                } catch (SQLException ex) {
-                    Logger.getLogger(ManHinhChinhFrame.class.getName()).log(Level.SEVERE, null, ex);
+                //cho can them
+                Boolean kiemtraDung = true;
+                for (int i = 0; i < row - 1; i++) {
+
+                    if (thayDoiQuyDinh.tbMonHoc.getValueAt(row, column).equals(thayDoiQuyDinh.tbMonHoc.getValueAt(i, 1))) {
+                        JOptionPane.showMessageDialog(null, "Tên của bạn nhập đã trùng");
+
+                        kiemtraDung = false;
+                        thayDoiQuyDinh.tbMonHoc.setValueAt(thayDoiQuyDinh.DiemBanDau, row, column);
+                        break;
+                    }
+                }
+                for (int i = row + 1; i < thayDoiQuyDinh.tbLop.getRowCount(); i++) {
+                    if (thayDoiQuyDinh.tbMonHoc.getValueAt(row, column).equals(thayDoiQuyDinh.tbMonHoc.getValueAt(i, 1))) {
+                        JOptionPane.showMessageDialog(null, "Tên của bạn nhập đã trùng");
+
+                        kiemtraDung = false;
+                        thayDoiQuyDinh.tbMonHoc.setValueAt(thayDoiQuyDinh.DiemBanDau, row, column);
+                        break;
+                    }
+                }
+                if (kiemtraDung == true) {
+                    // cho can them  
+                    Connection con = JDBCConnection.ketNoiJBDC();
+                    try {
+                        Statement mystm = con.createStatement();
+                        String sql = "   Update MONHOC\n"
+                                + "  SET TenMonHoc='" + thayDoiQuyDinh.tbMonHoc.getValueAt(row, column) + "'\n"
+                                + "  WHERE MaMonHoc='" + thayDoiQuyDinh.tbMonHoc.getValueAt(row, 0) + "'";
+                        mystm.executeUpdate(sql);
+                        resetPanel();
+                        JOptionPane.showMessageDialog(null, "Update tên môn học thành công");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ManHinhChinhFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
 
             }
