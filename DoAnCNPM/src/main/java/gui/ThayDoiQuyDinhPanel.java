@@ -88,7 +88,6 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(ThayDoiQuyDinhPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-<<<<<<< HEAD
     }
 
     public void ThemLopTrongTruongListen() {
@@ -264,8 +263,6 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
             Logger.getLogger(ThayDoiQuyDinhPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         new LayThamSo().ketNoiCoSoDulieu();
-=======
->>>>>>> 20f1735219207045d75a13c049823880539b5d5c
     }
 
     /**
@@ -281,13 +278,8 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tbLop = new javax.swing.JTable();
-<<<<<<< HEAD
         XoaLop = new javax.swing.JButton();
         ThemLop = new javax.swing.JButton();
-=======
-        jButton7 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
->>>>>>> 20f1735219207045d75a13c049823880539b5d5c
         jPanel2 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         txtDiemQuaMon = new javax.swing.JTextField();
@@ -302,11 +294,7 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-<<<<<<< HEAD
         CapNhat = new javax.swing.JButton();
-=======
-        jButton5 = new javax.swing.JButton();
->>>>>>> 20f1735219207045d75a13c049823880539b5d5c
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -315,22 +303,13 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         jLabel14 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tbMonHoc = new javax.swing.JTable();
-<<<<<<< HEAD
         ThemMonHoc = new javax.swing.JButton();
         XoaMonHoc = new javax.swing.JButton();
-=======
-        jButton9 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
->>>>>>> 20f1735219207045d75a13c049823880539b5d5c
         jPanel4 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         tbNam = new javax.swing.JTable();
         jLabel17 = new javax.swing.JLabel();
-<<<<<<< HEAD
         ThemNamHoc = new javax.swing.JButton();
-=======
-        jButton13 = new javax.swing.JButton();
->>>>>>> 20f1735219207045d75a13c049823880539b5d5c
 
         setBackground(new java.awt.Color(239, 247, 248));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -366,7 +345,6 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         tbLop.setIntercellSpacing(new java.awt.Dimension(0, 1));
         tbLop.setRowHeight(25);
         jScrollPane4.setViewportView(tbLop);
-<<<<<<< HEAD
 
         jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 230, 250));
 
@@ -397,38 +375,6 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
             }
         });
         jPanel1.add(ThemLop, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 100, 30));
-=======
-
-        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 230, 250));
-
-        jButton7.setBackground(new java.awt.Color(237, 98, 96));
-        jButton7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_delete_24px_1.png"))); // NOI18N
-        jButton7.setText("Xóa");
-        jButton7.setBorder(null);
-        jButton7.setFocusable(false);
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 100, 30));
-
-        jButton11.setBackground(new java.awt.Color(128, 99, 246));
-        jButton11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_add_24px.png"))); // NOI18N
-        jButton11.setText("Thêm");
-        jButton11.setBorder(null);
-        jButton11.setFocusable(false);
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 100, 30));
->>>>>>> 20f1735219207045d75a13c049823880539b5d5c
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 280, 360));
 
@@ -504,7 +450,6 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Thay đổi độ tuổi đi học của học sinh");
 
-<<<<<<< HEAD
         CapNhat.setBackground(new java.awt.Color(0, 176, 239));
         CapNhat.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         CapNhat.setForeground(new java.awt.Color(255, 255, 255));
@@ -515,18 +460,6 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         CapNhat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CapNhatActionPerformed(evt);
-=======
-        jButton5.setBackground(new java.awt.Color(0, 176, 239));
-        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_upload_to_cloud_24px_1.png"))); // NOI18N
-        jButton5.setText("Cập nhật");
-        jButton5.setBorder(null);
-        jButton5.setFocusable(false);
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
->>>>>>> 20f1735219207045d75a13c049823880539b5d5c
             }
         });
 
@@ -572,11 +505,7 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
                                 .addContainerGap(174, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-<<<<<<< HEAD
                                 .addComponent(CapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-=======
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
->>>>>>> 20f1735219207045d75a13c049823880539b5d5c
                                 .addContainerGap())))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -598,11 +527,7 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(txtSiso, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-<<<<<<< HEAD
                     .addComponent(CapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-=======
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
->>>>>>> 20f1735219207045d75a13c049823880539b5d5c
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
@@ -648,15 +573,9 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
             }
         });
         add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 290, 115, 30));
-<<<<<<< HEAD
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-=======
-
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-
->>>>>>> 20f1735219207045d75a13c049823880539b5d5c
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel14.setText("Thay đổi môn học");
 
@@ -684,7 +603,6 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         tbMonHoc.setRowHeight(25);
         jScrollPane5.setViewportView(tbMonHoc);
 
-<<<<<<< HEAD
         ThemMonHoc.setBackground(new java.awt.Color(128, 99, 246));
         ThemMonHoc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         ThemMonHoc.setForeground(new java.awt.Color(255, 255, 255));
@@ -708,31 +626,6 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         XoaMonHoc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 XoaMonHocActionPerformed(evt);
-=======
-        jButton9.setBackground(new java.awt.Color(128, 99, 246));
-        jButton9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_add_24px.png"))); // NOI18N
-        jButton9.setText("Thêm");
-        jButton9.setBorder(null);
-        jButton9.setFocusable(false);
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
-            }
-        });
-
-        jButton12.setBackground(new java.awt.Color(237, 98, 96));
-        jButton12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton12.setForeground(new java.awt.Color(255, 255, 255));
-        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_delete_24px_1.png"))); // NOI18N
-        jButton12.setText("Xóa");
-        jButton12.setBorder(null);
-        jButton12.setFocusable(false);
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
->>>>>>> 20f1735219207045d75a13c049823880539b5d5c
             }
         });
 
@@ -744,15 +637,9 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-<<<<<<< HEAD
                         .addComponent(ThemMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
                         .addComponent(XoaMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-=======
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
->>>>>>> 20f1735219207045d75a13c049823880539b5d5c
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -767,17 +654,10 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-<<<<<<< HEAD
                         .addComponent(ThemMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(XoaMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-=======
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
->>>>>>> 20f1735219207045d75a13c049823880539b5d5c
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -811,7 +691,6 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel17.setText("Thay đổi năm học");
 
-<<<<<<< HEAD
         ThemNamHoc.setBackground(new java.awt.Color(128, 99, 246));
         ThemNamHoc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         ThemNamHoc.setForeground(new java.awt.Color(255, 255, 255));
@@ -822,18 +701,6 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         ThemNamHoc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ThemNamHocActionPerformed(evt);
-=======
-        jButton13.setBackground(new java.awt.Color(128, 99, 246));
-        jButton13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton13.setForeground(new java.awt.Color(255, 255, 255));
-        jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_add_24px.png"))); // NOI18N
-        jButton13.setText("Thêm");
-        jButton13.setBorder(null);
-        jButton13.setFocusable(false);
-        jButton13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
->>>>>>> 20f1735219207045d75a13c049823880539b5d5c
             }
         });
 
@@ -845,11 +712,7 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-<<<<<<< HEAD
                     .addComponent(ThemNamHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-=======
-                    .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
->>>>>>> 20f1735219207045d75a13c049823880539b5d5c
                     .addComponent(jLabel17))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
@@ -861,11 +724,7 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-<<<<<<< HEAD
                 .addComponent(ThemNamHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-=======
-                .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
->>>>>>> 20f1735219207045d75a13c049823880539b5d5c
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -884,7 +743,6 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTuoiToiThieuActionPerformed
 
-<<<<<<< HEAD
     private void XoaLopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_XoaLopActionPerformed
 
     }//GEN-LAST:event_XoaLopActionPerformed
@@ -1000,278 +858,9 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
     private void ThemNamHocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThemNamHocActionPerformed
 
     }//GEN-LAST:event_ThemNamHocActionPerformed
-=======
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        if (tbLop.getSelectedRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Chưa chọn dòng dữ liệu");
-        }
-        if (tbLop.getSelectedRowCount() > 1) {
-            JOptionPane.showMessageDialog(this, "Chỉ được xóa 1 dòng dữ liệu mỗi lần");
-        }
-        if (tbLop.getSelectedRowCount() == 1) {
-            Connection con = JDBCConnection.ketNoiJBDC();
-            try {
-                String lop = duLieuLop.getValueAt(tbLop.getSelectedRow(), 1).toString();
-                //Kiểm tra thông tin môn học
-                Statement statement = con.createStatement();
-                String sql = "select * from LOP l, QUATRINHHOC qth\n"
-                        + "where l.IDLop = qth.IDLop\n"
-                        + "and TenLOP = N'" + lop + "'";
-                ResultSet rs = statement.executeQuery(sql);
-                int count = 0;
-                while (rs.next()) {
-                    count++;
-                }
-                if (count != 0) {
-                    int exit = JOptionPane.showConfirmDialog(null, "Lớp có dữ liệu, bạn vẫn muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
-                    if (exit == JOptionPane.YES_OPTION) {
-                        CallableStatement callStatement = con.prepareCall("{call sp_ThayDoiQuyDinh_XoaLop(?)}");
-                        callStatement.setString(1, lop);
-                        boolean check = callStatement.execute();
-                        if (!check) {
-                            JOptionPane.showMessageDialog(this, "Xóa thành công");
-                        } else {
-                            JOptionPane.showMessageDialog(this, "Xóa thất bại");
-                        }
-                        duLieuLop.removeRow(tbLop.getSelectedRow());
-                    }
-                } else {
-                    CallableStatement callStatement = con.prepareCall("{call sp_ThayDoiQuyDinh_XoaLop(?)}");
-                    callStatement.setString(1, lop);
-                    boolean check = callStatement.execute();
-                    if (!check) {
-                        JOptionPane.showMessageDialog(this, "Xóa thành công");
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Xóa thất bại");
-                    }
-                    duLieuLop.removeRow(tbLop.getSelectedRow());
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(ThayDoiQuyDinhPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
-        Connection con = JDBCConnection.ketNoiJBDC();
-
-        try {
-            Statement statement = con.createStatement();
-            String sql = "update THAMSO set GiaTri = " + Integer.parseInt(txtTuoiToiThieu.getText()) + "where TenThamSo = 'TuoiToiThieu'";
-            statement.execute(sql);
-            sql = "update THAMSO set GiaTri = " + Integer.parseInt(txtTuoiToiDa.getText()) + "where TenThamSo = 'TuoiToiDa'";
-            statement.execute(sql);
-            sql = "update THAMSO set GiaTri = " + Integer.parseInt(txtSiso.getText()) + "where TenThamSo = 'SiSoToiDa'";
-            statement.execute(sql);
-            sql = "update THAMSO set GiaTri = " + Float.parseFloat(txtDiemLenLop.getText()) + "where TenThamSo = 'DiemLenLop'";
-            statement.execute(sql);
-            sql = "update THAMSO set GiaTri = " + Float.parseFloat(txtDiemQuaMon.getText()) + "where TenThamSo = 'DiemQuaMon'";
-            statement.execute(sql);
-
-            JOptionPane.showMessageDialog(this, "Cập nhật thành công");
-            JOptionPane.showMessageDialog(this, "Vui lòng khởi động lại chương trình để cập nhật tham số");
-        } catch (SQLException ex) {
-            Logger.getLogger(ThayDoiQuyDinhPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        new LayThamSo().ketNoiCoSoDulieu();
-    }//GEN-LAST:event_jButton5ActionPerformed
->>>>>>> 20f1735219207045d75a13c049823880539b5d5c
-
-    private void txtTuoiToiThieuKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTuoiToiThieuKeyTyped
-        char c = evt.getKeyChar();
-        if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtTuoiToiThieuKeyTyped
-
-    private void txtTuoiToiDaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTuoiToiDaKeyTyped
-        char c = evt.getKeyChar();
-        if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtTuoiToiDaKeyTyped
-
-    private void txtSisoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSisoKeyTyped
-        char c = evt.getKeyChar();
-        if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtSisoKeyTyped
-
-    private void txtDiemQuaMonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDiemQuaMonKeyTyped
-        char c = evt.getKeyChar();
-        if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtDiemQuaMonKeyTyped
-
-    private void txtDiemLenLopKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDiemLenLopKeyTyped
-        char c = evt.getKeyChar();
-        if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtDiemLenLopKeyTyped
-
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        String mon = JOptionPane.showInputDialog("Nhập tên môn học");
-        int count = duLieuMon.getRowCount();
-        count++;
-        Object data[] = {count, mon};
-        duLieuMon.addRow(data);
-        Connection con = JDBCConnection.ketNoiJBDC();
-        try {
-            CallableStatement callStatement = con.prepareCall("{call sp_ThayDoiQuyDinh_ThemMonHoc(?)}");
-            callStatement.setString(1, mon);
-            boolean check = callStatement.execute();
-            if (check) {
-                JOptionPane.showMessageDialog(this, "Thêm thành công");
-            } else {
-                JOptionPane.showMessageDialog(this, "Thêm thất bại");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ThayDoiQuyDinhPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        themLop.setVisible(true);
-        if (themLop.isShowing()) {
-            Object data[] = themLop.getData();
-            duLieuLop.addRow(data);
-        }
-    }//GEN-LAST:event_jButton11ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        new LayThamSo().ketNoiCoSoDulieu();
-        txtTuoiToiDa.setText(String.valueOf(new LayThamSo().getTuoiToiDa()));
-        txtTuoiToiThieu.setText(String.valueOf(new LayThamSo().getTuoiToiThieu()));
-        txtSiso.setText(String.valueOf(new LayThamSo().getSiSoToiDa()));
-        txtDiemLenLop.setText(String.valueOf(new LayThamSo().getDiemLenLop()));
-        txtDiemQuaMon.setText(String.valueOf(new LayThamSo().getDiemQuaMon()));
-
-        duLieuLop.setRowCount(0);
-        duLieuMon.setRowCount(0);
-        duLieuNam.setRowCount(0);
-
-        Connection con = JDBCConnection.ketNoiJBDC();
-        String sql;
-        try {
-            Statement statement = con.createStatement();
-            //Thêm dữ liệu vào bảng lớp
-            sql = "select * from LOP";
-            ResultSet rs = statement.executeQuery(sql);
-
-            while (rs.next()) {
-                String ma = rs.getString("MaLop");
-                String khoi = rs.getString("MaKhoi");
-                String lop = rs.getString("TenLop");
-                Object data[] = {ma, lop, khoi};
-                duLieuLop.addRow(data);
-            }
-            tbLop.setModel(duLieuLop);
-
-            //Thêm dữ liệu vào bảng môn
-            sql = "select * from MONHOC";
-            rs = statement.executeQuery(sql);
-            while (rs.next()) {
-                String ma = rs.getString("MaMonHoc");
-                String monHoc = rs.getString("TenMonHoc");
-                Object data[] = {ma, monHoc};
-                duLieuMon.addRow(data);
-            }
-            tbMonHoc.setModel(duLieuMon);
-
-            //Thêm dữ liệu vào bảng môn
-            int stt = 1;
-            sql = "select distinct Nam from HOCKI_NAM order by Nam";
-            rs = statement.executeQuery(sql);
-            while (rs.next()) {
-                String nam = rs.getString("Nam");
-                Object data[] = {stt, nam};
-                duLieuNam.addRow(data);
-                stt++;
-            }
-            tbNam.setModel(duLieuNam);
-        } catch (SQLException ex) {
-            Logger.getLogger(ThayDoiQuyDinhPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        if (tbMonHoc.getSelectedRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Chưa chọn dòng dữ liệu");
-        }
-        if (tbMonHoc.getSelectedRowCount() > 1) {
-            JOptionPane.showMessageDialog(this, "Chỉ được xóa 1 dòng dữ liệu mỗi lần");
-        }
-        if (tbMonHoc.getSelectedRowCount() == 1) {
-            Connection con = JDBCConnection.ketNoiJBDC();
-            try {
-                String monHoc = duLieuMon.getValueAt(tbMonHoc.getSelectedRow(), 1).toString();
-                //Kiểm tra thông tin môn học
-                Statement statement = con.createStatement();
-                String sql = "select * from MONHOC mh, BANGDIEMMON bdm\n"
-                        + "where mh.IDMonHoc = bdm.IDMonHoc\n"
-                        + "and TenMonHoc = N'" + monHoc + "'";
-                ResultSet rs = statement.executeQuery(sql);
-                int count = 0;
-                while (rs.next()) {
-                    count++;
-                }
-                if (count != 0) {
-                    int exit = JOptionPane.showConfirmDialog(null, "Môn học có dữ liệu, bạn vẫn muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
-                    if (exit == JOptionPane.YES_OPTION) {
-                        CallableStatement callStatement = con.prepareCall("{call sp_ThayDoiQuyDinh_XoaMon(?)}");
-                        callStatement.setString(1, monHoc);
-                        boolean check = callStatement.execute();
-                        if (!check) {
-                            JOptionPane.showMessageDialog(this, "Xóa thành công");
-                        } else {
-                            JOptionPane.showMessageDialog(this, "Xóa thất bại");
-                        }
-                        duLieuMon.removeRow(tbMonHoc.getSelectedRow());
-                    }
-                } else {
-                    CallableStatement callStatement = con.prepareCall("{call sp_ThayDoiQuyDinh_XoaMon(?)}");
-                    callStatement.setString(1, monHoc);
-                    boolean check = callStatement.execute();
-                    if (!check) {
-                        JOptionPane.showMessageDialog(this, "Xóa thành công");
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Xóa thất bại");
-                    }
-                    duLieuMon.removeRow(tbMonHoc.getSelectedRow());
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(ThayDoiQuyDinhPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }//GEN-LAST:event_jButton12ActionPerformed
-
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        Connection con = JDBCConnection.ketNoiJBDC();
-        int nam = Integer.parseInt((String) duLieuNam.getValueAt(tbNam.getRowCount() - 1, 1)) + 1;
-        try {
-            CallableStatement callStatement = con.prepareCall("{call sp_ThayDoiQuyDinh_ThemNam(?)}");
-            callStatement.setInt(1, nam);
-            boolean check = callStatement.execute();
-            if (!check) {
-                JOptionPane.showMessageDialog(this, "Cập nhật thành công");
-            } else {
-                JOptionPane.showMessageDialog(this, "Thêm thất bại");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ThayDoiQuyDinhPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_jButton13ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-<<<<<<< HEAD
     public javax.swing.JButton CapNhat;
     public javax.swing.JButton ThemLop;
     public javax.swing.JButton ThemMonHoc;
@@ -1279,15 +868,6 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
     public javax.swing.JButton XoaLop;
     public javax.swing.JButton XoaMonHoc;
     private javax.swing.JButton jButton2;
-=======
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton9;
->>>>>>> 20f1735219207045d75a13c049823880539b5d5c
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
