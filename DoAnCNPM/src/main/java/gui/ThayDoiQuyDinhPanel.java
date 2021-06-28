@@ -7,6 +7,7 @@ package gui;
 
 import gui.JDBCConnection;
 import java.awt.event.KeyEvent;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import popupframe.ThemLop_ThayDoiQuyDinhPanel;
 import thamso.LayThamSo;
 
 /**
@@ -23,9 +25,11 @@ import thamso.LayThamSo;
  */
 public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
 
+    ThemLop_ThayDoiQuyDinhPanel themLop = new ThemLop_ThayDoiQuyDinhPanel();
     DefaultTableModel duLieuLop = new DefaultTableModel();
     DefaultTableModel duLieuMon = new DefaultTableModel();
     DefaultTableModel duLieuNam = new DefaultTableModel();
+
     public ThayDoiQuyDinhPanel() {
         initComponents();
         txtTuoiToiDa.setText(String.valueOf(new LayThamSo().getTuoiToiDa()));
@@ -34,51 +38,49 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         txtDiemLenLop.setText(String.valueOf(new LayThamSo().getDiemLenLop()));
         txtDiemQuaMon.setText(String.valueOf(new LayThamSo().getDiemQuaMon()));
         //Tạo column cho bảng dữ liệu
-        duLieuLop.addColumn("STT");
-        duLieuLop.addColumn("Khối");
+        duLieuLop.addColumn("Mã lớp");
         duLieuLop.addColumn("Lớp");
-        duLieuMon.addColumn("STT");
+        duLieuLop.addColumn("Khối");
+        duLieuMon.addColumn("Mã môn");
         duLieuMon.addColumn("Môn");
         duLieuNam.addColumn("STT");
         duLieuNam.addColumn("Nam");
-        
+
         Connection con = JDBCConnection.ketNoiJBDC();
         String sql;
         try {
             Statement statement = con.createStatement();
-            int stt = 1;
             //Thêm dữ liệu vào bảng lớp
             sql = "select * from LOP";
             ResultSet rs = statement.executeQuery(sql);
-            
-            while (rs.next()){
+
+            while (rs.next()) {
+                String ma = rs.getString("MaLop");
                 String khoi = rs.getString("MaKhoi");
                 String lop = rs.getString("TenLop");
-                Object data[] = {stt,khoi,lop};
+                Object data[] = {ma, lop, khoi};
                 duLieuLop.addRow(data);
-                stt++;
             }
             tbLop.setModel(duLieuLop);
-            
+
             //Thêm dữ liệu vào bảng môn
-            stt = 1;
             sql = "select * from MONHOC";
             rs = statement.executeQuery(sql);
-            while (rs.next()){
+            while (rs.next()) {
+                String ma = rs.getString("MaMonHoc");
                 String monHoc = rs.getString("TenMonHoc");
-                Object data[] = {stt,monHoc};
+                Object data[] = {ma, monHoc};
                 duLieuMon.addRow(data);
-                stt++;
             }
             tbMonHoc.setModel(duLieuMon);
-            
+
             //Thêm dữ liệu vào bảng môn
-            stt = 1;
-            sql = "select distinct Nam from HOCKI_NAM";
+            int stt = 1;
+            sql = "select distinct Nam from HOCKI_NAM order by Nam";
             rs = statement.executeQuery(sql);
-            while (rs.next()){
+            while (rs.next()) {
                 String nam = rs.getString("Nam");
-                Object data[] = {stt,nam};
+                Object data[] = {stt, nam};
                 duLieuNam.addRow(data);
                 stt++;
             }
@@ -133,7 +135,6 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         tbNam = new javax.swing.JTable();
         jLabel17 = new javax.swing.JLabel();
         jButton13 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(239, 247, 248));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -161,7 +162,7 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
                 {null, null, null}
             },
             new String [] {
-                "STT", "Khối", "Lớp"
+                "Mã Lớp", "Lớp", "Khối"
             }
         ));
         tbLop.setFocusable(false);
@@ -428,7 +429,7 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
                 {null, null}
             },
             new String [] {
-                "STT", "Môn học"
+                "Mã môn", "Môn học"
             }
         ));
         tbMonHoc.setFocusable(false);
@@ -485,10 +486,13 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
                 .addComponent(jLabel14)
                 .addGap(24, 24, 24)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -535,19 +539,6 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton14.setBackground(new java.awt.Color(237, 98, 96));
-        jButton14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton14.setForeground(new java.awt.Color(255, 255, 255));
-        jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_delete_24px_1.png"))); // NOI18N
-        jButton14.setText("Xóa");
-        jButton14.setBorder(null);
-        jButton14.setFocusable(false);
-        jButton14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton14ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -556,10 +547,7 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
@@ -571,9 +559,7 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -593,30 +579,61 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txtTuoiToiThieuActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        if(tbLop.getSelectedRowCount()==0)
+        if (tbLop.getSelectedRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "Chưa chọn dòng dữ liệu");
-        if(tbLop.getSelectedRowCount()>1)
+        }
+        if (tbLop.getSelectedRowCount() > 1) {
             JOptionPane.showMessageDialog(this, "Chỉ được xóa 1 dòng dữ liệu mỗi lần");
-        if(tbLop.getSelectedRowCount()==1){
+        }
+        if (tbLop.getSelectedRowCount() == 1) {
             Connection con = JDBCConnection.ketNoiJBDC();
             try {
+                String lop = duLieuLop.getValueAt(tbLop.getSelectedRow(), 1).toString();
+                //Kiểm tra thông tin môn học
                 Statement statement = con.createStatement();
                 String sql = "select * from LOP l, QUATRINHHOC qth\n"
                         + "where l.IDLop = qth.IDLop\n"
-                        + "and TenLop = " + tbLop.getValueAt(tbLop.getSelectedRow(), 1);
+                        + "and TenLOP = N'" + lop + "'";
+                ResultSet rs = statement.executeQuery(sql);
+                int count = 0;
+                while (rs.next()) {
+                    count++;
+                }
+                if (count != 0) {
+                    int exit = JOptionPane.showConfirmDialog(null, "Lớp có dữ liệu, bạn vẫn muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
+                    if (exit == JOptionPane.YES_OPTION) {
+                        CallableStatement callStatement = con.prepareCall("{call sp_ThayDoiQuyDinh_XoaLop(?)}");
+                        callStatement.setString(1, lop);
+                        boolean check = callStatement.execute();
+                        if (!check) {
+                            JOptionPane.showMessageDialog(this, "Xóa thành công");
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Xóa thất bại");
+                        }
+                        duLieuLop.removeRow(tbLop.getSelectedRow());
+                    }
+                } else {
+                    CallableStatement callStatement = con.prepareCall("{call sp_ThayDoiQuyDinh_XoaLop(?)}");
+                    callStatement.setString(1, lop);
+                    boolean check = callStatement.execute();
+                    if (!check) {
+                        JOptionPane.showMessageDialog(this, "Xóa thành công");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Xóa thất bại");
+                    }
+                    duLieuLop.removeRow(tbLop.getSelectedRow());
+                }
+
             } catch (SQLException ex) {
                 Logger.getLogger(ThayDoiQuyDinhPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            duLieuLop.removeRow(tbLop.getSelectedRow());
-            JOptionPane.showMessageDialog(this, tbLop.getValueAt(tbLop.getSelectedRow(),2));
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        
+
         Connection con = JDBCConnection.ketNoiJBDC();
-        
+
         try {
             Statement statement = con.createStatement();
             String sql = "update THAMSO set GiaTri = " + Integer.parseInt(txtTuoiToiThieu.getText()) + "where TenThamSo = 'TuoiToiThieu'";
@@ -629,46 +646,46 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
             statement.execute(sql);
             sql = "update THAMSO set GiaTri = " + Float.parseFloat(txtDiemQuaMon.getText()) + "where TenThamSo = 'DiemQuaMon'";
             statement.execute(sql);
-            
+
             JOptionPane.showMessageDialog(this, "Cập nhật thành công");
             JOptionPane.showMessageDialog(this, "Vui lòng khởi động lại chương trình để cập nhật tham số");
         } catch (SQLException ex) {
             Logger.getLogger(ThayDoiQuyDinhPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        new LayThamSo().ketNoiCoSoDulieu();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void txtTuoiToiThieuKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTuoiToiThieuKeyTyped
         char c = evt.getKeyChar();
-        if(!(Character.isDigit(c) || c==KeyEvent.VK_BACK_SPACE||c==KeyEvent.VK_DELETE)){
+        if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtTuoiToiThieuKeyTyped
 
     private void txtTuoiToiDaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTuoiToiDaKeyTyped
         char c = evt.getKeyChar();
-        if(!(Character.isDigit(c) || c==KeyEvent.VK_BACK_SPACE||c==KeyEvent.VK_DELETE)){
+        if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtTuoiToiDaKeyTyped
 
     private void txtSisoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSisoKeyTyped
         char c = evt.getKeyChar();
-        if(!(Character.isDigit(c) || c==KeyEvent.VK_BACK_SPACE||c==KeyEvent.VK_DELETE)){
+        if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtSisoKeyTyped
 
     private void txtDiemQuaMonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDiemQuaMonKeyTyped
         char c = evt.getKeyChar();
-        if(!(Character.isDigit(c) || c==KeyEvent.VK_BACK_SPACE || c==KeyEvent.VK_DELETE)){
+        if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtDiemQuaMonKeyTyped
 
     private void txtDiemLenLopKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDiemLenLopKeyTyped
         char c = evt.getKeyChar();
-        if(!(Character.isDigit(c) || c==KeyEvent.VK_BACK_SPACE||c==KeyEvent.VK_DELETE)){
+        if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtDiemLenLopKeyTyped
@@ -677,17 +694,29 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         String mon = JOptionPane.showInputDialog("Nhập tên môn học");
         int count = duLieuMon.getRowCount();
         count++;
-        Object data[] = {count,mon};
+        Object data[] = {count, mon};
         duLieuMon.addRow(data);
+        Connection con = JDBCConnection.ketNoiJBDC();
+        try {
+            CallableStatement callStatement = con.prepareCall("{call sp_ThayDoiQuyDinh_ThemMonHoc(?)}");
+            callStatement.setString(1, mon);
+            boolean check = callStatement.execute();
+            if (check) {
+                JOptionPane.showMessageDialog(this, "Thêm thành công");
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm thất bại");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ThayDoiQuyDinhPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        int count = duLieuLop.getRowCount();
-        count++;
-        String lop = "";
-        String khoi = "";
-        Object data[] = {count,khoi,lop};
-        duLieuLop.addRow(data);
+        themLop.setVisible(true);
+        if (themLop.isShowing()) {
+            Object data[] = themLop.getData();
+            duLieuLop.addRow(data);
+        }
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -697,48 +726,46 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         txtSiso.setText(String.valueOf(new LayThamSo().getSiSoToiDa()));
         txtDiemLenLop.setText(String.valueOf(new LayThamSo().getDiemLenLop()));
         txtDiemQuaMon.setText(String.valueOf(new LayThamSo().getDiemQuaMon()));
-        
+
         duLieuLop.setRowCount(0);
         duLieuMon.setRowCount(0);
         duLieuNam.setRowCount(0);
-        
+
         Connection con = JDBCConnection.ketNoiJBDC();
         String sql;
         try {
             Statement statement = con.createStatement();
-            int stt = 1;
             //Thêm dữ liệu vào bảng lớp
             sql = "select * from LOP";
             ResultSet rs = statement.executeQuery(sql);
-            
-            while (rs.next()){
+
+            while (rs.next()) {
+                String ma = rs.getString("MaLop");
                 String khoi = rs.getString("MaKhoi");
                 String lop = rs.getString("TenLop");
-                Object data[] = {stt,khoi,lop};
+                Object data[] = {ma, lop, khoi};
                 duLieuLop.addRow(data);
-                stt++;
             }
             tbLop.setModel(duLieuLop);
-            
+
             //Thêm dữ liệu vào bảng môn
-            stt = 1;
             sql = "select * from MONHOC";
             rs = statement.executeQuery(sql);
-            while (rs.next()){
+            while (rs.next()) {
+                String ma = rs.getString("MaMonHoc");
                 String monHoc = rs.getString("TenMonHoc");
-                Object data[] = {stt,monHoc};
+                Object data[] = {ma, monHoc};
                 duLieuMon.addRow(data);
-                stt++;
             }
             tbMonHoc.setModel(duLieuMon);
-            
+
             //Thêm dữ liệu vào bảng môn
-            stt = 1;
-            sql = "select distinct Nam from HOCKI_NAM";
+            int stt = 1;
+            sql = "select distinct Nam from HOCKI_NAM order by Nam";
             rs = statement.executeQuery(sql);
-            while (rs.next()){
+            while (rs.next()) {
                 String nam = rs.getString("Nam");
-                Object data[] = {stt,nam};
+                Object data[] = {stt, nam};
                 duLieuNam.addRow(data);
                 stt++;
             }
@@ -749,23 +776,80 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        // TODO add your handling code here:
+        if (tbMonHoc.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Chưa chọn dòng dữ liệu");
+        }
+        if (tbMonHoc.getSelectedRowCount() > 1) {
+            JOptionPane.showMessageDialog(this, "Chỉ được xóa 1 dòng dữ liệu mỗi lần");
+        }
+        if (tbMonHoc.getSelectedRowCount() == 1) {
+            Connection con = JDBCConnection.ketNoiJBDC();
+            try {
+                String monHoc = duLieuMon.getValueAt(tbMonHoc.getSelectedRow(), 1).toString();
+                //Kiểm tra thông tin môn học
+                Statement statement = con.createStatement();
+                String sql = "select * from MONHOC mh, BANGDIEMMON bdm\n"
+                        + "where mh.IDMonHoc = bdm.IDMonHoc\n"
+                        + "and TenMonHoc = N'" + monHoc + "'";
+                ResultSet rs = statement.executeQuery(sql);
+                int count = 0;
+                while (rs.next()) {
+                    count++;
+                }
+                if (count != 0) {
+                    int exit = JOptionPane.showConfirmDialog(null, "Môn học có dữ liệu, bạn vẫn muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
+                    if (exit == JOptionPane.YES_OPTION) {
+                        CallableStatement callStatement = con.prepareCall("{call sp_ThayDoiQuyDinh_XoaMon(?)}");
+                        callStatement.setString(1, monHoc);
+                        boolean check = callStatement.execute();
+                        if (!check) {
+                            JOptionPane.showMessageDialog(this, "Xóa thành công");
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Xóa thất bại");
+                        }
+                        duLieuMon.removeRow(tbMonHoc.getSelectedRow());
+                    }
+                } else {
+                    CallableStatement callStatement = con.prepareCall("{call sp_ThayDoiQuyDinh_XoaMon(?)}");
+                    callStatement.setString(1, monHoc);
+                    boolean check = callStatement.execute();
+                    if (!check) {
+                        JOptionPane.showMessageDialog(this, "Xóa thành công");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Xóa thất bại");
+                    }
+                    duLieuMon.removeRow(tbMonHoc.getSelectedRow());
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ThayDoiQuyDinhPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton13ActionPerformed
+        Connection con = JDBCConnection.ketNoiJBDC();
+        int nam = Integer.parseInt((String) duLieuNam.getValueAt(tbNam.getRowCount() - 1, 1)) + 1;
+        try {
+            CallableStatement callStatement = con.prepareCall("{call sp_ThayDoiQuyDinh_ThemNam(?)}");
+            callStatement.setInt(1, nam);
+            boolean check = callStatement.execute();
+            if (!check) {
+                JOptionPane.showMessageDialog(this, "Cập nhật thành công");
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm thất bại");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ThayDoiQuyDinhPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton14ActionPerformed
+    }//GEN-LAST:event_jButton13ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton7;

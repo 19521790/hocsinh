@@ -74,7 +74,6 @@ public class DashboardPanel extends javax.swing.JPanel {
         lbMonHoc = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(239, 247, 248));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -214,7 +213,7 @@ public class DashboardPanel extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 1081, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,10 +221,6 @@ public class DashboardPanel extends javax.swing.JPanel {
         );
 
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 1081, -1));
-
-        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\nguye\\OneDrive\\Desktop\\preview-277812-LfcIAIIeOf-high_0000.jpg")); // NOI18N
-        jLabel8.setText("jLabel8");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 0, 1220, 310));
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -236,7 +231,6 @@ public class DashboardPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
