@@ -272,6 +272,7 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextField1 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -292,13 +293,17 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
 
+        jTextField1.setText("jTextField1");
+
         setBackground(new java.awt.Color(239, 247, 248));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel1.setText("Lớp:");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel2.setText("Môn:");
 
         TimKiem.setBackground(new java.awt.Color(0, 176, 239));
@@ -314,8 +319,10 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
             }
         });
 
+        Lop.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         Lop.setFocusable(false);
 
+        Mon.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         Mon.setFocusable(false);
         Mon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -323,12 +330,16 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel3.setText("Học kỳ:");
 
+        Hocky.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         Hocky.setFocusable(false);
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel9.setText("Năm:");
 
+        Nam.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         Nam.setFocusable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -381,6 +392,7 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
         jScrollPane1.setOpaque(false);
 
         tableDiem.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        tableDiem.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tableDiem.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -461,7 +473,7 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(128, 99, 246));
-        jLabel8.setText("QUẢN LÍ HỌC SINH");
+        jLabel8.setText("QUẢN LÍ ĐIỂM SỐ");
         jLabel8.setFocusable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -507,7 +519,8 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
                             .addComponent(jLabel6)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(97, 97, 97))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(EditTableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -749,6 +762,7 @@ public class QuanLiDiemSoPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tableDiem;
     // End of variables declaration//GEN-END:variables
 }
