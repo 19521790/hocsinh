@@ -267,11 +267,14 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         Connection con = JDBCConnection.ketNoiJBDC();
         int nam = Integer.parseInt((String) duLieuNam.getValueAt(tbNam.getRowCount() - 1, 1)) + 1;
         try {
+            int stt = Integer.parseInt(String.valueOf(duLieuNam.getValueAt(tbNam.getRowCount()-1, 0))) + 1;
+            Object data[] = {stt,nam};
             CallableStatement callStatement = con.prepareCall("{call sp_ThayDoiQuyDinh_ThemNam(?)}");
             callStatement.setInt(1, nam);
             boolean check = callStatement.execute();
             if (!check) {
                 JOptionPane.showMessageDialog(this, "Cập nhật thành công");
+                duLieuNam.addRow(data);
             } else {
                 JOptionPane.showMessageDialog(this, "Thêm thất bại");
             }
