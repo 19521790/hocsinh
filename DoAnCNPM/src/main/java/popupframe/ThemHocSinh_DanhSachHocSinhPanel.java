@@ -11,8 +11,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -99,7 +97,6 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
      model.removeRow(rows[i]-i);
    }
 }
-    
     public void loadtable() {
          DefaultTableModel model = (DefaultTableModel) this.tableHocSinh.getModel();
         model.setRowCount(0);
@@ -113,7 +110,7 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
             Statement sta = cn.createStatement();
          ResultSet   r = sta.executeQuery(sql);
              while (r.next()) {
-                
+                i++;
                 String name = r.getString("HoTen");
                 String date = r.getString("NgaySinh");
                 String mahs = r.getString("MaHocSinh");
@@ -121,14 +118,9 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
                 String email = r.getString("Email");
                 String address = r.getString("DiaChi");
                 String s = r.getString("GioiTinh");
-               // if(!checktable(mahs))continue;
-               if(this.dsl.kiemTraMaHocSinh(mahs)) 
-               {
-                i++;
                 String datab[] = {Integer.toString(i), mahs, name, date, s, address, email};
                 DefaultTableModel tblM = (DefaultTableModel) this.tableHocSinh.getModel();
                 tblM.addRow(datab);
-               }
             }
             
         } catch (SQLException e) {
@@ -138,12 +130,7 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
         
 
     }
-    void checktable(){
-        
-    
-    
-    
-    }
+
     public ThemHocSinh_DanhSachHocSinhPanel() {
         initComponents();
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -161,6 +148,7 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
         nam = dsl.selectedYear;
         System.out.println(nam + ":::" + malop);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -204,6 +192,7 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
         tableHocSinh.setFocusable(false);
         tableHocSinh.setGridColor(new java.awt.Color(255, 255, 255));
         tableHocSinh.setIntercellSpacing(new java.awt.Dimension(0, 1));
+        tableHocSinh.setRowHeight(25);
         tableHocSinh.setSelectionBackground(new java.awt.Color(0, 176, 239));
         tableHocSinh.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -231,22 +220,23 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addGap(32, 32, 32)
                 .addComponent(ThemMoi1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
             .addGroup(layout.createSequentialGroup()
-                .addGap(117, 117, 117)
-                .addComponent(ThemMoi1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(117, 117, 117)
+                        .addComponent(ThemMoi1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
