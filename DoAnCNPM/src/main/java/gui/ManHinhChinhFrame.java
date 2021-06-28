@@ -9,8 +9,15 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
 import thamso.LayThamSo;
 
 /**
@@ -128,6 +135,61 @@ public class ManHinhChinhFrame extends javax.swing.JFrame {
                 thayDoiQuyDinh.ThemLopTrongTruongListen();
 
                 resetPanel();
+            }
+        });
+
+        thayDoiQuyDinh.tbLop.getDefaultEditor(String.class).addCellEditorListener(new CellEditorListener() {
+            @Override
+            @SuppressWarnings("empty-statement")
+            public void editingStopped(ChangeEvent e) {
+
+                int column = thayDoiQuyDinh.tbLop.getSelectedColumn();
+                int row = thayDoiQuyDinh.tbLop.getSelectedRow();
+                Connection con = JDBCConnection.ketNoiJBDC();
+                try {
+                    Statement mystm = con.createStatement();
+                    String sql = "  Update LOP\n"
+                            + "  SET TenLop='" + thayDoiQuyDinh.tbLop.getValueAt(row, column) + "'\n"
+                            + "  WHERE MaLop='" + thayDoiQuyDinh.tbLop.getValueAt(row, 0) + "'";
+                    mystm.executeUpdate(sql);
+                    resetPanel();
+                    JOptionPane.showMessageDialog(null, "Update tên lớp thành công");
+                } catch (SQLException ex) {
+                    Logger.getLogger(ManHinhChinhFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+            @Override
+            public void editingCanceled(ChangeEvent e) {
+
+            }
+        });
+        thayDoiQuyDinh.tbMonHoc.getDefaultEditor(String.class).addCellEditorListener(new CellEditorListener() {
+            @Override
+            @SuppressWarnings("empty-statement")
+            public void editingStopped(ChangeEvent e) {
+
+                int column = thayDoiQuyDinh.tbMonHoc.getSelectedColumn();
+                int row = thayDoiQuyDinh.tbMonHoc.getSelectedRow();
+                Connection con = JDBCConnection.ketNoiJBDC();
+                try {
+                    Statement mystm = con.createStatement();
+                    String sql = "   Update MONHOC\n"
+                            + "  SET TenMonHoc='"+thayDoiQuyDinh.tbMonHoc.getValueAt(row, column)+"'\n"
+                            + "  WHERE MaMonHoc='"+thayDoiQuyDinh.tbMonHoc.getValueAt(row, 0)+"'";
+                    mystm.executeUpdate(sql);
+                    resetPanel();
+                    JOptionPane.showMessageDialog(null, "Update tên môn học thành công");
+                } catch (SQLException ex) {
+                    Logger.getLogger(ManHinhChinhFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+            @Override
+            public void editingCanceled(ChangeEvent e) {
+
             }
         });
 

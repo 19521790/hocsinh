@@ -65,53 +65,52 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
     private void addStudent(int indicesRow[]) {
 
         if (!(indicesRow.length > 0)) {
-            JOptionPane.showMessageDialog(this, "Chưa có học sinh nào đc chọn");
+             JOptionPane.showMessageDialog(this, "Chưa có học sinh nào đc chọn");
             return;
         }
-        String thongbao = "";
+        String thongbao="";
         String mshs = "";
-        DefaultTableModel model = (DefaultTableModel) this.tableHocSinh.getModel();
+       DefaultTableModel model = (DefaultTableModel) this.tableHocSinh.getModel();
         for (int indices : indicesRow) {
             mshs = this.tableHocSinh.getValueAt(indices, 1).toString();
-            thongbao = thongbao + mshs + " ";
+            thongbao=thongbao+mshs+" ";
             System.out.println(mshs);
             dsl.addintoTable(mshs);
             dsl.addstu(mshs);
-
+             
         }
-        JOptionPane.showMessageDialog(this, "đã thêm các học sinh có mã số " + thongbao + " vào lớp " + malop + " nam học " + nam);
-        this.removeSelectedRows();
-        // DefaultTableModel model = (DefaultTableModel) this.tableHocSinh.getModel();
+         JOptionPane.showMessageDialog(this, "đã thêm các học sinh có mã số "+thongbao+" vào lớp "+malop+" nam học "+nam);
+         this.removeSelectedRows();
+          // DefaultTableModel model = (DefaultTableModel) this.tableHocSinh.getModel();
 //           for(int i:indicesRow){
 //           model.removeRow(i);
 //             System.out.println(i);
 //           
 //           }
+        
 
     }
-
-    public void removeSelectedRows() {
-        DefaultTableModel model = (DefaultTableModel) this.tableHocSinh.getModel();
-        int[] rows = tableHocSinh.getSelectedRows();
-        for (int i = 0; i < rows.length; i++) {
-            model.removeRow(rows[i] - i);
-        }
-    }
-
+    public void removeSelectedRows(){
+   DefaultTableModel model = (DefaultTableModel) this.tableHocSinh.getModel();
+   int[] rows = tableHocSinh.getSelectedRows();
+   for(int i=0;i<rows.length;i++){
+     model.removeRow(rows[i]-i);
+   }
+}
     public void loadtable() {
-        DefaultTableModel model = (DefaultTableModel) this.tableHocSinh.getModel();
+         DefaultTableModel model = (DefaultTableModel) this.tableHocSinh.getModel();
         model.setRowCount(0);
-        String sql = "select DISTINCT HOCSINH.MaHocSinh,HoTen,NgaySinh,GioiTinh,DiaChi,Email from HOCSINH WHERE   IDHocSinh  NOT IN( SELECT IDHocSinh FROM QUATRINHHOC ,HOCKI_NAM where HOCKI_NAM.IDHocKi=QUATRINHHOC.IDHocKi and Nam=" + nam + " and IDLop is not null)";
-        // String sql2 ="select * from HOCSINH  WHERE    HOCSINH.IDHocSinh NOT IN (SELECT QUATRINHHOC.IDHocSinh FROM QUATRINHHOC ,HOCKI_NAM WHERE  QUATRINHHOC.IDHocKi=HOCKI_NAM.IDHocKi AND Nam=" +nam +")";
+        String sql = "select DISTINCT HOCSINH.MaHocSinh,HoTen,NgaySinh,GioiTinh,DiaChi,Email from HOCSINH WHERE   IDHocSinh  NOT IN( SELECT IDHocSinh FROM QUATRINHHOC ,HOCKI_NAM where HOCKI_NAM.IDHocKi=QUATRINHHOC.IDHocKi and Nam="+nam+" and IDLop is not null)";
+       // String sql2 ="select * from HOCSINH  WHERE    HOCSINH.IDHocSinh NOT IN (SELECT QUATRINHHOC.IDHocSinh FROM QUATRINHHOC ,HOCKI_NAM WHERE  QUATRINHHOC.IDHocKi=HOCKI_NAM.IDHocKi AND Nam=" +nam +")";
         System.out.println(sql);
-
-        int i = 0;
+       
+         int i = 0;
         try {
             Connection cn = JDBCConnection.ketNoiJBDC();
             Statement sta = cn.createStatement();
-            ResultSet r = sta.executeQuery(sql);
-            while (r.next()) {
-
+         ResultSet   r = sta.executeQuery(sql);
+             while (r.next()) {
+                i++;
                 String name = r.getString("HoTen");
                 String date = r.getString("NgaySinh");
                 String mahs = r.getString("MaHocSinh");
@@ -119,17 +118,16 @@ public class ThemHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
                 String email = r.getString("Email");
                 String address = r.getString("DiaChi");
                 String s = r.getString("GioiTinh");
-                if (this.dsl.checkMSHS(mahs)) {
-                    i++;
-                    String datab[] = {Integer.toString(i), mahs, name, date, s, address, email};
-                    DefaultTableModel tblM = (DefaultTableModel) this.tableHocSinh.getModel();
-                    tblM.addRow(datab);
-                }
+                String datab[] = {Integer.toString(i), mahs, name, date, s, address, email};
+                DefaultTableModel tblM = (DefaultTableModel) this.tableHocSinh.getModel();
+                tblM.addRow(datab);
             }
-
+            
         } catch (SQLException e) {
 
         }
+        
+        
 
     }
 

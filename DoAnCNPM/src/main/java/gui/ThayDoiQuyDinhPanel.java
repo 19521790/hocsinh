@@ -38,11 +38,27 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
         txtDiemLenLop.setText(String.valueOf(new LayThamSo().getDiemLenLop()));
         txtDiemQuaMon.setText(String.valueOf(new LayThamSo().getDiemQuaMon()));
         //Tạo column cho bảng dữ liệu
-        duLieuLop.addColumn("Mã lớp");
-        duLieuLop.addColumn("Lớp");
-        duLieuLop.addColumn("Khối");
-        duLieuMon.addColumn("Mã môn");
-        duLieuMon.addColumn("Môn");
+
+        String[] colTitle = {"Mã Lớp", "Lớp", "Khối"};
+        boolean[] isEditable = {false, true, false};
+        duLieuLop = new DefaultTableModel(colTitle, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+
+                return isEditable[column];
+            }
+        };
+        String[] colTitle2 = {"Mã môn", "Môn"};
+        boolean[] isEditable2 = {false, true};
+        duLieuMon = new DefaultTableModel(colTitle2, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+
+                return isEditable2[column];
+            }
+        };
+
+      
         duLieuNam.addColumn("STT");
         duLieuNam.addColumn("Nam");
 
@@ -339,7 +355,15 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
             new String [] {
                 "Mã Lớp", "Lớp", "Khối"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tbLop.setFocusable(false);
         tbLop.setGridColor(new java.awt.Color(255, 255, 255));
         tbLop.setIntercellSpacing(new java.awt.Dimension(0, 1));
@@ -889,8 +913,8 @@ public class ThayDoiQuyDinhPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTable tbLop;
-    private javax.swing.JTable tbMonHoc;
+    public javax.swing.JTable tbLop;
+    public javax.swing.JTable tbMonHoc;
     private javax.swing.JTable tbNam;
     private javax.swing.JTextField txtDiemLenLop;
     private javax.swing.JTextField txtDiemQuaMon;
