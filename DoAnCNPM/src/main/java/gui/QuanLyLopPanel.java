@@ -236,9 +236,19 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         }
 
     }
+    public boolean checkMSHS(String mahs){
+     int sohang= infoTable.getRowCount();
+    for(int i=0; i<sohang;i++){
+        
+        if(mahs.equals(this.infoTable.getValueAt(i, 1)))
+            return false;
+    }
+    
+    return true;
+    }
     public void  refreshSTT(){
     
-    int sohang= infoTable.getColumnCount();
+    int sohang= infoTable.getRowCount();
     for(int i=0; i<sohang;i++){
         this.infoTable.setValueAt(Integer.toString(i+1), i, 0);
     }
