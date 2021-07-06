@@ -84,7 +84,7 @@ public class ThongTinHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         emailBox.setBackground(new java.awt.Color(240, 240, 240));
-        emailBox.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        emailBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         emailBox.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         emailBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,7 +97,7 @@ public class ThongTinHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
         jLabel24.setText("*");
 
         nameBox.setBackground(new java.awt.Color(240, 240, 240));
-        nameBox.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        nameBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         nameBox.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         nameBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,23 +105,23 @@ public class ThongTinHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
             }
         });
 
-        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel23.setText("Địa chỉ:");
 
-        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel19.setText("Họ tên:");
 
         jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(255, 51, 51));
         jLabel25.setText("*");
 
-        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel20.setText("Email:");
 
-        jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel21.setText("Giới tính:");
 
-        rbNu2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        rbNu2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         rbNu2.setText("Nữ");
         rbNu2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,11 +134,11 @@ public class ThongTinHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
         jLabel26.setText("*");
 
         addressBox.setColumns(20);
-        addressBox.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        addressBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         addressBox.setRows(5);
         jScrollPane4.setViewportView(addressBox);
 
-        rbNam2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        rbNam2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         rbNam2.setText("Nam");
         rbNam2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,11 +146,11 @@ public class ThongTinHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
             }
         });
 
-        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel22.setText("Ngày sinh:");
 
         dateBox.setBackground(new java.awt.Color(240, 240, 240));
-        dateBox.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        dateBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         dateBox.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -169,7 +169,7 @@ public class ThongTinHocSinh_DanhSachHocSinhPanel extends javax.swing.JFrame {
                     .addComponent(jLabel19))
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nameBox, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                    .addComponent(nameBox, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
                     .addComponent(emailBox)
                     .addComponent(dateBox))
                 .addGap(71, 71, 71)

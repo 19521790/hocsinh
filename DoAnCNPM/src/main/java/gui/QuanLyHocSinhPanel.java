@@ -24,8 +24,8 @@ import javax.swing.JOptionPane;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.*;
-import popupframe.SuaHocSinh_QuanLiHocSinh;
-import popupframe.ThemHocSinh_QuanLiHocSinh;
+import popupframe.SuaHocSinh_QuanLyHocSinhPanel;
+import popupframe.ThemHocSinh_QuanLyHocSinhPanel;
 import thamso.LayThamSo;
 
 /**
@@ -34,8 +34,8 @@ import thamso.LayThamSo;
  */
 public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
 
-    SuaHocSinh_QuanLiHocSinh suahs = new SuaHocSinh_QuanLiHocSinh();
-    ThemHocSinh_QuanLiHocSinh themhs = new ThemHocSinh_QuanLiHocSinh();
+    SuaHocSinh_QuanLyHocSinhPanel suahs = new SuaHocSinh_QuanLyHocSinhPanel();
+    ThemHocSinh_QuanLyHocSinhPanel themhs = new ThemHocSinh_QuanLyHocSinhPanel();
 
     int NamSinhCuaTuoiToiThieu = Calendar.getInstance().get(Calendar.YEAR) - new LayThamSo().getTuoiToiThieu();
     int NamSinhCuaTuoiToiDa = Calendar.getInstance().get(Calendar.YEAR) - new LayThamSo().getTuoiToiDa();
@@ -54,7 +54,7 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
         initComponents();
         
         //Đổi font mục bảng
-        tableHocSinh.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
+        tableHocSinh.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
         
         suahs.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         themhs.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -237,9 +237,10 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(239, 247, 248));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Xoa.setBackground(new java.awt.Color(237, 98, 96));
-        Xoa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Xoa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Xoa.setForeground(new java.awt.Color(255, 255, 255));
         Xoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_delete_24px_1.png"))); // NOI18N
         Xoa.setText("Xóa");
@@ -251,9 +252,10 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
                 XoaActionPerformed(evt);
             }
         });
+        add(Xoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 350, 130, 40));
 
         ThemMoi.setBackground(new java.awt.Color(128, 99, 246));
-        ThemMoi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        ThemMoi.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         ThemMoi.setForeground(new java.awt.Color(255, 255, 255));
         ThemMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_add_administrator_24px.png"))); // NOI18N
         ThemMoi.setText("Thêm mới");
@@ -265,9 +267,10 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
                 ThemMoiActionPerformed(evt);
             }
         });
+        add(ThemMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 290, 130, 40));
 
         Sua.setBackground(new java.awt.Color(254, 193, 6));
-        Sua.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Sua.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Sua.setForeground(new java.awt.Color(255, 255, 255));
         Sua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_pencil_24px_1.png"))); // NOI18N
         Sua.setText("Sửa");
@@ -279,9 +282,10 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
                 SuaActionPerformed(evt);
             }
         });
+        add(Sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 410, 130, 40));
 
         jButton2.setBackground(new java.awt.Color(114, 217, 118));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_refresh_24px.png"))); // NOI18N
         jButton2.setText("Làm mới");
@@ -293,17 +297,18 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
                 jButton2ActionPerformed(evt);
             }
         });
+        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 470, 130, 40));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Họ tên:");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Mã học sinh:");
 
-        MaHS.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        MaHS.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         MaHS.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         MaHS.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -311,7 +316,7 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
             }
         });
 
-        HoTen.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        HoTen.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         HoTen.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         HoTen.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -320,7 +325,7 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
         });
 
         TimKiembutton.setBackground(new java.awt.Color(0, 176, 239));
-        TimKiembutton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        TimKiembutton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         TimKiembutton.setForeground(new java.awt.Color(255, 255, 255));
         TimKiembutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_search_24px_1.png"))); // NOI18N
         TimKiembutton.setText("Tìm kiếm");
@@ -347,7 +352,7 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(HoTen, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
-                .addComponent(TimKiembutton, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TimKiembutton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(77, 77, 77))
         );
         jPanel3Layout.setVerticalGroup(
@@ -359,18 +364,23 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
                     .addComponent(MaHS, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(HoTen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TimKiembutton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TimKiembutton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
+        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 130, -1, -1));
+
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Tìm kiếm học sinh");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 100, -1, -1));
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jScrollPane1.setFocusable(false);
+        jScrollPane1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jScrollPane1.setOpaque(false);
 
-        tableHocSinh.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tableHocSinh.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tableHocSinh.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -400,67 +410,17 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tableHocSinh);
 
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 286, 942, 440));
+
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Danh sách học sinh");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 250, -1, -1));
 
+        jLabel5.setBackground(new java.awt.Color(0, 0, 0));
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(128, 99, 246));
         jLabel5.setText("QUẢN LÍ HỌC SINH");
         jLabel5.setFocusable(false);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 704, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 800, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(55, 55, 55)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Xoa, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ThemMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(ThemMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(Xoa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21)
-                        .addComponent(Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46))
-        );
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 25, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void XoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_XoaActionPerformed
@@ -575,7 +535,7 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
         int row = tableHocSinh.getSelectedRow();
         if (row != -1) {
             suahs.setVisible(true);
-            SuaHocSinh_QuanLiHocSinh.getMaHocSinh = tableHocSinh.getValueAt(row, 1).toString();
+            SuaHocSinh_QuanLyHocSinhPanel.getMaHocSinh = tableHocSinh.getValueAt(row, 1).toString();
             suahs.txtHoTenHocSinh.setText(tableHocSinh.getValueAt(row, 2).toString());
             if ("Nam".equals(tableHocSinh.getValueAt(row, 4).toString())) {
                 suahs.rbNamHocSinh.setSelected(true);

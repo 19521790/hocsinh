@@ -5,12 +5,14 @@
  */
 package gui;
 
+import java.awt.image.BufferedImage;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 /**
  *
  * @author nguye
@@ -24,6 +26,7 @@ public class DashboardPanel extends javax.swing.JPanel {
         initComponents();
         
         Connection con = JDBCConnection.ketNoiJBDC();
+        
         
         try {
             Statement statement = con.createStatement();
@@ -74,12 +77,13 @@ public class DashboardPanel extends javax.swing.JPanel {
         lbMonHoc = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(239, 247, 248));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.GridLayout(1, 3, 40, 0));
+        jPanel1.setLayout(new java.awt.GridLayout(1, 3, 20, 0));
 
         jPanel3.setBackground(new java.awt.Color(128, 99, 246));
 
@@ -89,7 +93,7 @@ public class DashboardPanel extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Tổng học sinh");
+        jLabel2.setText("Học sinh");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/icons8_student_male_52px.png"))); // NOI18N
 
@@ -102,7 +106,7 @@ public class DashboardPanel extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(0, 201, Short.MAX_VALUE))
+                        .addGap(0, 257, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(lbHocSinh)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -127,7 +131,7 @@ public class DashboardPanel extends javax.swing.JPanel {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Tổng lớp");
+        jLabel3.setText("Lớp");
 
         lbLop.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lbLop.setForeground(new java.awt.Color(255, 255, 255));
@@ -144,7 +148,7 @@ public class DashboardPanel extends javax.swing.JPanel {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(0, 241, Short.MAX_VALUE))
+                        .addGap(0, 296, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(lbLop)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -169,7 +173,7 @@ public class DashboardPanel extends javax.swing.JPanel {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Tổng môn học");
+        jLabel5.setText("Môn học");
 
         lbMonHoc.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lbMonHoc.setForeground(new java.awt.Color(255, 255, 255));
@@ -190,7 +194,7 @@ public class DashboardPanel extends javax.swing.JPanel {
                         .addComponent(jLabel6))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addGap(0, 196, Short.MAX_VALUE)))
+                        .addGap(0, 255, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -207,20 +211,24 @@ public class DashboardPanel extends javax.swing.JPanel {
 
         jPanel1.add(jPanel5);
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 1081, -1));
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 1081, -1));
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/19197906_resize.jpg"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1081, Short.MAX_VALUE)
+            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 416, Short.MAX_VALUE)
+            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 620, Short.MAX_VALUE)
         );
 
-        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 1081, -1));
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 156, 1081, 620));
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -231,6 +239,7 @@ public class DashboardPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
