@@ -8,6 +8,12 @@ package gui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,17 +21,29 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import popupframe.SuaHocSinh_QuanLiHocSinh;
 import popupframe.ThemHocSinh_QuanLiHocSinh;
+import thamso.Contact;
 import thamso.LayThamSo;
 
 /**
@@ -41,7 +59,7 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
     int NamSinhCuaTuoiToiDa = Calendar.getInstance().get(Calendar.YEAR) - new LayThamSo().getTuoiToiDa();
 
     DefaultTableModel bangDuLieu = new DefaultTableModel();
-    
+
     public DefaultTableModel getBangDuLieu() {
         return bangDuLieu;
     }
@@ -52,10 +70,10 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
     public QuanLyHocSinhPanel() {
 
         initComponents();
-        
+
         //Đổi font mục bảng
         tableHocSinh.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
-        
+
         suahs.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         themhs.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -173,7 +191,6 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
             }
         });
     }
-    
 
     public void HocSinhTrongTruong() {
 
@@ -235,6 +252,8 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
         tableHocSinh = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        ExcelButton = new javax.swing.JButton();
+        Sample = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(239, 247, 248));
 
@@ -297,13 +316,10 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel2.setText("Họ tên:");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel3.setText("Mã học sinh:");
 
-        MaHS.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         MaHS.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         MaHS.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -311,7 +327,6 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
             }
         });
 
-        HoTen.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         HoTen.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         HoTen.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -370,7 +385,6 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         jScrollPane1.setOpaque(false);
 
-        tableHocSinh.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tableHocSinh.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -408,6 +422,34 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
         jLabel5.setText("QUẢN LÍ HỌC SINH");
         jLabel5.setFocusable(false);
 
+        ExcelButton.setBackground(new java.awt.Color(51, 102, 0));
+        ExcelButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        ExcelButton.setForeground(new java.awt.Color(255, 255, 255));
+        ExcelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/microsoft-excel-4-722715 (1).png"))); // NOI18N
+        ExcelButton.setText("Nhập Excel");
+        ExcelButton.setBorder(null);
+        ExcelButton.setFocusPainted(false);
+        ExcelButton.setFocusable(false);
+        ExcelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExcelButtonActionPerformed(evt);
+            }
+        });
+
+        Sample.setBackground(new java.awt.Color(51, 102, 0));
+        Sample.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Sample.setForeground(new java.awt.Color(255, 255, 255));
+        Sample.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/poly/poly/app/icons/16x16/microsoft-excel-4-722715 (1).png"))); // NOI18N
+        Sample.setText("File Excel Mẫu");
+        Sample.setBorder(null);
+        Sample.setFocusPainted(false);
+        Sample.setFocusable(false);
+        Sample.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SampleActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -434,7 +476,9 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
                     .addComponent(Xoa, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ThemMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ExcelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Sample, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
@@ -457,7 +501,11 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
                         .addGap(21, 21, 21)
                         .addComponent(Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(ExcelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Sample, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46))
         );
@@ -477,10 +525,9 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
                     CallableStatement mystm = con.prepareCall("{call sp_TiepNhanHocSinh_XoaHocSinh(?)}");
                     mystm.setString(1, tableHocSinh.getValueAt(row, 1).toString());
                     mystm.executeQuery();
-              
 
                 } catch (SQLException ex) {
-                  
+
                 }
                 JOptionPane.showMessageDialog(null, "Xóa thành công!");
                 HocSinhTrongTruong();
@@ -602,10 +649,126 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_SuaActionPerformed
 
+    private void ExcelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcelButtonActionPerformed
+        File excelFile;
+        FileInputStream excelFIS = null;
+        BufferedInputStream excelBIS = null;
+        XSSFWorkbook excelJtableImport = null;
+
+        JFileChooser excelFilechooser = new JFileChooser("null");
+        excelFilechooser.setDialogTitle("Chọn file excel cần nhập");
+        int ExcelChooser = excelFilechooser.showOpenDialog(null);
+        if (ExcelChooser == JFileChooser.APPROVE_OPTION) {
+
+            try {
+                excelFile = excelFilechooser.getSelectedFile();
+
+                excelFIS = new FileInputStream(excelFile);
+                excelBIS = new BufferedInputStream(excelFIS);
+                excelJtableImport = new XSSFWorkbook(excelBIS);
+                XSSFSheet excelSheet = excelJtableImport.getSheetAt(0);
+
+                Connection con = JDBCConnection.ketNoiJBDC();
+                for (int row = 0; row < excelSheet.getLastRowNum(); row++) {
+                    XSSFRow excelRow = excelSheet.getRow(row + 1);
+                    XSSFCell HoTen = excelRow.getCell(0);
+                    XSSFCell NgaySinh = excelRow.getCell(1);
+                    XSSFCell GioiTinh = excelRow.getCell(2);
+                    XSSFCell DiaChi = excelRow.getCell(3);
+                    XSSFCell Email = excelRow.getCell(4);
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    Date date = sdf.parse(NgaySinh.toString());
+                    String txtNgaySinh = new SimpleDateFormat("yyyy-MM-dd").format(date);
+                
+                    try {
+                        CallableStatement mystm = con.prepareCall("{call sp_TiepNhanHocSinh_ThemHocSinh(?,?,?,?,?)}");
+
+                        mystm.setString(1, HoTen.toString());
+                        mystm.setString(2, txtNgaySinh);
+                        mystm.setString(3, GioiTinh.toString());
+                        mystm.setString(4, DiaChi.toString());
+
+                        mystm.setString(5, Email.toString());
+
+                        mystm.executeQuery();
+
+                    } catch (SQLException ex) {
+
+                    }
+
+//                    for (int column = 0; column < 5; column++) {
+//                        XSSFCell excelCell = excelRow.getCell(column);
+//                        System.out.println(excelCell.toString());
+//                    }
+                }
+                JOptionPane.showMessageDialog(null, "Lưu thành công");
+                HocSinhTrongTruong();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(QuanLyHocSinhPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(QuanLyHocSinhPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(QuanLyHocSinhPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }//GEN-LAST:event_ExcelButtonActionPerformed
+
+    private void SampleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SampleActionPerformed
+        String[] colums = {"Họ tên", "Ngày Sinh", "Giới tính", "Địa chỉ", "Email"};
+        List<Contact> contacts = new ArrayList<Contact>();
+        contacts.add(new Contact("Như long", "25/03/2005", "Nam", "IaTok", ""));
+        contacts.add(new Contact("Học Sinh A", "23/03/2005", "Nu", "Iagrai", ""));
+        contacts.add(new Contact("HocSinhN", "25/03/2006", "Nam", "HoChiMinh", "nguyennhulong@gmail.com"));
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Thông tin học sinh cần nhập");
+        Row headerRow = sheet.createRow(0);
+        for (int i = 0; i < colums.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(colums[i]);
+
+        }
+        int rownum = 1;
+        for (Contact contact : contacts) {
+            Row row = sheet.createRow(rownum++);
+            row.createCell(0).setCellValue(contact.HoTen);
+            row.createCell(1).setCellValue(contact.NgaySinh);
+            row.createCell(2).setCellValue(contact.GioiTinh);
+            row.createCell(3).setCellValue(contact.DiaChi);
+            row.createCell(4).setCellValue(contact.Email);
+
+        }
+        try {
+            String location = "";
+            JFileChooser targetDir = new JFileChooser();
+            targetDir.setDialogTitle("Chọn thư mục cần lưu");
+            targetDir.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            if (targetDir.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                location = targetDir.getSelectedFile().toString();
+                System.out.println(location + "\\contacts.xlsx");
+                FileOutputStream fileOut = new FileOutputStream(location + "\\contacts.xlsx");
+                workbook.write(fileOut);
+                JOptionPane.showMessageDialog(null, "Lưu thành công, vui lòng mở file tại " + location + "\\contacts.xlsx");
+                fileOut.close();
+                workbook.close();
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(QuanLyHocSinhPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(QuanLyHocSinhPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_SampleActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ExcelButton;
     private javax.swing.JTextField HoTen;
     private javax.swing.JTextField MaHS;
+    private javax.swing.JButton Sample;
     private javax.swing.JButton Sua;
     public javax.swing.JButton ThemMoi;
     private javax.swing.JButton TimKiembutton;
