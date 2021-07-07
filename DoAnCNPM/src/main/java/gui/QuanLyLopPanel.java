@@ -482,7 +482,6 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         });
         jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 440, 130, 40));
 
-<<<<<<< HEAD
         ChuyenLopBtn.setText("Chuyển lớp");
         ChuyenLopBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -490,15 +489,6 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
             }
         });
         jPanel1.add(ChuyenLopBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 200, 130, 40));
-=======
-        jButton2.setText("Chuyển lớp");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 200, 130, 40));
->>>>>>> 304d4185dbf510f917ab01c518458c85b1e7ff79
 
         jTabbedPane1.addTab("Quản lý lớp", jPanel1);
 
@@ -755,11 +745,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
-<<<<<<< HEAD
     private void ChuyenLopBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChuyenLopBtnActionPerformed
-=======
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
->>>>>>> 304d4185dbf510f917ab01c518458c85b1e7ff79
         // TODO add your handling code here:
         if (this.checkhaveSelected()) {
             return;
@@ -774,11 +760,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
             this.chuyen.setLocationRelativeTo(null);
             this.chuyen.setVisible(true);
         }
-<<<<<<< HEAD
     }//GEN-LAST:event_ChuyenLopBtnActionPerformed
-=======
-    }//GEN-LAST:event_jButton2ActionPerformed
->>>>>>> 304d4185dbf510f917ab01c518458c85b1e7ff79
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
