@@ -30,9 +30,10 @@
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="583" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="ThemMoi1" pref="130" max="32767" attributes="0"/>
-                  <Component id="jComboBox1" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="ThemMoi1" min="-2" pref="130" max="-2" attributes="0"/>
+                  <Component id="danhsachlop" min="-2" pref="113" max="-2" attributes="0"/>
+                  <Component id="jButton1" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -48,8 +49,10 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
-                      <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                      <Component id="danhsachlop" min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jButton1" min="-2" pref="23" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                       <Component id="ThemMoi1" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -142,23 +145,28 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ThemMoi1ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBox1">
+    <Component class="javax.swing.JComboBox" name="danhsachlop">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="10A1"/>
-            <StringItem index="1" value="10A2"/>
-            <StringItem index="2" value="10A3"/>
-            <StringItem index="3" value="10A4"/>
+          <StringArray count="1">
+            <StringItem index="0" value="T&#x1ea5;t c&#x1ea3;"/>
           </StringArray>
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="danhsachlopActionPerformed"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n t&#x1ea5;t c&#x1ea3;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

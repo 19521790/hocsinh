@@ -11,10 +11,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -98,6 +101,73 @@ public class ThemHocSinh_QuanLyLopPanel extends javax.swing.JFrame {
         }
     }
 
+    public void createList(String curClass) {
+        String temp = curClass.substring(0, 2);
+        System.out.println(temp);
+
+        int num = Integer.parseInt(temp);
+        temp = Integer.toString(num - 1);
+        if (num == 10) {
+            return;
+        }
+        String sql = "select  * from  LOP where TenLop  like '" + temp + "%'";
+        System.out.println("############################################");
+        System.out.println(sql);
+        try {
+
+            Connection cn = JDBCConnection.ketNoiJBDC();
+            Statement sta = cn.createStatement();
+            ResultSet r = sta.executeQuery(sql);
+            while (r.next()) {
+                this.danhsachlop.addItem(r.getString("TenLop"));
+            }
+        } catch (SQLException e) {
+
+        }
+
+    }
+
+    public void loadStudentList(String clasName) {
+        
+        int temp = Integer.parseInt(nam);
+        String str = Integer.toString(temp - 1);
+
+        String checksql = "select * from HOCKI_NAM where nam=" + str;
+
+        String sql = "select DISTINCT  HOCSINH.HoTen ,HOCSINH.MaHocSinh, HOCSINH.Email, HOCSINH.GioiTinh,HOCSINH.DiaChi, HOCSINH.NgaySinh from HOCSINH  , QUATRINHHOC,HOCKI_NAM ,LOP WHERE HOCSINH.IDHocSinh=QUATRINHHOC.IDHocSinh AND QUATRINHHOC.IDHocKi=HOCKI_NAM.IDHocKi  AND QUATRINHHOC.IDLop=LOP.IDLop AND LOP.TenLop='" + clasName + "' AND HOCKI_NAM.Nam=" + str + " ORDER BY MaHocSinh ASC";
+
+        try {
+            Connection cn = JDBCConnection.ketNoiJBDC();
+            Statement sta = cn.createStatement();
+            ResultSet r = sta.executeQuery(checksql);
+            if (!r.next()) {
+                
+                JOptionPane.showMessageDialog(this, "Không tìm thấy năm học trước đó");
+                return;
+            }
+            DefaultTableModel model = (DefaultTableModel) this.tableHocSinh.getModel();
+            model.setRowCount(0);
+            r = sta.executeQuery(sql);
+            int i = 0;
+            while (r.next()) {
+                i++;
+                String name = r.getString("HoTen");
+                String date = r.getString("NgaySinh");
+                String mahs = r.getString("MaHocSinh");
+                System.out.println(mahs);
+                String email = r.getString("Email");
+                String address = r.getString("DiaChi");
+                String s = r.getString("GioiTinh");
+                String datab[] = {Integer.toString(i), mahs, name, s, date, address};
+                DefaultTableModel tblM = (DefaultTableModel) this.tableHocSinh.getModel();
+                tblM.addRow(datab);
+            }
+        } catch (SQLException e) {
+
+        }
+
+    }
+
     public void loadtable() {
         DefaultTableModel model = (DefaultTableModel) this.tableHocSinh.getModel();
         model.setRowCount(0);
@@ -146,6 +216,7 @@ public class ThemHocSinh_QuanLyLopPanel extends javax.swing.JFrame {
         System.out.println(" ThemHocSinh_DanhSachHocSinhPanel");
         dsl = t;
         loadtable();
+        this.createList(dsl.selectedClas);
         malop = dsl.selectedClas;
         nam = dsl.selectedYear;
         System.out.println(nam + ":::" + malop);
@@ -165,7 +236,8 @@ public class ThemHocSinh_QuanLyLopPanel extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tableHocSinh = new javax.swing.JTable();
         ThemMoi1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        danhsachlop = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(239, 247, 248));
@@ -218,10 +290,17 @@ public class ThemHocSinh_QuanLyLopPanel extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10A1", "10A2", "10A3", "10A4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        danhsachlop.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả" }));
+        danhsachlop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                danhsachlopActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Chọn tất cả");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -233,9 +312,10 @@ public class ThemHocSinh_QuanLyLopPanel extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(ThemMoi1, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ThemMoi1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(danhsachlop, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -247,8 +327,10 @@ public class ThemHocSinh_QuanLyLopPanel extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(53, 53, 53)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(58, 58, 58)
+                        .addComponent(danhsachlop, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7)
                         .addComponent(ThemMoi1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
@@ -277,13 +359,26 @@ public class ThemHocSinh_QuanLyLopPanel extends javax.swing.JFrame {
 
     }//GEN-LAST:event_ThemMoi1ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void danhsachlopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_danhsachlopActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+        if (this.danhsachlop.getSelectedItem().toString() == "Tất cả") {
+            this.loadtable();
+            return;
+        }
+        this.loadStudentList(this.danhsachlop.getSelectedItem().toString());
+
+    }//GEN-LAST:event_danhsachlopActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.tableHocSinh.clearSelection();
+        this.tableHocSinh.addRowSelectionInterval(0, this.tableHocSinh.getRowCount()-1);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ThemMoi1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> danhsachlop;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableHocSinh;
     // End of variables declaration//GEN-END:variables

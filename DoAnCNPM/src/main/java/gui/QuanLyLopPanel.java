@@ -22,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import popupframe.ChuyenLop_QuanLyLopPanel;
 import popupframe.ThongTinHocSinh_DanhSachHocSinhPanel;
 
 /**
@@ -37,6 +38,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
     public String selectedClas = "";
     public String selectedYear = "";
     String mshsChosen = "";
+    ChuyenLop_QuanLyLopPanel chuyen;
     ThemHocSinh_QuanLyLopPanel addstudent;
     DiemHocSinh_QuanLyLopPanel diemhs;
     List<String> deletequery = new ArrayList<>();
@@ -463,6 +465,11 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(981, 433, 130, 40));
 
         jButton2.setText("Chuyển lớp");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 200, 130, 40));
 
         jTabbedPane1.addTab("Quản lý lớp", jPanel1);
@@ -721,6 +728,19 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+         if (this.checkhaveSelected()) {
+            return;
+        }
+        chuyen = new ChuyenLop_QuanLyLopPanel(this);
+       if(chuyen.check)
+        this.chuyen.setVisible(true);
+       else {
+       JOptionPane.showMessageDialog(this, "đây là lớp duy nhất");
+       }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
