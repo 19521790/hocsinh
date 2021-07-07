@@ -321,18 +321,8 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
         jLabel3.setText("Mã học sinh:");
 
         MaHS.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        MaHS.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                MaHSKeyReleased(evt);
-            }
-        });
 
         HoTen.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        HoTen.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                HoTenKeyReleased(evt);
-            }
-        });
 
         TimKiembutton.setBackground(new java.awt.Color(0, 176, 239));
         TimKiembutton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -565,8 +555,10 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
             tableHocSinh.setModel(bangDuLieu);
             if (!MaHs.isEmpty()) {
                 sql = "SELECT * FROM HOCSINH WHERE MaHocSinh like '%" + MaHs + "%'";
-            } else {
+            } else if (HoTenHS.isEmpty()) {
                 sql = "SELECT * FROM HOCSINH WHERE HoTen like N'%" + HoTenHS + "%'";
+            } else {
+                sql = "SELECT * FROM HOCSINH WHERE MaHocSinh like '%" + MaHs + "%' AND HoTen like N'%" + HoTenHS + "%'";
             }
 
             Connection con = JDBCConnection.ketNoiJBDC();
@@ -596,22 +588,6 @@ public final class QuanLyHocSinhPanel extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_TimKiembuttonActionPerformed
-
-    private void MaHSKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MaHSKeyReleased
-        if (!MaHS.getText().isEmpty()) {
-            HoTen.setEnabled(false);
-        } else {
-            HoTen.setEnabled(true);
-        }
-    }//GEN-LAST:event_MaHSKeyReleased
-
-    private void HoTenKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_HoTenKeyReleased
-        if (!HoTen.getText().isEmpty()) {
-            MaHS.setEnabled(false);
-        } else {
-            MaHS.setEnabled(true);
-        }
-    }//GEN-LAST:event_HoTenKeyReleased
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 

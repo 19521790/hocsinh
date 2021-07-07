@@ -268,9 +268,6 @@
               </Border>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="MaHSKeyReleased"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="HoTen">
           <Properties>
@@ -280,9 +277,6 @@
               </Border>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="HoTenKeyReleased"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="TimKiembutton">
           <Properties>
