@@ -99,6 +99,7 @@ public class ChuyenLop_QuanLyLopPanel extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(300, 300));
 
         jLabel1.setText("Lớp:");
 

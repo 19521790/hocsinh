@@ -757,6 +757,7 @@ public class QuanLyLopPanel extends javax.swing.JPanel {
         } else if (!chuyen.check) {
             JOptionPane.showMessageDialog(this, "đây là lớp duy nhất");
         } else {
+            this.chuyen.setLocationRelativeTo(null);
             this.chuyen.setVisible(true);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
