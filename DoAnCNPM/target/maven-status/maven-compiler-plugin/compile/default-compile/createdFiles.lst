@@ -33,7 +33,10 @@ gui\TongKetPanel$3.class
 gui\QuanLyHocSinhPanel$12.class
 gui\TongKetPanel$6.class
 gui\JDBCConnection.class
+<<<<<<< HEAD
 gui\ManHinhDangNhap$3.class
+=======
+>>>>>>> 304d4185dbf510f917ab01c518458c85b1e7ff79
 gui\ThayDoiQuyDinhPanel$19.class
 gui\DashboardPanel.class
 gui\QuanLyDiemSoPanel$9.class
@@ -121,11 +124,17 @@ gui\QuanLyHocSinhPanel$11.class
 gui\ManHinhDangNhap$2.class
 gui\QuanLyLopPanel$11.class
 gui\ThayDoiQuyDinhPanel$18.class
+<<<<<<< HEAD
 gui\ManHinhDangNhap$3$1.class
 gui\TongKetPanel$14.class
 gui\QuanLyDiemSoPanel$1.class
 gui\ThayDoiQuyDinhPanel$5.class
 gui\ManHinhDangNhap$1.class
+=======
+gui\TongKetPanel$14.class
+gui\QuanLyDiemSoPanel$1.class
+gui\ThayDoiQuyDinhPanel$5.class
+>>>>>>> 304d4185dbf510f917ab01c518458c85b1e7ff79
 gui\QuanLyDiemSoPanel$8.class
 popupframe\ThemLop_ThayDoiQuyDinhPanel.class
 gui\QuanLyHocSinhPanel$4.class
