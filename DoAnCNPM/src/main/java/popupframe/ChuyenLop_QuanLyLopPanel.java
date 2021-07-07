@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -24,7 +25,8 @@ public class ChuyenLop_QuanLyLopPanel extends javax.swing.JFrame {
      * Creates new form ChuyenLop_QuanLyLopPanel
      */
     QuanLyLopPanel dsl;
-    public boolean check=true ;
+    public boolean check = true;
+
     void loadClas(String name) {
         String t = name.substring(0, 2);
         String sql = "select  * from  LOP  where TenLop like '" + t + "%' and TenLop<> '" + name + "'";
@@ -33,39 +35,46 @@ public class ChuyenLop_QuanLyLopPanel extends javax.swing.JFrame {
             Connection cn = JDBCConnection.ketNoiJBDC();
             Statement sta = cn.createStatement();
             ResultSet r = sta.executeQuery(sql);
-            if(!r.next()) this.check= false;
-            r=sta.executeQuery(sql);
-            while(r.next()){
-            this.clasBox.addItem(r.getString("TenLop"));
+            if (!r.next()) {
+                this.check = false;
+            }
+            r = sta.executeQuery(sql);
+            while (r.next()) {
+                this.clasBox.addItem(r.getString("TenLop"));
             }
         } catch (SQLException e) {
-            
+
         }
     }
 
-    void chuyen() {
-        String desClas ="";
-         desClas= this.clasBox.getSelectedItem().toString();
-        if(desClas=="") return;
-        String sql = "declare @des int\n"
-                + "set @des= (select LOP.IDLop from LOP where  TenLop='"+desClas+"')\n"
+    void chuyen(String t) {
+
+        String desClas = "";
+        desClas = this.clasBox.getSelectedItem().toString();
+        if (desClas == "") {
+            return;
+        }
+        String sql = "declare @id int\n"
+                + "set @id =(select HOCSINH.IDHocSinh from HOCSINH where MaHocSinh='"+t+"')\n"
+                + " declare @des int\n"
+                + "set @des= (select LOP.IDLop from LOP where  TenLop='" + desClas + "')\n"
                 + "declare @sour int \n"
-                + "set @sour= (select LOP.IDLop from LOP where  TenLop='"+this.dsl.selectedClas+"')\n"
-                + "update QUATRINHHOC  set  IDLop= @des where IDLop=@sour and  QUATRINHHOC.IDHocKi IN\n"
+                + "set @sour= (select LOP.IDLop from LOP where  TenLop='" + this.dsl.selectedClas + "')\n"
+                + "update QUATRINHHOC  set  IDLop= @des where IDLop=@sour  AND IDHocSinh=@id and  QUATRINHHOC.IDHocKi IN\n"
                 + "(\n"
                 + "SELECT HOCKI_NAM.IDHocKi\n"
-                + "FROM HOCKI_NAM WHERE Nam="+this.dsl.selectedYear+"\n"
+                + "FROM HOCKI_NAM WHERE Nam=" + this.dsl.selectedYear + "\n"
                 + ")";
         System.out.println(sql);
-         try {
-                Connection cn = JDBCConnection.ketNoiJBDC();
-                Statement cst = cn.createStatement();
-                int r = cst.executeUpdate(sql);
-                System.out.println(sql);
-            } catch (SQLException e) {
+        try {
+            Connection cn = JDBCConnection.ketNoiJBDC();
+            Statement cst = cn.createStatement();
+            int r = cst.executeUpdate(sql);
+            System.out.println(sql);
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Quá số lượng học sinh");
 
-            }
+        }
     }
 
     public ChuyenLop_QuanLyLopPanel(QuanLyLopPanel t) {
@@ -73,7 +82,7 @@ public class ChuyenLop_QuanLyLopPanel extends javax.swing.JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.loadClas(t.selectedClas);
         dsl = t;
-
+        
     }
 
     /**
@@ -134,8 +143,15 @@ public class ChuyenLop_QuanLyLopPanel extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "chuyển tất cả học sinh lớp" + this.dsl.selectedClas + " vào lớp " + this.clasBox.getSelectedItem() + " nam học " + this.dsl.selectedYear);
-        chuyen();
+        JOptionPane.showMessageDialog(this, "đã chuyễn  các học sinh lớp" + this.dsl.selectedClas + " vào lớp " + this.clasBox.getSelectedItem() + " nam học " + this.dsl.selectedYear);
+        List<String> list = dsl.getSelectedItemInfotable();
+        list.forEach(maso -> {
+            System.out.println();
+            System.out.println(maso);
+             chuyen(maso);
+        });
+       
+        this.dsl.seek(dsl.selectedClas, dsl.selectedYear);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
